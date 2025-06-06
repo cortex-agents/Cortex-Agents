@@ -62,7 +62,7 @@ export default function Testimonials() {
                                 <p className="text-gray-400 text-sm">{testimonial.designation}</p>
                             </div>
                         </div>
-                        <p className="mt-4 text-gray-300 italic">"{testimonial.feedback}"</p>
+                        <p className="mt-4 text-gray-300 italic">&quot;{testimonial.feedback}&quot;</p>
                     </motion.div>
                 ))}
             </div>
