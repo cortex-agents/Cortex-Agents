@@ -15,7 +15,7 @@ const Hero = () => {
     }, 10000); // Change every 10 seconds
 
     return () => clearInterval(interval);
-  }, []);
+  }, [images.length]);
 
   return (
     <section className="relative w-full h-screen overflow-hidden">

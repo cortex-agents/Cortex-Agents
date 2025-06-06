@@ -1,5 +1,6 @@
 'use client';
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 
 const testimonials = [
     {
@@ -56,13 +57,13 @@ export default function Testimonials() {
                         transition={{ duration: 1, delay: index * 0.3 }}
                     >
                         <div className="flex items-center gap-4">
-                            <img src={testimonial.image} alt={testimonial.name} className="w-14 h-14 rounded-full border-2 border-gray-400" />
+                            <Image src={testimonial.image} alt={testimonial.name} width={56} height={56} className="w-14 h-14 rounded-full border-2 border-gray-400" />
                             <div>
                                 <h3 className="text-lg font-semibold">{testimonial.name}</h3>
                                 <p className="text-gray-400 text-sm">{testimonial.designation}</p>
                             </div>
                         </div>
-                        <p className="mt-4 text-gray-300 italic">&quot;{testimonial.feedback}&quot;</p>
+                        <p className="mt-4 text-gray-300 italic">{testimonial.feedback}</p>
                     </motion.div>
                 ))}
             </div>
