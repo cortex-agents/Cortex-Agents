@@ -5,7 +5,7 @@ const CompanyShowcaseCard = () => {
   const [transform, setTransform] = useState<string>('');
   const [isHovering, setIsHovering] = useState<boolean>(false);
   const cardRef = useRef<HTMLDivElement>(null);
-  const animationRef = useRef<number>();
+  const animationRef = useRef<number>(null);
 
   const services = [
     { icon: "🎨", name: "Web Design", color: "text-purple-400" },
