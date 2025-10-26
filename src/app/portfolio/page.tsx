@@ -5,39 +5,12 @@ import Tilt from 'react-parallax-tilt';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ExternalLink } from 'lucide-react';
+import products from '../../components/data/products';
+import { Product } from '../../components/data/products_types';
 
-const projects = [
-  { 
-    id: 1, 
-    title: 'Furniture E-Commerce Website', 
-    description: 'Built with Next.js & Sanity', 
-    image: '/ecommerce.png', 
-    link: 'https://hackathone3.vercel.app/',
-    tags: ['Next.js', 'Sanity', 'E-commerce'],
-    gradient: 'from-blue-500 to-cyan-500'
-  },
-  { 
-    id: 2, 
-    title: 'MER TECH Solution Portfolio Website', 
-    description: 'Modern UI/UX with Framer Motion', 
-    image: '/portfolio.png', 
-    link: 'https://mer-tech-solutions.vercel.app/',
-    tags: ['React', 'Framer Motion', 'UI/UX'],
-    gradient: 'from-purple-500 to-pink-500'
-  },
-  { 
-    id: 3, 
-    title: 'Blog Website', 
-    description: 'CMS-powered blog using Next.js', 
-    image: '/blog.png', 
-    link: 'https://blog-website-livid-six.vercel.app/',
-    tags: ['Next.js', 'CMS', 'Blog'],
-    gradient: 'from-emerald-500 to-teal-500'
-  },
-  // You can add more projects here
-];
+const PortfolioPage = () => {
+  const projectData: Product[] = products;
 
-export default function ProjectsPage() {
   return (
     <main className="relative min-h-screen bg-black text-white py-30">
       <div className="max-w-7xl mx-auto px-6 lg:px-16">
@@ -61,7 +34,7 @@ export default function ProjectsPage() {
 
         {/* Projects Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
-          {projects.map((project, index) => (
+          {projectData.map((project, index) => (
             <motion.div
               key={project.id}
               initial={{ opacity: 0, y: 50 }}
@@ -163,3 +136,5 @@ export default function ProjectsPage() {
     </main>
   );
 }
+
+export default PortfolioPage;

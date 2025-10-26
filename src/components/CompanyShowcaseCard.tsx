@@ -8,7 +8,7 @@ const CompanyShowcaseCard = () => {
   const animationRef = useRef<number>(null);
 
   const services = [
-    { icon: "🎨", name: "Web Design", color: "text-purple-400" },
+    { icon: "🎨", name: "UI Design", color: "text-purple-400" },
     { icon: "⚡", name: "Web Development", color: "text-blue-400" },
     { icon: "🤖", name: "AI Solutions", color: "text-emerald-400" },
     { icon: "📱", name: "Mobile Apps", color: "text-pink-400" },
@@ -78,7 +78,7 @@ const CompanyShowcaseCard = () => {
 
       
       {/* Card Content */}
-      <div className="p-6 relative">
+      <div className="p-6 sm:pb-8 relative">
         {/* Background pattern */}
         <div className="absolute inset-0 opacity-5">
           <div className="absolute inset-0 bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500"></div>
@@ -95,10 +95,10 @@ const CompanyShowcaseCard = () => {
                 key={index}
                 className="flex items-center gap-3 bg-gray-800/50 hover:bg-gray-800/80 p-3 rounded-lg border border-gray-700/50 hover:border-blue-500/50 transition-all duration-300 group/item"
               >
-                <span className="text-2xl group-hover/item:scale-110 transition-transform duration-300">
+                <span className="text-2xl group-hover/item:scale-110 transition-transform duration-300 flex-shrink-0">
                   {service.icon}
                 </span>
-                <span className={`text-sm font-medium ${service.color}`}>
+                <span className={`text-sm font-medium ${service.color} truncate`}>
                   {service.name}
                 </span>
               </div>

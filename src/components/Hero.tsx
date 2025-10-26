@@ -3,9 +3,9 @@ import CompanyShowcaseCard from '../components/CompanyShowcaseCard';
 
 const Hero = () => {
   return (
-    <section className="relative w-full h-screen overflow-hidden " id="home">
+    <section className="relative w-full pt-16 md:h-screen sm:min-h-screen sm:pt-24 sm:pb-24 md:overflow-hidden " id="home">
       {/* Hero Content */}
-      <div className="relative z-10 flex flex-col md:flex-row items-center justify-between h-full px-6 md:px-16 lg:px-24 gap-8 md:gap-12">
+      <div className="relative z-10 flex flex-col items-center md:flex-row justify-between h-full px-6 md:px-16 lg:px-24 gap-8 md:gap-12 sm:text-center md:text-left">
         {/* Left Side - Text Content */}
         <div className="mt-18 md:mt-0 flex-1 text-left text-white max-w-2xl">
           {/* Hero Title */}
@@ -20,10 +20,15 @@ const Hero = () => {
           <p className="text-xl md:text-2xl lg:text-3xl mb-10 text-gray-300 font-semibold leading-relaxed">
             Your trusted partner for building high-end websites
           </p>
-      </div>
+        </div>
 
-        {/* Right Side - Company Card */}
+        {/* Right Side - Company Card (Desktop) */}
         <div className="flex-1 max-w-xl w-full hidden md:block">
+          <CompanyShowcaseCard />
+        </div>
+
+        {/* Company Card (Mobile) */}
+        <div className="flex-1 max-w-xl w-full block md:hidden mt-8">
           <CompanyShowcaseCard />
         </div>
       </div>

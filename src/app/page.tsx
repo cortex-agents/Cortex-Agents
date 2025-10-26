@@ -1,6 +1,5 @@
 import About from '@/components/About'
 import Contact from '@/components/Contact'
-import Footer from '@/components/Footer'
 import Hero from '@/components/Hero'
 import Team from '@/components/ourTeam'
 import Portfolio from '@/components/portfolio'
@@ -11,7 +10,6 @@ import React from 'react'
 const Home = () => {
   return (
     <div>
-
       <Hero/>
       <About/>
       <Team />
@@ -19,8 +17,7 @@ const Home = () => {
       <Portfolio/>
       <Testimonials/>
       <Contact/>
-      <Footer/>
-    </div>
+   </div>
   )
 }
 

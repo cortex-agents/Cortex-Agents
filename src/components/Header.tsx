@@ -4,18 +4,18 @@ import { useState, useCallback, useMemo, useEffect } from "react";
 import { Menu, X, Phone, Home, Settings, FolderOpen, Mail, ArrowRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
+import Link from "next/link";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
-  // ✅ Update: nav items use section IDs, not routes
   const NAV_ITEMS = useMemo(
     () => [
-      { name: "Home", id: "home", icon: Home },
-      { name: "Services", id: "services", icon: Settings },
-      { name: "Portfolio", id: "portfolio", icon: FolderOpen },
-      { name: "Contact", id: "contact", icon: Mail },
+      { name: "Home", href: "/", icon: Home },
+      { name: "Services", href: "/services", icon: Settings },
+      { name: "Portfolio", href: "/portfolio", icon: FolderOpen },
+      { name: "About Us", href: "/about", icon: Mail },
     ],
     []
   );
@@ -27,16 +27,7 @@ const Navbar = () => {
   }, []);
 
   const toggleMenu = useCallback(() => setIsMenuOpen((prev) => !prev), []);
-
-  // ✅ Smooth scroll handler
-  const handleScrollTo = (id: string) => {
-    const section = document.getElementById(id);
-    if (section) {
-      section.scrollIntoView({ behavior: "smooth" });
-      setIsMenuOpen(false);
-    }
-  };
-
+  
   return (
     <div
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 backdrop-blur-xl ${
@@ -61,9 +52,8 @@ const Navbar = () => {
               className="flex items-center gap-3 cursor-pointer"
               whileHover={{ scale: 1.02 }}
               transition={{ type: "spring", stiffness: 300 }}
-              onClick={() => handleScrollTo("home")}
             >
-              <div className="relative">
+              <Link href="/">
                 <Image
                   src={"/logo_bright.png"}
                   alt="Cortex Agents"
@@ -71,7 +61,7 @@ const Navbar = () => {
                   height={44}
                   className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl transition-all duration-500"
                 />
-              </div>
+              </Link>
               <motion.div
                 className="flex flex-col"
                 animate={{ color: scrolled ? "#1f2937" : "#ffffff" }}
@@ -97,35 +87,27 @@ const Navbar = () => {
             {/* Desktop Menu */}
             <div className="hidden md:flex items-center space-x-1">
               {NAV_ITEMS.map((item) => (
-                <motion.button
-                  key={item.name}
-                  onClick={() => handleScrollTo(item.id)}
-                  whileHover={{ y: -1 }}
-                  transition={{ type: "spring", stiffness: 400 }}
-                  className={`relative px-4 py-2.5 font-medium text-sm tracking-wide rounded-xl group transition-all duration-300 ${
+                <Link key={item.name} href={item.href} className={`relative px-4 py-2.5 font-medium text-sm tracking-wide rounded-xl group transition-all duration-300 ${
                     scrolled
                       ? "text-gray-400 hover:bg-gray-100 hover:text-gray-900"
                       : "text-gray-200 hover:bg-white/10 hover:text-white"
-                  }`}
-                >
+                  }`}>
                   {item.name}
-                </motion.button>
+                </Link>
               ))}
 
               {/* CTA */}
-              <motion.button
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                onClick={() => handleScrollTo("contact")}
+              <Link
+                href="/contact"
                 className={`ml-4 px-6 py-2.5 rounded-xl font-medium text-sm flex items-center gap-2 shadow-lg transition-all duration-300 ${
                   scrolled
                     ? "bg-gray-800 text-white hover:bg-gray-700 shadow-gray-800/20"
                     : "bg-white text-gray-800 hover:bg-gray-50 shadow-white/20"
                 }`}
               >
-                Get Started
+                Contact Us
                 <ArrowRight size={16} />
-              </motion.button>
+              </Link>
             </div>
 
             {/* Mobile Toggle */}
@@ -170,17 +152,13 @@ const Navbar = () => {
               }`}
             >
               <div className="px-4 py-6 md:px-6">
-                {/* Navigation */}
                 <div className="space-y-2 mb-6">
-                  {NAV_ITEMS.map((item, index) => {
+                  {NAV_ITEMS.map((item) => {
                     const Icon = item.icon;
                     return (
-                      <motion.button
+                      <Link
                         key={item.name}
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: index * 0.1 }}
-                        onClick={() => handleScrollTo(item.id)}
+                        href={item.href}
                         className={`w-full flex items-center space-x-4 p-4 rounded-xl transition-all duration-300 group ${
                           scrolled
                             ? "hover:bg-gray-50 border border-transparent hover:border-gray-200"
@@ -205,16 +183,13 @@ const Navbar = () => {
                         >
                           {item.name}
                         </span>
-                      </motion.button>
+                      </Link>
                     );
                   })}
                 </div>
 
-                {/* CTA */}
-                <motion.button
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  onClick={() => handleScrollTo("contact")}
+                <Link
+                  href="/contact"
                   className={`w-full py-4 px-6 rounded-xl font-medium text-sm flex justify-center items-center gap-3 shadow-xl transition-all ${
                     scrolled
                       ? "bg-gradient-to-r from-gray-800 to-gray-900 text-white hover:from-gray-700 hover:to-gray-800"
@@ -222,14 +197,8 @@ const Navbar = () => {
                   }`}
                 >
                   <Phone size={18} />
-                  <span className="font-semibold">Get Free Quote</span>
-                  <motion.div
-                    animate={{ x: [0, 3, 0] }}
-                    transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                  >
-                    <ArrowRight size={18} />
-                  </motion.div>
-                </motion.button>
+                  <span className="font-semibold"> Contact Us </span>
+                </Link>
               </div>
             </motion.div>
           )}

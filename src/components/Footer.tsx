@@ -1,7 +1,9 @@
 'use client';
 import Image from 'next/image';
+import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { FaFacebookF, FaTwitter, FaLinkedinIn, FaInstagram } from 'react-icons/fa';
+import { FaFacebookF, FaLinkedinIn, FaInstagram } from 'react-icons/fa';
+import { RiWhatsappFill } from 'react-icons/ri';
 
 export default function Footer() {
   return (
@@ -11,7 +13,7 @@ export default function Footer() {
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
-        className="max-w-7xl mx-auto px-6 lg:px-12 py-16 grid md:grid-cols-2 lg:grid-cols-3 gap-10"
+        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 py-12 sm:py-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10"
       >
         {/* Brand Column */}
         <div className="space-y-5">
@@ -23,7 +25,7 @@ export default function Footer() {
               height={50}
               className="rounded-xl object-contain drop-shadow-md"
             />
-            <h2 className="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400">
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400">
               Cortex Agents
             </h2>
           </div>
@@ -33,58 +35,70 @@ export default function Footer() {
           <div className="flex gap-4 mt-4">
             {[
               { icon: FaFacebookF, link: '#', label: 'Facebook' },
-              { icon: FaTwitter, link: '#', label: 'Twitter' },
+              { icon: RiWhatsappFill, link: 'https://wa.me/923212322687', label: 'Whatsapp' },
               { icon: FaLinkedinIn, link: '#', label: 'LinkedIn' },
               { icon: FaInstagram, link: '#', label: 'Instagram' },
             ].map(({ icon: Icon, link, label }, index) => (
-              <motion.a
-                key={index}
-                href={link}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={label}
-                whileHover={{ scale: 1.15 }}
-                className="w-10 h-10 flex items-center justify-center rounded-full border border-gray-700 hover:border-blue-500 hover:text-white transition-colors"
-              >
-                <Icon size={18} />
-              </motion.a>
+              <motion.div key={index} whileHover={{ scale: 1.15 }}>
+                <Link
+                  href={link}
+                  target="_blank"
+                  aria-label={label}
+                  className="w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center rounded-full border border-gray-700 hover:border-blue-500 hover:text-white transition-colors"
+                >
+                  <Icon size={18} />
+                </Link>
+              </motion.div>
             ))}
           </div>
         </div>
 
         {/* Quick Links */}
-        <div className="md:col-span-1 lg:col-span-1">
-          <h3 className="text-lg font-semibold mb-5 text-white">Quick Links</h3>
+        <div>
+          <h3 className="text-lg sm:text-xl font-semibold mb-5 text-white">Quick Links</h3>
           <ul className="space-y-3 text-gray-400">
-            {['Home', 'About', 'Services', 'Projects', 'Contact'].map((item, index) => (
+            {[
+              { name: 'Home', href: '/' },
+              { name: 'Services', href: '/services' },
+              { name: 'Projects', href: '/portfolio' },
+              { name: 'Contact', href: '/contact' }
+            ].map((item, index) => (
               <motion.li
                 key={index}
                 whileHover={{ x: 5, color: '#60a5fa' }}
                 transition={{ type: 'spring', stiffness: 300 }}
               >
-                <a href="#" className="hover:text-blue-400 transition-colors">
-                  {item}
-                </a>
+                <Link href={item.href} className="hover:text-blue-400 transition-colors">
+                  {item.name}
+                </Link>
               </motion.li>
             ))}
           </ul>
         </div>
 
         {/* Contact Info */}
-        <div className="lg:col-span-1">
-          <h3 className="text-lg font-semibold mb-5 text-white">Get in Touch</h3>
+        <div>
+          <h3 className="text-lg sm:text-xl font-semibold mb-5 text-white">Get in Touch</h3>
           <ul className="space-y-3 text-gray-400">
             <li>
               <span className="block text-gray-500 text-sm">Email</span>
-              <a href="mailto:cortexagents@gmail.com" className="hover:text-blue-400 transition-colors">
+              <Link
+                href="mailto:cortexagents@gmail.com?subject=Inquiry&body=Hello%20Cortex%20Agents,"
+                target="_blank"
+                className="hover:text-blue-400 transition-colors"
+              >
                 cortexagents@gmail.com
-              </a>
+              </Link>
             </li>
             <li>
-              <span className="block text-gray-500 text-sm">Phone</span>
-              <a href="tel:+1234567890" className="hover:text-blue-400 transition-colors">
-                +123 456 7890
-              </a>
+              <span className="block text-gray-500 text-sm">Whatsapp</span>
+              <Link
+                href="https://wa.me/923212322687"
+                target="_blank"
+                className="hover:text-blue-400 transition-colors"
+              >
+                +92 3212322687
+              </Link>
             </li>
             <li>
               <span className="block text-gray-500 text-sm">Address</span>
@@ -104,7 +118,7 @@ export default function Footer() {
         transition={{ delay: 0.6 }}
         className="py-6 text-center text-sm text-gray-500"
       >
-        © {new Date().getFullYear()} <span className="text-gray-300 font-medium">Cortex Agents</span>. All Rights Reserved.  
+        © {new Date().getFullYear()} <span className="text-gray-300 font-medium">Cortex Agents</span>. All Rights Reserved.
         <span className="hidden md:inline"> | Designed with 💡 by Cortex Design Studio</span>
       </motion.div>
     </footer>

@@ -1,7 +1,15 @@
 "use client";
 import { motion } from "framer-motion";
+import { useState } from "react";
+import Modal from "./Modal";
 
 const Services = () => {
+  const [selectedService, setSelectedService] = useState<null | {
+    title: string;
+    description: string;
+    gradient: string;
+  }>(null);
+
   const services = [
     {
       title: "Web Development",
@@ -50,7 +58,7 @@ const Services = () => {
   return (
     <section className="relative py-20 overflow-hidden" id="services">
       <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-16">
-        {/* Section Title */}
+        {/* Title */}
         <motion.div
           className="text-center mb-16"
           initial={{ opacity: 0, y: 50 }}
@@ -69,24 +77,22 @@ const Services = () => {
           </p>
         </motion.div>
 
-        {/* Services Cards */}
+        {/* Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {services.map((service, index) => (
             <motion.div
               key={index}
-              className="group relative"
+              className="group relative cursor-pointer"
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
+              onClick={() => setSelectedService(service)}
             >
               <div className="relative bg-gray-900/80 backdrop-blur-xl border border-gray-700/30 rounded-2xl p-8 h-full transition-all duration-500 hover:border-gray-600/50 hover:shadow-2xl overflow-hidden">
-                {/* Gradient Overlay on Hover */}
                 <div
                   className={`absolute inset-0 bg-gradient-to-br ${service.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-500 rounded-2xl`}
                 />
-
-                {/* Icon with Gradient Background */}
                 <div className="relative z-10 mb-6">
                   <div
                     className={`inline-flex items-center justify-center w-16 h-16 rounded-xl bg-gradient-to-br ${service.gradient} p-0.5 group-hover:scale-110 transition-transform duration-300`}
@@ -96,32 +102,20 @@ const Services = () => {
                     </div>
                   </div>
                 </div>
-
-                {/* Title */}
-                <h3 className="relative z-10 text-2xl font-bold mb-4 text-white group-hover:text-white transition-colors">
+                <h3 className="relative z-10 text-2xl font-bold mb-4 text-white">
                   {service.title}
                 </h3>
-
-                {/* Description */}
-                <p className="relative z-10 text-gray-400 leading-relaxed group-hover:text-gray-300 transition-colors">
-                  {service.description}
+                <p className="relative z-10 text-gray-400 leading-relaxed">
+                  {service.description.slice(0, 100)}...
                 </p>
 
-                {/* Learn More Link */}
                 <div className="relative z-10 mt-6 flex items-center gap-2 text-sm font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                   <span
                     className={`bg-gradient-to-r ${service.gradient} text-transparent bg-clip-text`}
                   >
-                    Learn More
-                  </span>
-                  <span
-                    className={`bg-gradient-to-r ${service.gradient} text-transparent bg-clip-text`}
-                  >
-                    →
+                    Learn More →
                   </span>
                 </div>
-
-                {/* Decorative Corner Element */}
                 <div
                   className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-br ${service.gradient} opacity-5 blur-3xl group-hover:opacity-20 transition-opacity duration-500`}
                 />
@@ -130,7 +124,7 @@ const Services = () => {
           ))}
         </div>
 
-        {/* CTA Section */}
+        {/* CTA */}
         <motion.div
           className="mt-16 text-center"
           initial={{ opacity: 0, y: 30 }}
@@ -151,11 +145,19 @@ const Services = () => {
             }}
             className="bg-gradient-to-r from-white to-gray-100 hover:from-gray-100 hover:to-gray-200 text-gray-800 py-4 px-10 rounded-xl text-lg font-semibold transition-all duration-300 shadow-xl shadow-white/20 transform hover:scale-105 active:scale-95 inline-flex items-center gap-2"
           >
-            Get Custom Solution
-            <span>→</span>
+            Get Custom Solution →
           </button>
         </motion.div>
       </div>
+
+      {/* Modal */}
+      <Modal
+        isOpen={!!selectedService}
+        onClose={() => setSelectedService(null)}
+        title={selectedService?.title || ""}
+        description={selectedService?.description || ""}
+        gradient={selectedService?.gradient || "from-blue-500 to-cyan-500"}
+      />
     </section>
   );
 };

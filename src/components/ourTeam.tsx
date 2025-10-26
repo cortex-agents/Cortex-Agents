@@ -1,7 +1,7 @@
 'use client';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
-import { Github, Linkedin, Mail, Code, Palette, Database, Brain } from 'lucide-react';
+import { Github, Linkedin, Mail, Code, Palette, Brain , BrainCircuit} from 'lucide-react';
 
 const teamMembers = [
     {
@@ -14,44 +14,44 @@ const teamMembers = [
         gradient: 'from-blue-500 to-cyan-500',
         icon: Brain,
         socials: {
-            github: '#',
-            linkedin: '#',
+            github: 'https://github.com/Okashanadeem/Okashanadeem',
+            linkedin: 'https://www.linkedin.com/in/okasha-nadeem/',
             email: 'okashanadeem0101@gmail.com'
         }
     },
     {
         id: 2,
-        name: 'Taha',
-        role: 'Frontend Developer',
+        name: 'Taha Qureshi',
+        role: 'AI Expert | Frontend Developer ',
         expertise: ['React', 'Next.js', 'UI/UX', 'Tailwind'],
-        description: 'Creating beautiful and responsive user interfaces that users love.',
-        image: '/taha.jpeg',
+        description: 'Crafting elegant, intuitive interfaces and intelligent AI agents people love.',
+        image: '/taha.jpg',
         gradient: 'from-purple-500 to-pink-500',
         icon: Palette,
         socials: {
-            github: '#',
-            linkedin: '#',
+            github: 'https://github.com/Tahaimran56',
+            linkedin: 'https://www.linkedin.com/in/taha-qureshi-37a5792a6/',
             email: 'taha@cortexagents.com'
         }
     },
     {
         id: 3,
-        name: 'Ubaid',
-        role: 'Backend Developer',
-        expertise: ['Node.js', 'MongoDB', 'APIs', 'Cloud'],
-        description: 'Building robust and scalable backend systems that power modern applications.',
-        image: '/ubaid.jpeg',
+        name: 'Muhammad Ubaid Raza',
+        role: 'Agentic Ai Developer',
+        expertise: ['Open AI Agent SDK', 'AgentKit', 'APIs', 'Automation'],
+        description: 'AI developer crafting scalable intelligent agents transforming businesses.',
+        image: '/ubaid.png',
         gradient: 'from-emerald-500 to-teal-500',
-        icon: Database,
+        icon: BrainCircuit,
         socials: {
             github: '#',
-            linkedin: '#',
-            email: 'ubaid@cortexagents.com'
+            linkedin: 'https://www.linkedin.com/in/muhammad-ubaid-raza-8207332ba/',
+            email: 'muhammadubaidansari145@gmail.com'
         }
     },
     {
         id: 4,
-        name: 'Ahsan',
+        name: 'Syed Ahsan Raza Bukhari',
         role: 'Full Stack Developer',
         expertise: ['React', 'Node.js', 'DevOps', 'AWS'],
         description: 'End-to-end development with focus on performance and scalability.',
@@ -59,9 +59,9 @@ const teamMembers = [
         gradient: 'from-orange-500 to-amber-500',
         icon: Code,
         socials: {
-            github: '#',
-            linkedin: '#',
-            email: 'ahsan@cortexagents.com'
+            github: 'https://github.com/syedahsanrazabukhari',
+            linkedin: 'https://www.linkedin.com/in/syedahsanrazabukhari/',
+            email: 'syedahsanrazabukhari10@gmail.com'
         }
     }
 ];
@@ -69,8 +69,6 @@ const teamMembers = [
 export default function Team() {
     return (
         <section className="relative text-white py-20 overflow-hidden">
-
-
             <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-16">
                 {/* Section Title */}
                 <motion.div
@@ -106,19 +104,16 @@ export default function Team() {
                                 {/* Gradient Overlay on Hover */}
                                 <div className={`absolute inset-0 bg-gradient-to-br ${member.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-500`} />
                                 
-                                {/* Image Container */}
-                                <div className="relative h-64 overflow-hidden">
+                                {/* ✅ Responsive Image Container */}
+                                <div className="relative aspect-[4/5] overflow-hidden sm:aspect-square md:aspect-[4/5] lg:aspect-[3/4] rounded-t-2xl">
                                     <Image
                                         src={member.image}
                                         alt={member.name}
-                                        width={400}
-                                        height={400}
-                                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                        fill
+                                        className="object-cover transition-transform duration-700 group-hover:scale-110"
+                                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                                     />
-                                    {/* Gradient Overlay */}
                                     <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/50 to-transparent" />
-                                    
-                                    {/* Icon Badge */}
                                     <div className={`absolute top-4 right-4 p-3 rounded-xl bg-gradient-to-br ${member.gradient} shadow-lg group-hover:scale-110 transition-transform duration-300`}>
                                         <member.icon size={20} className="text-white" />
                                     </div>
@@ -126,7 +121,6 @@ export default function Team() {
 
                                 {/* Content */}
                                 <div className="p-6 relative z-10">
-                                    {/* Name & Role */}
                                     <h3 className="text-xl font-bold mb-1 text-white group-hover:bg-gradient-to-r group-hover:from-blue-400 group-hover:to-purple-400 group-hover:text-transparent group-hover:bg-clip-text transition-all duration-300">
                                         {member.name}
                                     </h3>
@@ -134,12 +128,10 @@ export default function Team() {
                                         {member.role}
                                     </p>
 
-                                    {/* Description */}
                                     <p className="text-gray-400 text-sm leading-relaxed mb-4">
                                         {member.description}
                                     </p>
 
-                                    {/* Expertise Tags */}
                                     <div className="flex flex-wrap gap-2 mb-4">
                                         {member.expertise.map((skill, idx) => (
                                             <span
@@ -151,7 +143,6 @@ export default function Team() {
                                         ))}
                                     </div>
 
-                                    {/* Social Links */}
                                     <div className="flex gap-2 pt-4 border-t border-gray-800/50">
                                         <a
                                             href={member.socials.github}
