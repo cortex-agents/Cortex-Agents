@@ -81,13 +81,11 @@ export default function Footer() {
           <ul className="space-y-3 text-gray-400">
             <li>
               <span className="block text-gray-500 text-sm">Email</span>
-              <Link
-                href="mailto:cortexagents@gmail.com?subject=Inquiry&body=Hello%20Cortex%20Agents,"
-                target="_blank"
+              <span
                 className="hover:text-blue-400 transition-colors"
               >
                 cortexagents@gmail.com
-              </Link>
+              </span>
             </li>
             <li>
               <span className="block text-gray-500 text-sm">Whatsapp</span>
