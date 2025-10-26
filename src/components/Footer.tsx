@@ -34,15 +34,14 @@ export default function Footer() {
           </p>
           <div className="flex gap-4 mt-4">
             {[
-              { icon: FaFacebookF, link: '#', label: 'Facebook' },
+              { icon: FaFacebookF, link: 'https://www.facebook.com/profile.php?id=61582835397946', label: 'Facebook' },
               { icon: RiWhatsappFill, link: 'https://wa.me/923212322687', label: 'Whatsapp' },
               { icon: FaLinkedinIn, link: '#', label: 'LinkedIn' },
-              { icon: FaInstagram, link: '#', label: 'Instagram' },
+              { icon: FaInstagram, link: 'https://www.instagram.com/cortex_agents?igsh=dWI0bHhkZTZ4OGY2', label: 'Instagram' },
             ].map(({ icon: Icon, link, label }, index) => (
               <motion.div key={index} whileHover={{ scale: 1.15 }}>
                 <Link
                   href={link}
-                  target="_blank"
                   aria-label={label}
                   className="w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center rounded-full border border-gray-700 hover:border-blue-500 hover:text-white transition-colors"
                 >

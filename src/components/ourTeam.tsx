@@ -31,7 +31,7 @@ const teamMembers = [
         socials: {
             github: 'https://github.com/Tahaimran56',
             linkedin: 'https://www.linkedin.com/in/taha-qureshi-37a5792a6/',
-            email: 'taha@cortexagents.com'
+            email: 'tahaqureshidev@gmail.com'
         }
     },
     {
@@ -44,7 +44,7 @@ const teamMembers = [
         gradient: 'from-emerald-500 to-teal-500',
         icon: BrainCircuit,
         socials: {
-            github: '#',
+            github: 'https://github.com/mub7865',
             linkedin: 'https://www.linkedin.com/in/muhammad-ubaid-raza-8207332ba/',
             email: 'muhammadubaidansari145@gmail.com'
         }
