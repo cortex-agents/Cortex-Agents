@@ -51,7 +51,7 @@ const teamMembers = [
     expertise: ["Open AI Agent SDK", "AgentKit", "APIs", "Automation"],
     description:
       "AI developer crafting scalable intelligent agents transforming businesses.",
-    image: "/Ubaid.png",
+    image: "/ubaid.png",
     gradient: "from-emerald-500 to-teal-500",
     icon: BrainCircuit,
     socials: {
