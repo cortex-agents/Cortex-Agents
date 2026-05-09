@@ -1,105 +1,37 @@
-'use client';
+"use client";
 
-import { motion } from 'framer-motion';
-import { Code, Brain, Palette, Smartphone, Cloud, Megaphone } from 'lucide-react';
+import { motion } from "framer-motion";
+import Link from "next/link";
+import { Code, Layers, MessageSquare, Bot, TrendingUp, Cloud, LucideIcon } from "lucide-react";
+import { servicesData } from "@/lib/services-data";
 
-const servicesData = [
-  {
-    id: 'web-development',
-    title: 'Web Development',
-    icon: Code,
-    gradient: 'from-blue-500 to-cyan-500',
-    description: 'Building high-performance, scalable, and secure web applications tailored to your business needs. From custom websites to complex enterprise solutions, we deliver robust digital experiences.',
-    features: [
-      'Custom Web Applications',
-      'E-commerce Solutions',
-      'CMS Integration (WordPress, Strapi)',
-      'API Development & Integration',
-      'Performance Optimization',
-      'Responsive Design',
-    ],
-  },
-  {
-    id: 'ai-solutions',
-    title: 'AI & Machine Learning',
-    icon: Brain,
-    gradient: 'from-purple-500 to-pink-500',
-    description: 'Leveraging artificial intelligence and machine learning to automate processes, gain insights, and create intelligent systems that drive innovation and efficiency.',
-    features: [
-      'Custom AI Model Development',
-      'Natural Language Processing (NLP)',
-      'Computer Vision',
-      'Predictive Analytics',
-      'AI-powered Chatbots & Assistants',
-      'Data Science & Analytics',
-    ],
-  },
-  {
-    id: 'ui-ux-design',
-    title: 'UI/UX Design',
-    icon: Palette,
-    gradient: 'from-emerald-500 to-teal-500',
-    description: 'Crafting intuitive, engaging, and aesthetically pleasing user interfaces and experiences that captivate your audience and ensure seamless interaction.',
-    features: [
-      'User Research & Analysis',
-      'Wireframing & Prototyping',
-      'Information Architecture',
-      'Interaction Design',
-      'Visual Design & Branding',
-      'Usability Testing',
-    ],
-  },
-  {
-    id: 'mobile-app-development',
-    title: 'Mobile App Development',
-    icon: Smartphone,
-    gradient: 'from-orange-500 to-amber-500',
-    description: 'Developing native and cross-platform mobile applications that deliver exceptional performance and user experience on iOS and Android devices.',
-    features: [
-      'iOS App Development',
-      'Android App Development',
-      'Cross-Platform (React Native, Flutter)',
-      'Backend Integration',
-      'Push Notifications',
-      'App Store Optimization (ASO)',
-    ],
-  },
-  {
-    id: 'cloud-infrastructure',
-    title: 'Cloud & DevOps',
-    icon: Cloud,
-    gradient: 'from-red-500 to-yellow-500',
-    description: 'Designing, deploying, and managing robust cloud infrastructure and implementing DevOps practices to streamline your development lifecycle and ensure scalability.',
-    features: [
-      'Cloud Strategy & Migration (AWS, Azure, GCP)',
-      'CI/CD Pipelines',
-      'Containerization (Docker, Kubernetes)',
-      'Infrastructure as Code (IaC)',
-      'Monitoring & Logging',
-      'Security & Compliance',
-    ],
-  },
-  {
-    id: 'digital-marketing',
-    title: 'Digital Marketing',
-    icon: Megaphone,
-    gradient: 'from-pink-500 to-purple-500',
-    description: 'Boosting your online presence and reaching your target audience through comprehensive digital marketing strategies and execution.',
-    features: [
-      'Search Engine Optimization (SEO)',
-      'Social Media Marketing (SMM)',
-      'Content Marketing',
-      'Pay-Per-Click (PPC) Advertising',
-      'Email Marketing',
-      'Analytics & Reporting',
-    ],
-  },
-];
+const iconMap: { [key: string]: LucideIcon } = {
+  Globe: Code,
+  Layers,
+  MessageSquare,
+  Bot,
+  TrendingUp,
+  Cloud,
+};
 
-const ServicesPage = () => {
+export default function ServicesPage() {
   return (
-    <main className="relative min-h-screen bg-black text-white py-20 pt-28">
-      <div className="max-w-7xl mx-auto px-6 lg:px-16">
+    <main className="relative min-h-screen bg-[#020008] text-white py-20 pt-32">
+      {/* Aurora Background */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-purple-600/20 via-violet-600/10 to-purple-600/20 animate-pulse" />
+      </div>
+
+      {/* Grid Pattern */}
+      <div
+        className="absolute inset-0 z-[-5]"
+        style={{
+          backgroundImage: 'linear-gradient(to right, rgba(139, 92, 246, 0.1) 1px, transparent 1px), linear-gradient(to bottom, rgba(139, 92, 246, 0.1) 1px, transparent 1px)',
+          backgroundSize: '32px 32px',
+        }}
+      />
+
+      <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-16">
         {/* Title */}
         <motion.div
           className="text-center mb-16"
@@ -107,60 +39,95 @@ const ServicesPage = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
-          <h1 className="text-5xl md:text-6xl font-black mb-6 tracking-tight">
-            Our{' '}
-            <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 text-transparent bg-clip-text">
+          <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 tracking-tight">
+            Our{" "}
+            <span className="bg-gradient-to-r from-purple-400 via-violet-400 to-purple-600 text-transparent bg-clip-text">
               Services
             </span>
           </h1>
-          <p className="text-lg text-gray-400 max-w-2xl mx-auto">
-            We offer a comprehensive suite of digital solutions to empower your business.
+          <p className="text-xl text-purple-100/70 max-w-3xl mx-auto">
+            Comprehensive AI-powered solutions to transform your business
           </p>
         </motion.div>
 
         {/* Services Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {servicesData.map((service, index) => {
-            const Icon = service.icon;
+            const Icon = iconMap[service.icon] || Code;
             return (
               <motion.div
-                key={service.id}
+                key={service.slug}
                 initial={{ opacity: 0, y: 50 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: index * 0.15 }}
-                className="group relative bg-gray-900/80 backdrop-blur-xl border border-gray-700/30 rounded-2xl overflow-hidden h-full transition-all duration-500 hover:border-gray-600/50 hover:shadow-2xl"
+                transition={{ duration: 0.8, delay: index * 0.1 }}
+                className="group relative"
               >
-                <div className={`absolute inset-0 bg-gradient-to-br ${service.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-500`} />
-                
-                <div className="p-6 relative z-10">
-                  <div className="flex items-center gap-4 mb-4">
-                    <div className={`p-3 rounded-xl bg-gradient-to-br ${service.gradient} shadow-lg`}>
-                      <Icon size={24} className="text-white" />
+                <Link href={`/services/${service.slug}`}>
+                  <div className="relative bg-purple-600/10 backdrop-blur-xl border border-purple-500/30 rounded-2xl p-8 h-full transition-all duration-300 hover:border-purple-500/50 hover:shadow-2xl hover:shadow-purple-500/20 hover:scale-105 cursor-pointer">
+                    {/* Badge Label */}
+                    {service.label && (
+                      <div className="absolute top-4 right-4 px-3 py-1 rounded-full bg-purple-500/20 border border-purple-500/30 backdrop-blur-sm">
+                        <span className="text-xs font-semibold text-purple-300">{service.label}</span>
+                      </div>
+                    )}
+
+                    {/* Icon */}
+                    <motion.div
+                      className="w-16 h-16 rounded-xl bg-gradient-to-br from-purple-500 to-violet-500 p-0.5 mb-6"
+                      whileHover={{ rotate: 360, scale: 1.1 }}
+                      transition={{ duration: 0.6 }}
+                    >
+                      <div className="w-full h-full bg-[#020008] rounded-xl flex items-center justify-center">
+                        <Icon className="w-8 h-8 text-white" />
+                      </div>
+                    </motion.div>
+
+                    {/* Title */}
+                    <h2 className="text-2xl font-bold text-white mb-3">{service.title}</h2>
+
+                    {/* Description */}
+                    <p className="text-purple-200/70 leading-relaxed mb-6">{service.shortDescription}</p>
+
+                    {/* Learn More Link */}
+                    <div className="flex items-center gap-2 text-sm font-semibold">
+                      <span className="bg-gradient-to-r from-purple-400 to-violet-400 text-transparent bg-clip-text">
+                        Learn More →
+                      </span>
                     </div>
-                    <h2 className="text-xl font-bold text-white">
-                      {service.title}
-                    </h2>
+
+                    {/* Decorative glow */}
+                    <div className="absolute bottom-0 right-0 w-32 h-32 bg-gradient-to-tr from-purple-500 to-violet-500 opacity-0 group-hover:opacity-20 blur-3xl transition-opacity duration-500" />
                   </div>
-                  <p className="text-gray-400 text-sm leading-relaxed mb-4">
-                    {service.description}
-                  </p>
-                  <ul className="space-y-2 text-gray-300 text-sm">
-                    {service.features.map((feature, idx) => (
-                      <li key={idx} className="flex items-center gap-2">
-                        <svg className="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg>
-                        {feature}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                </Link>
               </motion.div>
             );
           })}
         </div>
+
+        {/* CTA Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, delay: 0.8 }}
+          className="text-center mt-20"
+        >
+          <p className="text-purple-200/70 mb-6 text-lg">
+            {"Don't see what you're looking for?"}
+          </p>
+          <Link
+            href="/contact"
+            className="inline-flex items-center gap-3 px-10 py-4 bg-gradient-to-r from-purple-600 to-violet-600 hover:from-purple-700 hover:to-violet-700 text-white text-lg font-semibold rounded-full shadow-lg shadow-purple-500/25 hover:shadow-xl hover:shadow-purple-500/40 transition-all duration-300 relative overflow-hidden group"
+          >
+            <span className="relative z-10">Get Custom Solution</span>
+            <motion.div
+              className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"
+              style={{ width: '200%' }}
+            />
+          </Link>
+        </motion.div>
       </div>
     </main>
   );
-};
-
-export default ServicesPage;
+}
