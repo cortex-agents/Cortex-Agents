@@ -1,76 +1,23 @@
-"use client";
-import { motion } from "framer-motion";
-import { useState, useEffect, useRef } from "react";
+import React from "react";
 import Link from "next/link";
-import { Code, Layers, MessageSquare, Bot, TrendingUp, Cloud } from "lucide-react";
+import AuroraBackground from './ui/AuroraBackground';
 
-interface AuroraBackgroundProps extends React.HTMLProps<HTMLDivElement> {
-  children: React.ReactNode;
-  showRadialGradient?: boolean;
-}
-
-function AuroraBackground({
-  className = "",
-  children,
-  showRadialGradient = true,
-  ...props
-}: AuroraBackgroundProps) {
-  return (
-    <div
-      className={`relative flex flex-col h-full items-center justify-center transition-bg ${className}`}
-      style={{ background: '#02040a' }}
-      {...props}
-    >
-      <div className="absolute inset-0 overflow-hidden">
-        <div
-          className={`
-            [--silver-gradient:repeating-linear-gradient(100deg,#38bdf8_0%,#38bdf8_7%,transparent_10%,transparent_12%,#38bdf8_16%)]
-            [--dark-gradient:repeating-linear-gradient(100deg,#02040a_0%,#02040a_7%,transparent_10%,transparent_12%,#02040a_16%)]
-            [--aurora:repeating-linear-gradient(100deg,#38bdf8_10%,#0ea5e9_15%,#06b6d4_20%,#14b8a6_25%,#38bdf8_30%)]
-            [background-image:var(--dark-gradient),var(--aurora)]
-            [background-size:300%,_200%]
-            [background-position:50%_50%,50%_50%]
-            filter blur-[10px]
-            after:content-[""] after:absolute after:inset-0 after:[background-image:var(--dark-gradient),var(--aurora)]
-            after:[background-size:200%,_100%]
-            after:animate-aurora after:[background-attachment:fixed] after:mix-blend-difference
-            pointer-events-none
-            absolute -inset-[10px] opacity-50 will-change-transform
-            ${showRadialGradient ? '[mask-image:radial-gradient(ellipse_at_100%_0%,black_10%,transparent_70%)]' : ''}
-          `}
-        ></div>
-      </div>
-      {children}
-    </div>
-  );
-}
+// Inline SVGs for minimal hydration and bundle size
+const CodeIcon = ({ className }: { className?: string }) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>;
+const LayersIcon = ({ className }: { className?: string }) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>;
+const MessageSquareIcon = ({ className }: { className?: string }) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>;
+const BotIcon = ({ className }: { className?: string }) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg>;
+const TrendingUpIcon = ({ className }: { className?: string }) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>;
+const CloudIcon = ({ className }: { className?: string }) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M17.5 19A5.5 5.5 0 0 1 12 24a5.5 5.5 0 0 1-5.5-5.5c0-.46.06-.9.17-1.31A7 7 0 0 1 13 3a7 7 0 0 1 6.33 10.69c.11.41.17.85.17 1.31a5.5 5.5 0 0 1-2 4Z"/></svg>;
 
 const Services = () => {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const sectionRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      if (sectionRef.current) {
-        const rect = sectionRef.current.getBoundingClientRect();
-        setMousePosition({
-          x: (e.clientX - rect.left - rect.width / 2) / 30,
-          y: (e.clientY - rect.top - rect.height / 2) / 30,
-        });
-      }
-    };
-
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
-
-  const services = [
+  const servicesData = [
     {
       title: "Web Development",
       slug: "web-development",
       description: "Custom, fast, and stunning websites built with Next.js — designed to convert visitors into clients.",
-      icon: Code,
-      iconColor: "text-sky-400", // Sky Blue - Development
+      icon: CodeIcon,
+      iconColor: "text-sky-400",
       gradient: "from-sky-400 to-sky-600",
       depth: 20,
       label: "Most Popular",
@@ -79,8 +26,8 @@ const Services = () => {
       title: "UI/UX Design",
       slug: "ui-ux-design",
       description: "Beautiful, intuitive designs that users love and businesses profit from — built in Figma.",
-      icon: Layers,
-      iconColor: "text-cyan-400", // Cyan - Creative/Design
+      icon: LayersIcon,
+      iconColor: "text-cyan-400",
       gradient: "from-cyan-400 to-cyan-600",
       depth: 40,
       label: null,
@@ -89,8 +36,8 @@ const Services = () => {
       title: "AI Chatbots",
       slug: "ai-chatbots",
       description: "Intelligent chatbots that answer, qualify, and convert your customers — 24/7, automatically.",
-      icon: MessageSquare,
-      iconColor: "text-sky-400", // Electric Cyan - AI Chatbots
+      icon: MessageSquareIcon,
+      iconColor: "text-sky-400",
       gradient: "from-sky-400 to-cyan-400",
       depth: 30,
       label: "AI Powered",
@@ -99,8 +46,8 @@ const Services = () => {
       title: "AI Agents & Automation",
       slug: "ai-agents",
       description: "Intelligent AI agents that think, decide, and act — automating complex business workflows end to end.",
-      icon: Bot,
-      iconColor: "text-sky-400", // Electric Cyan - AI Agents
+      icon: BotIcon,
+      iconColor: "text-sky-400",
       gradient: "from-sky-400 to-sky-600",
       depth: 50,
       label: "Cutting Edge",
@@ -109,8 +56,8 @@ const Services = () => {
       title: "SEO Optimization",
       slug: "seo-optimization",
       description: "Rank higher on Google, get found by the right people, and turn organic traffic into real revenue.",
-      icon: TrendingUp,
-      iconColor: "text-teal-400", // Teal - Data/Analytics
+      icon: TrendingUpIcon,
+      iconColor: "text-teal-400",
       gradient: "from-teal-400 to-teal-600",
       depth: 25,
       label: null,
@@ -119,8 +66,8 @@ const Services = () => {
       title: "Cloud Solutions",
       slug: "cloud-solutions",
       description: "Scalable, secure cloud infrastructure that grows with your business — deployed and managed by experts.",
-      icon: Cloud,
-      iconColor: "text-sky-400", // Sky Blue - Technical/Cloud
+      icon: CloudIcon,
+      iconColor: "text-sky-400",
       gradient: "from-sky-400 to-cyan-400",
       depth: 35,
       label: null,
@@ -128,87 +75,83 @@ const Services = () => {
   ];
 
   return (
-    <div ref={sectionRef} className="relative min-h-screen w-full overflow-hidden" id="services">
+    <div className="relative min-h-screen w-full overflow-hidden" id="services">
       <AuroraBackground showRadialGradient={true}>
         {/* Grid Pattern */}
         <div
           className="absolute inset-0 z-[-10]"
           style={{
-            backgroundImage: 'linear-gradient(to right, rgba(56, 189, 248, 0.08) 1px, transparent 1px), linear-gradient(to bottom, rgba(56, 189, 248, 0.08) 1px, transparent 1px)',
+            backgroundImage: 'linear-gradient(to right, rgba(56, 189, 248, 0.05) 1px, transparent 1px), linear-gradient(to bottom, rgba(56, 189, 248, 0.05) 1px, transparent 1px)',
             backgroundSize: '32px 32px',
             maskImage: 'radial-gradient(ellipse at center, #020008, transparent)',
           }}
         />
 
-        {/* Mouse spotlight */}
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            background: `radial-gradient(600px circle at ${mousePosition.x * 20 + 50}% ${mousePosition.y * 20 + 50}%, rgba(56, 189, 248, 0.15), transparent 40%)`,
-          }}
-        />
-
         <div className="relative z-10 w-full min-h-screen flex items-center justify-center px-6 py-20">
           <div className="max-w-7xl mx-auto w-full">
+            <div
+              className="absolute inset-0 pointer-events-none"
+              style={{
+                background: `radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(56, 189, 248, 0.15), transparent 40%)`,
+              }}
+            />
+
             {/* Section Title */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-              className="text-center mb-20"
+            <div
+              className="text-center mb-20 animate-fade-in-up"
+              style={{ animationDelay: '0.1s', animationFillMode: 'both' }}
             >
-              <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-tight mb-6">
-                Our{' '}
-                <span className="bg-gradient-to-r from-slate-50 via-slate-200 to-slate-400 bg-clip-text text-transparent">
+              <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-tight mb-6">
+                <span className="text-white">Our </span>
+                <span className="bg-gradient-to-r from-white via-sky-200 to-sky-400 bg-clip-text text-transparent">
                   Services
                 </span>
               </h2>
-              <p className="text-xl max-w-3xl mx-auto text-slate-300">
+              <p className="text-xl max-w-3xl mx-auto text-slate-400">
                 Comprehensive AI-powered solutions to transform your business
               </p>
-            </motion.div>
+            </div>
 
             {/* Floating Cards Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {services.map((service, index) => (
-                <motion.div
+              {servicesData.map((service, index) => (
+                <div
                   key={service.slug}
-                  initial={{ opacity: 0, y: 50 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.8, delay: 0.2 + index * 0.1 }}
                   style={{
-                    transform: `translateZ(${service.depth}px) translateX(${mousePosition.x * (index % 2 === 0 ? 1 : -1)}px) translateY(${mousePosition.y * (index % 2 === 0 ? 1 : -1)}px)`,
+                    animationDelay: `${0.2 + index * 0.1}s`,
+                    animationFillMode: 'both',
+                    transform: `translate3d(calc((var(--mouse-x, 50%) - 50%) * 0.1), calc((var(--mouse-y, 50%) - 50%) * 0.1), ${service.depth}px)`,
                     transformStyle: 'preserve-3d',
+                    willChange: 'transform',
                   }}
-                  className="relative group"
+                  className="relative group animate-fade-in-up"
                 >
                   <Link href={`/services/${service.slug}`}>
                     <div className="relative bg-[#02040a]/90 backdrop-blur-xl border border-sky-400/20 rounded-2xl p-8 h-full transition-all duration-300 hover:border-sky-400/40 hover:shadow-2xl hover:shadow-sky-400/20 hover:scale-105 cursor-pointer">
                       {/* Badge Label */}
                       {service.label && (
                         <div className="absolute top-4 right-4 px-3 py-1 rounded-full bg-sky-400/10 border border-sky-400/30 backdrop-blur-sm">
-                          <span className="text-xs font-semibold text-white">{service.label}</span>
+                          <span className="text-xs font-bold text-[#38bdf8] uppercase tracking-wider">{service.label}</span>
                         </div>
                       )}
 
-                      {/* Icon with 360° rotation on hover */}
-                      <motion.div
-                        className={`w-16 h-16 rounded-xl bg-gradient-to-br ${service.gradient} p-0.5 mb-6`}
-                        whileHover={{ rotate: 360, scale: 1.1 }}
-                        transition={{ duration: 0.6 }}
+                      {/* Icon with 360° rotation on hover - Using pure CSS for hover */}
+                      <div
+                        className={`w-16 h-16 rounded-xl bg-gradient-to-br ${service.gradient} p-0.5 mb-6 transition-transform duration-500 group-hover:rotate-[360deg] group-hover:scale-110`}
+                        aria-hidden="true"
                       >
                         <div className="w-full h-full bg-[#02040a] rounded-xl flex items-center justify-center">
                           <service.icon className={`w-8 h-8 ${service.iconColor}`} />
                         </div>
-                      </motion.div>
+                      </div>
+
+                      {/* Image replacement placeholder - need to add Image components here if images are used inside the card */}
 
                       {/* Title */}
-                      <h3 className="text-2xl font-bold text-white mb-3">{service.title}</h3>
+                      <h3 className="text-2xl font-bold text-slate-100 mb-3 group-hover:text-[#38bdf8] transition-colors">{service.title}</h3>
 
                       {/* Description */}
-                      <p className="leading-relaxed mb-6 text-slate-400">{service.description}</p>
+                      <div className="leading-relaxed mb-6 text-slate-300">{service.description}</div>
 
                       {/* Learn More Link */}
                       <div className="flex items-center gap-2 text-sm font-semibold">
@@ -221,32 +164,29 @@ const Services = () => {
                       <div className={`absolute bottom-0 right-0 w-32 h-32 bg-gradient-to-tr ${service.gradient} opacity-0 group-hover:opacity-20 blur-3xl transition-opacity duration-500`} />
                     </div>
                   </Link>
-                </motion.div>
+                </div>
               ))}
             </div>
 
             {/* CTA Section */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.8 }}
-              className="text-center mt-20"
+            <div
+              className="text-center mt-20 animate-fade-in-up"
+              style={{ animationDelay: '0.8s', animationFillMode: 'both' }}
             >
-              <p className="mb-6 text-lg text-slate-400">
+              <div className="mb-6 text-lg text-slate-500 font-medium tracking-wide">
                 {"Don't see what you're looking for?"}
-              </p>
+              </div>
               <Link
                 href="/contact"
                 className="inline-flex items-center gap-3 px-10 py-4 bg-gradient-to-r from-sky-400 to-sky-600 hover:from-sky-500 hover:to-sky-700 text-white text-lg font-semibold rounded-full shadow-lg shadow-sky-400/30 hover:shadow-xl hover:shadow-sky-400/50 transition-all duration-300 relative overflow-hidden group"
               >
                 <span className="relative z-10">Get Custom Solution</span>
-                <motion.div
+                <div
                   className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"
                   style={{ width: '200%' }}
                 />
               </Link>
-            </motion.div>
+            </div>
           </div>
         </div>
       </AuroraBackground>

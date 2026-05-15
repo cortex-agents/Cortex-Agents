@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { useInView } from 'framer-motion';
 
 interface AnimatedCounterProps {
   target: number;
@@ -18,37 +17,77 @@ export default function AnimatedCounter({
 }: AnimatedCounterProps) {
   const [count, setCount] = useState(0);
   const ref = useRef<HTMLSpanElement>(null);
-  const isInView = useInView(ref, { once: true });
+  const [isInView, setIsInView] = useState(false);
   const hasAnimated = useRef(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsInView(true);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (ref.current) {
+      observer.observe(ref.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     if (!isInView || hasAnimated.current) return;
 
-    hasAnimated.current = true;
-    const startTime = Date.now();
+    const startAnimation = () => {
+      hasAnimated.current = true;
+      const startTime = Date.now();
 
-    const updateCount = () => {
-      const now = Date.now();
-      const progress = Math.min((now - startTime) / duration, 1);
+      let frameId: number;
+      const updateCount = () => {
+        const now = Date.now();
+        const progress = Math.min((now - startTime) / duration, 1);
 
-      // Easing function for smooth animation
-      const easeOutQuart = 1 - Math.pow(1 - progress, 4);
-      const currentCount = Math.floor(easeOutQuart * target);
+        const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+        const currentCount = Math.floor(easeOutQuart * target);
 
-      setCount(currentCount);
+        setCount(currentCount);
 
-      if (progress < 1) {
-        requestAnimationFrame(updateCount);
-      } else {
-        setCount(target);
-      }
+        if (progress < 1) {
+          frameId = requestAnimationFrame(updateCount);
+        } else {
+          setCount(target);
+        }
+      };
+
+      frameId = requestAnimationFrame(updateCount);
+      return () => cancelAnimationFrame(frameId);
     };
 
-    requestAnimationFrame(updateCount);
+    // Use requestIdleCallback if available, otherwise fallback to setTimeout
+    let cleanup: (() => void) | undefined;
+    if ('requestIdleCallback' in window) {
+      const handle = window.requestIdleCallback(() => {
+        cleanup = startAnimation();
+      });
+      return () => {
+        if (handle) window.cancelIdleCallback(handle);
+        if (cleanup) cleanup();
+      };
+    } else {
+      const timer = setTimeout(() => {
+        cleanup = startAnimation();
+      }, 200);
+      return () => {
+        clearTimeout(timer);
+        if (cleanup) cleanup();
+      };
+    }
   }, [isInView, target, duration]);
 
   return (
-    <span ref={ref} className={className}>
+    <span ref={ref} className={className} aria-live="polite" aria-atomic="true">
       {count}{suffix}
     </span>
   );

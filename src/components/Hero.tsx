@@ -1,51 +1,16 @@
-"use client"
-
-import React, { useRef, useEffect, useState } from 'react'
-import { motion, useInView } from 'framer-motion'
-import { ArrowRight, Bot, Code, MessageSquare, Sparkles, Zap, Brain } from 'lucide-react'
+import React from 'react'
 import Link from 'next/link'
-import HeroShowcase from './HeroShowcase'
+import HeroShowcase from './HeroShowcase';
+import AuroraBackground from './ui/AuroraBackground'
 
-interface AuroraBackgroundProps extends React.HTMLProps<HTMLDivElement> {
-  children: React.ReactNode
-  showRadialGradient?: boolean
-}
-
-function AuroraBackground({
-  className = "",
-  children,
-  showRadialGradient = true,
-  ...props
-}: AuroraBackgroundProps) {
-  return (
-    <div
-      className={`relative flex flex-col h-full items-center justify-center text-slate-950 transition-bg ${className}`}
-      style={{ background: '#02040a' }}
-      {...props}
-    >
-      <div className="absolute inset-0 overflow-hidden">
-        <div
-          className={`
-            [--silver-gradient:repeating-linear-gradient(100deg,#38bdf8_0%,#38bdf8_7%,transparent_10%,transparent_12%,#38bdf8_16%)]
-            [--dark-gradient:repeating-linear-gradient(100deg,#02040a_0%,#02040a_7%,transparent_10%,transparent_12%,#02040a_16%)]
-            [--aurora:repeating-linear-gradient(100deg,#38bdf8_10%,#0ea5e9_15%,#06b6d4_20%,#14b8a6_25%,#38bdf8_30%)]
-            [background-image:var(--dark-gradient),var(--aurora)]
-            [background-size:300%,_200%]
-            [background-position:50%_50%,50%_50%]
-            filter blur-[10px]
-            after:content-[""] after:absolute after:inset-0 after:[background-image:var(--dark-gradient),var(--aurora)]
-            after:[background-size:200%,_100%]
-            after:animate-aurora after:[background-attachment:fixed] after:mix-blend-difference
-            pointer-events-none
-            absolute -inset-[10px] opacity-50 will-change-transform
-            ${showRadialGradient ? '[mask-image:radial-gradient(ellipse_at_100%_0%,black_10%,transparent_70%)]' : ''}
-          `}
-        ></div>
-      </div>
-      {children}
-    </div>
-  )
-}
+// Inline SVGs for minimal hydration - updated to accept className
+const ArrowRightIcon = () => <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>;
+const BotIcon = ({ className, size = 40 }: { className?: string; size?: number }) => <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg>;
+const CodeIcon = ({ className, size = 40 }: { className?: string; size?: number }) => <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>;
+const MessageSquareIcon = ({ className, size = 40 }: { className?: string; size?: number }) => <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>;
+const SparklesIcon = ({ className, size = 40 }: { className?: string; size?: number }) => <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="M5 3v4"/><path d="M19 17v4"/><path d="M3 5h4"/><path d="M17 19h4"/></svg>;
+const ZapIcon = ({ className, size = 40 }: { className?: string; size?: number }) => <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M4 14.899 13 2l-2.4 8.71h7.4L9 22l2.4-8.71H4z"/></svg>;
+const BrainIcon = ({ className, size = 40 }: { className?: string; size?: number }) => <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 4.44-2.54Z"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-4.44-2.54Z"/></svg>;
 
 type BGVariantType = 'dots' | 'grid'
 type BGMaskType = 'fade-edges' | 'none'
@@ -99,190 +64,117 @@ function BGPattern({
 }
 
 function Hero() {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
-  const heroRef = useRef<HTMLDivElement>(null)
-  const contentRef = useRef<HTMLDivElement>(null)
-  const isInView = useInView(contentRef, { once: true })
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      if (heroRef.current) {
-        const rect = heroRef.current.getBoundingClientRect()
-        setMousePosition({
-          x: e.clientX - rect.left,
-          y: e.clientY - rect.top,
-        })
-      }
-    }
-
-    window.addEventListener('mousemove', handleMouseMove)
-    return () => window.removeEventListener('mousemove', handleMouseMove)
-  }, [])
-
   const floatingIcons = [
-    { Icon: Code, delay: 0, duration: 3, color: 'text-sky-400/40' },
-    { Icon: MessageSquare, delay: 0.5, duration: 3.5, color: 'text-sky-400/40' },
-    { Icon: Bot, delay: 1, duration: 4, color: 'text-sky-400/40' },
-    { Icon: Sparkles, delay: 1.5, duration: 3.2, color: 'text-cyan-400/40' },
-    { Icon: Zap, delay: 2, duration: 3.8, color: 'text-sky-400/40' },
-    { Icon: Brain, delay: 2.5, duration: 3.3, color: 'text-sky-400/40' },
+    { Icon: CodeIcon, delay: 0, duration: 3, color: 'text-sky-400/40' },
+    { Icon: MessageSquareIcon, delay: 0.5, duration: 3.5, color: 'text-sky-400/40' },
+    { Icon: BotIcon, delay: 1, duration: 4, color: 'text-sky-400/40' },
+    { Icon: SparklesIcon, delay: 1.5, duration: 3.2, color: 'text-cyan-400/40' },
+    { Icon: ZapIcon, delay: 2, duration: 3.8, color: 'text-sky-400/40' },
+    { Icon: BrainIcon, delay: 2.5, duration: 3.3, color: 'text-sky-400/40' },
   ]
 
   return (
-    <div ref={heroRef} className="relative min-h-screen w-full overflow-hidden" style={{ background: '#02040a' }}>
-      <style jsx>{`
-        @keyframes aurora {
-          from {
-            background-position: 50% 50%, 50% 50%;
-          }
-          to {
-            background-position: 350% 50%, 350% 50%;
-          }
-        }
-        .animate-aurora {
-          animation: aurora 60s linear infinite;
-        }
-      `}</style>
-
+    <div className="relative min-h-screen w-full overflow-hidden" style={{ background: '#02040a' }}>
       <AuroraBackground showRadialGradient={true}>
         <BGPattern variant="grid" mask="fade-edges" size={32} fill="rgba(56, 189, 248, 0.08)" />
 
         <div
           className="absolute inset-0 pointer-events-none"
           style={{
-            background: `radial-gradient(600px circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(56, 189, 248, 0.15), transparent 40%)`,
+            background: `radial-gradient(800px circle at 50% 50%, rgba(56, 189, 248, 0.15), transparent 60%)`,
           }}
         />
 
-        <div className="absolute top-20 left-10 w-64 h-64 bg-sky-400/20 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute bottom-20 right-10 w-96 h-96 bg-cyan-400/15 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
+        <div className="absolute top-20 left-10 w-64 h-64 bg-sky-500/[0.03] rounded-full blur-3xl" style={{ transform: 'translateZ(0)' }} />
+        <div className="absolute bottom-20 right-10 w-96 h-96 bg-cyan-500/[0.03] rounded-full blur-3xl" style={{ transform: 'translateZ(0)' }} />
 
         {floatingIcons.map(({ Icon, delay, duration, color }, index) => (
-          <motion.div
+          <div
             key={index}
-            className={`absolute ${color}`}
+            className={`absolute ${color} animate-float-icon`}
             style={{
               left: `${10 + (index * 15)}%`,
               top: `${20 + (index % 3) * 20}%`,
+              animationDelay: `${delay}s`,
+              animationDuration: `${duration}s`,
+              willChange: 'transform'
             }}
-            animate={{
-              y: [0, -20, 0],
-              rotate: [0, 5, -5, 0],
-              opacity: [0.4, 0.7, 0.4],
-            }}
-            transition={{
-              duration,
-              delay,
-              repeat: Infinity,
-              ease: 'easeInOut',
-            }}
+            aria-hidden="true"
           >
-            <Icon size={40} />
-          </motion.div>
+            <Icon />
+          </div>
         ))}
 
-        <div className="absolute top-1/4 right-1/4 w-32 h-32">
+        <div className="absolute top-1/4 right-1/4 w-32 h-32 pointer-events-none" aria-hidden="true">
           {[...Array(3)].map((_, i) => (
-            <motion.div
+            <div
               key={i}
-              className="absolute inset-0 border-2 border-sky-400/30 rounded-lg"
-              animate={{
-                rotate: [0, 360],
-                scale: [1, 1.2, 1],
-              }}
-              transition={{
-                duration: 4,
-                delay: i * 0.5,
-                repeat: Infinity,
-                ease: 'linear',
+              className="absolute inset-0 border-2 border-sky-400/30 rounded-lg animate-spin-pulse"
+              style={{
+                animationDelay: `${i * 0.5}s`,
+                willChange: 'transform'
               }}
             />
           ))}
         </div>
 
         <div className="relative z-10 w-full min-h-screen flex items-center justify-center px-6 pt-32 pb-20">
-          <div ref={contentRef} className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
-            <motion.div
-              initial={{ opacity: 0, x: -50 }}
-              animate={isInView ? { opacity: 1, x: 0 } : {}}
-              transition={{ duration: 0.8 }}
-              className="text-left space-y-8"
-            >
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.6, delay: 0.2 }}
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-sky-400/10 border border-sky-400/30 backdrop-blur-sm"
-              >
-                <Sparkles className="w-4 h-4 text-sky-400" />
+          <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
+            <div className="text-left space-y-8">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-sky-400/10 border border-sky-400/30 backdrop-blur-sm animate-fade-in" style={{ animationDelay: '0.1s', animationFillMode: 'both' }}>
+                <SparklesIcon size={16} className="text-sky-400" />
                 <span className="text-sm font-medium text-slate-200">AI-Powered Solutions</span>
-              </motion.div>
+              </div>
 
-              <motion.h1
-                initial={{ opacity: 0, y: 30 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.8, delay: 0.4 }}
-                className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight"
+              <h1
+                className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight"
               >
-                We Build the{' '}
-                <span className="bg-gradient-to-r from-slate-50 via-slate-200 to-slate-400 bg-clip-text text-transparent tracking-tighter">
+                <span className="text-white">We Build the </span>
+                <span className="bg-gradient-to-r from-white via-sky-200 to-sky-400 bg-clip-text text-transparent tracking-tighter">
                   Future
-                </span>{' '}
-                with AI
-              </motion.h1>
+                </span>
+                <span className="text-white"> with </span>
+                <span className="text-[#38bdf8]">AI</span>
+              </h1>
 
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.6, delay: 0.6 }}
-                className="flex flex-wrap items-center gap-3 text-lg md:text-xl text-slate-200"
-              >
+              <div className="flex flex-wrap items-center gap-3 text-lg md:text-xl text-slate-300 animate-fade-in" style={{ animationDelay: '0.3s', animationFillMode: 'both' }}>
                 <span className="flex items-center gap-2">
-                  <Code className="w-5 h-5 text-sky-400" />
+                  <div aria-hidden="true">
+                    <CodeIcon size={20} className="text-sky-400" />
+                  </div>
                   Custom Websites
                 </span>
                 <span className="text-slate-400">·</span>
                 <span className="flex items-center gap-2">
-                  <MessageSquare className="w-5 h-5 text-sky-400" />
+                  <div aria-hidden="true">
+                    <MessageSquareIcon size={20} className="text-sky-400" />
+                  </div>
                   AI Chatbots
                 </span>
                 <span className="text-slate-400">·</span>
                 <span className="flex items-center gap-2">
-                  <Bot className="w-5 h-5 text-sky-400" />
+                  <div aria-hidden="true">
+                    <BotIcon size={20} className="text-sky-400" />
+                  </div>
                   Intelligent Agents
                 </span>
-              </motion.div>
+              </div>
 
-              <motion.p
-                initial={{ opacity: 0, y: 20 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.6, delay: 0.8 }}
-                className="text-lg max-w-xl leading-relaxed text-slate-400"
-              >
+              <p className="text-lg max-w-xl leading-relaxed text-slate-400 animate-fade-in" style={{ animationDelay: '0.4s', animationFillMode: 'both' }}>
                 Transform your business with cutting-edge AI technology. We create intelligent solutions that automate workflows, enhance customer experiences, and drive growth.
-              </motion.p>
+              </p>
 
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.6, delay: 1 }}
-                className="flex flex-col sm:flex-row gap-4"
-              >
-                <Link href="/contact" className="btn-primary btn-primary-lg">
+              <div className="flex flex-col sm:flex-row gap-4 animate-fade-in" style={{ animationDelay: '0.5s', animationFillMode: 'both' }}>
+                <Link href="/contact" className="btn-primary btn-primary-lg" aria-label="Start Your Project">
                   Start Your Project
-                  <ArrowRight className="w-5 h-5" />
+                  <ArrowRightIcon />
                 </Link>
-                <Link href="/portfolio" className="btn-outline btn-outline-lg">
+                <Link href="/portfolio" className="btn-outline btn-outline-lg" aria-label="See Our Work">
                   See Our Work
                 </Link>
-              </motion.div>
+              </div>
 
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={isInView ? { opacity: 1 } : {}}
-                transition={{ duration: 0.6, delay: 1.2 }}
-                className="flex items-center gap-8 pt-4"
-              >
+              <div className="flex items-center gap-8 pt-4 animate-fade-in" style={{ animationDelay: '0.6s', animationFillMode: 'both' }}>
                 <div className="text-center">
                   <div className="text-3xl font-bold text-white">50+</div>
                   <div className="text-sm text-slate-400">Projects Delivered</div>
@@ -297,17 +189,12 @@ function Hero() {
                   <div className="text-3xl font-bold text-white">24/7</div>
                   <div className="text-sm text-slate-400">AI Support</div>
                 </div>
-              </motion.div>
-            </motion.div>
+              </div>
+            </div>
 
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={isInView ? { opacity: 1, scale: 1 } : {}}
-              transition={{ duration: 1, delay: 0.4 }}
-              className="relative hidden lg:block"
-            >
+            <div className="relative hidden lg:block animate-fade-in" style={{ animationDelay: '0.2s', animationFillMode: 'both' }}>
               <HeroShowcase />
-            </motion.div>
+            </div>
           </div>
         </div>
       </AuroraBackground>

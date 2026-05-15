@@ -1,95 +1,39 @@
-"use client"
-
-import React, { useRef, useEffect, useState } from 'react'
-import { motion, useInView } from 'framer-motion'
-import { Code, MessageSquare, Bot, Sparkles, Shield, Clock } from 'lucide-react'
+import React from 'react'
 import AnimatedCounter from './AnimatedCounter'
 import Link from 'next/link'
+import AuroraBackground from './ui/AuroraBackground'
 
-interface AuroraBackgroundProps extends React.HTMLProps<HTMLDivElement> {
-  children: React.ReactNode
-  showRadialGradient?: boolean
-}
-
-function AuroraBackground({
-  className = "",
-  children,
-  showRadialGradient = true,
-  ...props
-}: AuroraBackgroundProps) {
-  return (
-    <div
-      className={`relative flex flex-col h-full items-center justify-center transition-bg ${className}`}
-      style={{ background: '#02040a' }}
-      {...props}
-    >
-      <div className="absolute inset-0 overflow-hidden">
-        <div
-          className={`
-            [--silver-gradient:repeating-linear-gradient(100deg,#38bdf8_0%,#38bdf8_7%,transparent_10%,transparent_12%,#38bdf8_16%)]
-            [--dark-gradient:repeating-linear-gradient(100deg,#02040a_0%,#02040a_7%,transparent_10%,transparent_12%,#02040a_16%)]
-            [--aurora:repeating-linear-gradient(100deg,#38bdf8_10%,#0ea5e9_15%,#06b6d4_20%,#14b8a6_25%,#38bdf8_30%)]
-            [background-image:var(--dark-gradient),var(--aurora)]
-            [background-size:300%,_200%]
-            [background-position:50%_50%,50%_50%]
-            filter blur-[10px]
-            after:content-[""] after:absolute after:inset-0 after:[background-image:var(--dark-gradient),var(--aurora)]
-            after:[background-size:200%,_100%]
-            after:animate-aurora after:[background-attachment:fixed] after:mix-blend-difference
-            pointer-events-none
-            absolute -inset-[10px] opacity-50 will-change-transform
-            ${showRadialGradient ? '[mask-image:radial-gradient(ellipse_at_100%_0%,black_10%,transparent_70%)]' : ''}
-          `}
-        ></div>
-      </div>
-      {children}
-    </div>
-  )
-}
+// Inline SVGs for minimal hydration and bundle size
+const CodeIcon = ({ className }: { className?: string }) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>;
+const MessageSquareIcon = ({ className }: { className?: string }) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>;
+const BotIcon = ({ className }: { className?: string }) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg>;
+const SparklesIcon = ({ className }: { className?: string }) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="M5 3v4"/><path d="M19 17v4"/><path d="M3 5h4"/><path d="M17 19h4"/></svg>;
+const ShieldIcon = ({ className }: { className?: string }) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.5 3.8 17 5 19 5a1 1 0 0 1 1 1z"/></svg>;
+const ClockIcon = ({ className }: { className?: string }) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>;
 
 function About() {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
-  const sectionRef = useRef<HTMLDivElement>(null)
-  const contentRef = useRef<HTMLDivElement>(null)
-  const isInView = useInView(contentRef, { once: true })
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      if (sectionRef.current) {
-        const rect = sectionRef.current.getBoundingClientRect()
-        setMousePosition({
-          x: (e.clientX - rect.left - rect.width / 2) / 20,
-          y: (e.clientY - rect.top - rect.height / 2) / 20,
-        })
-      }
-    }
-
-    window.addEventListener('mousemove', handleMouseMove)
-    return () => window.removeEventListener('mousemove', handleMouseMove)
-  }, [])
-
   const services = [
     {
-      icon: Code,
+      icon: CodeIcon,
       title: "Custom Websites",
       description: "Modern, responsive, high-performance web applications",
-      iconColor: "text-sky-400", // Sky Blue - Development
+      iconColor: "text-sky-400",
       gradient: "from-sky-400 to-sky-600",
       depth: 20,
     },
     {
-      icon: MessageSquare,
+      icon: MessageSquareIcon,
       title: "AI Chatbots",
       description: "Intelligent conversational interfaces for customer engagement",
-      iconColor: "text-sky-400", // Electric Cyan - AI Chatbots
+      iconColor: "text-sky-400",
       gradient: "from-sky-400 to-cyan-400",
       depth: 40,
     },
     {
-      icon: Bot,
+      icon: BotIcon,
       title: "AI Agents",
       description: "Autonomous systems that automate workflows and enhance productivity",
-      iconColor: "text-sky-400", // Electric Cyan - AI Agents
+      iconColor: "text-sky-400",
       gradient: "from-cyan-400 to-sky-500",
       depth: 30,
     },
@@ -102,168 +46,120 @@ function About() {
   ]
 
   const whyChooseUs = [
-    { icon: Sparkles, title: "Innovation", description: "Cutting-edge AI technology", iconColor: "text-cyan-400", gradient: "from-cyan-400 to-cyan-600" },
-    { icon: Shield, title: "Quality", description: "Premium code and design", iconColor: "text-sky-400", gradient: "from-sky-400 to-sky-600" },
-    { icon: Bot, title: "AI Expertise", description: "Deep knowledge in AI/ML", iconColor: "text-sky-400", gradient: "from-sky-400 to-cyan-400" },
-    { icon: Clock, title: "24/7 Support", description: "Always available for clients", iconColor: "text-teal-400", gradient: "from-teal-400 to-teal-600" },
+    { icon: SparklesIcon, title: "Innovation", description: "Cutting-edge AI technology", iconColor: "text-cyan-400", gradient: "from-cyan-400 to-cyan-600" },
+    { icon: ShieldIcon, title: "Quality", description: "Premium code and design", iconColor: "text-sky-400", gradient: "from-sky-400 to-sky-600" },
+    { icon: BotIcon, title: "AI Expertise", description: "Deep knowledge in AI/ML", iconColor: "text-sky-400", gradient: "from-sky-400 to-cyan-400" },
+    { icon: ClockIcon, title: "24/7 Support", description: "Always available for clients", iconColor: "text-teal-400", gradient: "from-teal-400 to-teal-600" },
   ]
 
   return (
-    <div ref={sectionRef} className="relative min-h-screen w-full overflow-hidden">
-      <style jsx>{`
-        @keyframes aurora {
-          from {
-            background-position: 50% 50%, 50% 50%;
-          }
-          to {
-            background-position: 350% 50%, 350% 50%;
-          }
-        }
-        .animate-aurora {
-          animation: aurora 60s linear infinite;
-        }
-      `}</style>
-
+    <div className="relative min-h-screen w-full overflow-hidden">
       <AuroraBackground showRadialGradient={true}>
         {/* Grid Pattern */}
         <div
           className="absolute inset-0 z-[-10]"
           style={{
-            backgroundImage: 'linear-gradient(to right, rgba(56, 189, 248, 0.08) 1px, transparent 1px), linear-gradient(to bottom, rgba(56, 189, 248, 0.08) 1px, transparent 1px)',
+            backgroundImage: 'linear-gradient(to right, rgba(56, 189, 248, 0.05) 1px, transparent 1px), linear-gradient(to bottom, rgba(56, 189, 248, 0.05) 1px, transparent 1px)',
             backgroundSize: '32px 32px',
             maskImage: 'radial-gradient(ellipse at center, #020008, transparent)',
           }}
         />
 
-        {/* Mouse spotlight */}
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            background: `radial-gradient(600px circle at ${mousePosition.x * 20 + 50}% ${mousePosition.y * 20 + 50}%, rgba(56, 189, 248, 0.15), transparent 40%)`,
-          }}
-        />
-
         <div className="relative z-10 w-full min-h-screen flex items-center justify-center px-6 py-20">
-          <div ref={contentRef} className="max-w-7xl mx-auto w-full">
-            {/* Section Title */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.8 }}
-              className="text-center mb-20"
-            >
-              <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-tight mb-6">
-                About{' '}
-                <span className="bg-gradient-to-r from-slate-50 via-slate-200 to-slate-400 bg-clip-text text-transparent">
-                  Cortex Agents
-                </span>
-              </h2>
-              <p className="text-xl text-slate-300 max-w-3xl mx-auto">
-                We are a team of AI experts specializing in custom websites, intelligent chatbots, and AI agents that transform businesses.
-              </p>
-            </motion.div>
+          <div className="max-w-7xl mx-auto w-full">
+              <div className="text-center mb-20 animate-fade-in-up" style={{ animationDelay: '0.1s', animationFillMode: 'both' }}>
+                <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-tight mb-6">
+                  <span className="text-white">About </span>
+                  <span className="bg-gradient-to-r from-white via-sky-200 to-sky-400 bg-clip-text text-transparent">
+                    Cortex Agents
+                  </span>
+                </h2>
+                <div className="text-xl text-slate-300 max-w-3xl mx-auto">
+                  We are a team of AI experts specializing in custom websites, intelligent chatbots, and AI agents that transform businesses.
+                </div>
+              </div>
 
             {/* Central Mission Card */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={isInView ? { opacity: 1, scale: 1 } : {}}
-              transition={{ duration: 1, delay: 0.2 }}
+            <div
+              className="relative mb-20 animate-fade-in-up"
               style={{
-                transform: `translateZ(50px) translateX(${mousePosition.x}px) translateY(${mousePosition.y}px)`,
+                animationDelay: '0.2s',
+                animationFillMode: 'both',
               }}
-              className="relative mb-20"
             >
-              <div className="max-w-4xl mx-auto bg-gradient-to-br from-sky-400/10 to-cyan-400/10 backdrop-blur-xl border border-sky-400/20 rounded-3xl p-12 text-center shadow-2xl shadow-sky-400/10">
-                <motion.div
-                  animate={{
-                    backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'],
-                  }}
-                  transition={{
-                    duration: 10,
-                    repeat: Infinity,
-                    ease: 'linear',
-                  }}
-                  className="absolute inset-0 bg-gradient-to-r from-sky-400/5 via-cyan-400/5 to-sky-400/5 rounded-3xl"
+              <div className="max-w-4xl mx-auto bg-gradient-to-br from-sky-400/10 to-cyan-400/10 backdrop-blur-xl border border-sky-400/20 rounded-3xl p-12 text-center shadow-2xl shadow-sky-400/10 relative overflow-hidden">
+                <div
+                  className="absolute inset-0 bg-gradient-to-r from-sky-400/5 via-cyan-400/5 to-sky-400/5 rounded-3xl animate-aurora"
                   style={{
                     backgroundSize: '200% 100%',
                   }}
                 />
                 <div className="relative z-10">
-                  <h3 className="text-4xl md:text-5xl font-bold text-white mb-6">
-                    We Build the Future with AI
+                  <h3 className="text-4xl md:text-5xl font-bold mb-6">
+                    <span className="text-white">We Build the </span>
+                    <span className="bg-gradient-to-r from-white via-sky-200 to-sky-400 bg-clip-text text-transparent">Future</span>
+                    <span className="text-white"> with </span>
+                    <span className="text-[#38bdf8]">AI</span>
                   </h3>
                   <p className="text-xl text-slate-300 leading-relaxed">
                     Transform your business with cutting-edge AI technology. We create intelligent solutions that automate workflows, enhance customer experiences, and drive growth.
                   </p>
                 </div>
               </div>
-            </motion.div>
+            </div>
 
             {/* Floating Service Cards */}
             <div className="grid md:grid-cols-3 gap-8 mb-20">
               {services.map((service, index) => (
-                <motion.div
+                <div
                   key={index}
-                  initial={{ opacity: 0, y: 50 }}
-                  animate={isInView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.8, delay: 0.4 + index * 0.1 }}
-                  whileHover={{
-                    scale: 1.05,
-                    rotateY: 5,
-                    z: 50,
-                  }}
                   style={{
-                    transform: `translateZ(${service.depth}px) translateX(${mousePosition.x * (index - 1)}px) translateY(${mousePosition.y * (index - 1)}px)`,
+                    animationDelay: `${0.3 + index * 0.1}s`,
+                    animationFillMode: 'both',
+                    transform: `translate3d(calc((var(--mouse-x, 50%) - 50%) * 0.05), calc((var(--mouse-y, 50%) - 50%) * 0.05), ${service.depth}px)`,
                     transformStyle: 'preserve-3d',
                   }}
-                  className="relative group"
+                  className="relative group animate-fade-in-up"
                 >
-                  <div className="bg-sky-400/5 backdrop-blur-xl border border-sky-400/20 rounded-2xl p-8 h-full transition-all duration-300 hover:border-sky-400/40 hover:shadow-2xl hover:shadow-sky-400/20">
-                    <div className={`w-16 h-16 rounded-xl bg-gradient-to-br ${service.gradient} p-0.5 mb-6 group-hover:scale-110 transition-transform duration-300`}>
+                  <div className="bg-sky-400/5 backdrop-blur-xl border border-sky-400/20 rounded-2xl p-8 h-full transition-all duration-300 hover:border-sky-400/40 hover:shadow-2xl hover:shadow-sky-400/20 hover:scale-[1.02]">
+                      <div className={`w-16 h-16 rounded-xl bg-gradient-to-br ${service.gradient} p-0.5 mb-6 group-hover:scale-110 transition-transform duration-300`} aria-hidden="true">
                       <div className="w-full h-full bg-[#02040a] rounded-xl flex items-center justify-center">
                         <service.icon className={`w-8 h-8 ${service.iconColor}`} />
                       </div>
                     </div>
-                    <h3 className="text-2xl font-bold text-white mb-3">{service.title}</h3>
-                    <p className="text-slate-300 leading-relaxed">{service.description}</p>
+                    <h3 className="text-2xl font-bold text-slate-100 mb-3">{service.title}</h3>
+                    <p className="text-slate-300 leading-relaxed text-sm">{service.description}</p>
                   </div>
-                </motion.div>
+                </div>
               ))}
             </div>
 
             {/* Floating Stats Cards */}
             <div className="grid md:grid-cols-3 gap-8 mb-20">
               {stats.map((stat, index) => (
-                <motion.div
+                <div
                   key={index}
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={isInView ? { opacity: 1, scale: 1 } : {}}
-                  transition={{ duration: 0.8, delay: 0.7 + index * 0.1 }}
-                  whileHover={{
-                    scale: 1.1,
-                    rotateZ: 5,
-                  }}
                   style={{
-                    transform: `translateZ(${stat.depth}px) translateX(${mousePosition.x * (index - 1) * 0.5}px) translateY(${mousePosition.y * (index - 1) * 0.5}px)`,
+                    animationDelay: `${0.5 + index * 0.1}s`,
+                    animationFillMode: 'both',
+                    transform: `translate3d(calc((var(--mouse-x, 50%) - 50%) * 0.02), calc((var(--mouse-y, 50%) - 50%) * 0.02), ${stat.depth}px)`,
                   }}
-                  className="relative"
+                  className="relative animate-fade-in"
                 >
-                  <div className="bg-sky-400/5 backdrop-blur-xl border border-sky-400/20 rounded-2xl p-8 text-center hover:border-sky-400/40 transition-all duration-300 hover:shadow-2xl hover:shadow-sky-400/20">
+                  <div className="bg-sky-400/5 backdrop-blur-xl border border-sky-400/20 rounded-2xl p-8 text-center hover:border-sky-400/40 transition-all duration-300 hover:shadow-2xl hover:shadow-sky-400/20 hover:scale-[1.05]">
                     <div className={`text-5xl font-black mb-2 bg-gradient-to-r ${stat.gradient} text-transparent bg-clip-text`}>
                       <AnimatedCounter target={stat.number} suffix={stat.suffix} duration={2000} />
                     </div>
-                    <div className="text-slate-300 text-lg">{stat.label}</div>
+                    <div className="text-slate-400 text-sm font-medium tracking-wider uppercase">{stat.label}</div>
                   </div>
-                </motion.div>
+                </div>
               ))}
             </div>
 
             {/* Why Choose Us */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.8, delay: 1 }}
-              className="mb-20"
+            <div
+              className="mb-20 animate-fade-in-up"
+              style={{ animationDelay: '0.7s', animationFillMode: 'both' }}
             >
               <h3 className="text-4xl font-bold text-white text-center mb-12">
                 Why Choose{' '}
@@ -273,49 +169,40 @@ function About() {
               </h3>
               <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
                 {whyChooseUs.map((item, index) => (
-                  <motion.div
+                  <div
                     key={index}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={isInView ? { opacity: 1, y: 0 } : {}}
-                    transition={{ duration: 0.6, delay: 1.2 + index * 0.1 }}
-                    whileHover={{
-                      scale: 1.05,
-                      y: -5,
-                    }}
-                    className="bg-sky-400/5 backdrop-blur-xl border border-sky-400/20 rounded-2xl p-6 text-center hover:border-sky-400/40 transition-all duration-300 hover:shadow-xl hover:shadow-sky-400/20"
+                    className="bg-sky-400/5 backdrop-blur-xl border border-sky-400/20 rounded-2xl p-8 text-center hover:border-sky-400/40 transition-all duration-300 hover:shadow-xl hover:shadow-sky-400/20 hover:scale-105 group"
                   >
-                    <motion.div
-                      whileHover={{ rotate: 360, scale: 1.2 }}
-                      transition={{ duration: 0.6 }}
-                      className={`w-12 h-12 mx-auto mb-4 bg-gradient-to-br ${item.gradient} rounded-xl flex items-center justify-center`}
+                    <div
+                      className={`w-16 h-16 mx-auto mb-6 bg-gradient-to-br ${item.gradient} rounded-xl flex items-center justify-center transition-transform duration-500 group-hover:rotate-[360deg]`}
+                      aria-hidden="true"
                     >
-                      <item.icon className={`w-6 h-6 ${item.iconColor}`} />
-                    </motion.div>
-                    <h4 className="text-xl font-bold text-white mb-2">{item.title}</h4>
-                    <p className="text-slate-300 text-sm">{item.description}</p>
-                  </motion.div>
+                      <item.icon className={`w-8 h-8 ${item.iconColor}`} />
+                    </div>
+                    <h4 className="text-xl font-bold text-white mb-3">{item.title}</h4>
+                    <p className="text-slate-300 text-sm leading-relaxed">{item.description}</p>
+                  </div>
                 ))}
               </div>
-            </motion.div>
+            </div>
 
             {/* CTA */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.8, delay: 1.6 }}
-              className="text-center"
+            <div
+              className="text-center animate-fade-in-up"
+              style={{ animationDelay: '0.9s', animationFillMode: 'both' }}
             >
               <Link
                 href="/about"
+                aria-label="Discover Cortex Agents"
                 className="inline-flex items-center gap-3 px-10 py-4 bg-gradient-to-r from-sky-400 to-sky-600 hover:from-sky-500 hover:to-sky-700 text-white text-lg font-semibold rounded-full shadow-lg shadow-sky-400/30 hover:shadow-xl hover:shadow-sky-400/50 transition-all duration-300 relative overflow-hidden group"
               >
                 <span className="relative z-10">Discover Cortex Agents</span>
-                <motion.div
+                <div
                   className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"
                   style={{ width: '200%' }}
                 />
               </Link>
-            </motion.div>
+            </div>
           </div>
         </div>
       </AuroraBackground>

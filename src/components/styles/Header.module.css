@@ -1,0 +1,33 @@
+.is-scrolled .navbar-wrapper {
+  padding-top: 1rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+@media (min-width: 768px) {
+  .is-scrolled .navbar-wrapper {
+    padding-top: 1.5rem;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+.is-scrolled .navbar-container {
+  background-color: rgba(2, 4, 10, 0.9);
+  border-color: rgba(56, 189, 248, 0.4);
+  border-radius: 1rem;
+  backdrop-filter: blur(24px) saturate(150%);
+  box-shadow: 0 0 30px rgba(56, 189, 248, 0.15);
+}
+
+.is-scrolled .navbar-content {
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+}
+
+@media (min-width: 768px) {
+  .is-scrolled .navbar-content {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+}

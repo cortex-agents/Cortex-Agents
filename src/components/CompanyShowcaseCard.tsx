@@ -1,11 +1,20 @@
-import { useState, useRef } from 'react';
+'use client'
+import { useState, useRef, useEffect } from 'react';
 
 // Company Showcase Card with 3D tilt effect
 const CompanyShowcaseCard = () => {
   const [transform, setTransform] = useState<string>('');
   const [isHovering, setIsHovering] = useState<boolean>(false);
   const cardRef = useRef<HTMLDivElement>(null);
-  const animationRef = useRef<number>(null);
+  const animationRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
+      }
+    };
+  }, []);
 
   const services = [
     { icon: "🎨", name: "UI Design", color: "text-purple-400" },
@@ -52,11 +61,11 @@ const CompanyShowcaseCard = () => {
 
   const handleMouseLeave = () => {
     setIsHovering(false);
-    
+
     if (animationRef.current) {
       cancelAnimationFrame(animationRef.current);
     }
-    
+
     setTransform('perspective(1200px) rotateX(0deg) rotateY(0deg) translateX(0px) translateY(0px) translateZ(0px) scale(1)');
   };
 
@@ -69,21 +78,21 @@ const CompanyShowcaseCard = () => {
       className="w-full h-96 rounded-2xl border border-blue-500/30 bg-gradient-to-br from-gray-900 via-blue-950/20 to-gray-900 shadow-2xl  overflow-hidden group backdrop-blur-sm cursor-pointer will-change-transform"
       style={{
         transform: transform,
-        transition: isHovering 
-          ? 'box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s ease' 
+        transition: isHovering
+          ? 'box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s ease'
           : 'transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s ease',
         transformStyle: 'preserve-3d',
       }}
     >
 
-      
+
       {/* Card Content */}
       <div className="p-6 sm:pb-8 relative">
         {/* Background pattern */}
         <div className="absolute inset-0 opacity-5">
           <div className="absolute inset-0 bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500"></div>
         </div>
-        
+
         {/* Services Grid */}
         <div className="relative z-10 mb-6">
           <h4 className="text-lg font-semibold text-gray-300 mb-4 flex items-center gap-2">
@@ -95,7 +104,7 @@ const CompanyShowcaseCard = () => {
                 key={index}
                 className="flex items-center gap-3 bg-gray-800/50 hover:bg-gray-800/80 p-3 rounded-lg border border-gray-700/50 hover:border-blue-500/50 transition-all duration-300 group/item"
               >
-                <span className="text-2xl group-hover/item:scale-110 transition-transform duration-300 flex-shrink-0">
+                <span className="text-2xl group-hover/item:scale-110 transition-transform duration-300 flex-shrink-0" aria-hidden="true">
                   {service.icon}
                 </span>
                 <span className={`text-sm font-medium ${service.color} truncate`}>

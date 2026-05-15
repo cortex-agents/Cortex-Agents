@@ -1,0 +1,109 @@
+--- forced-reflow-insight ---
+{
+  "type": "list",
+  "items": [
+    {
+      "type": "table",
+      "headings": [
+        {
+          "key": "source",
+          "valueType": "source-location",
+          "label": "Source"
+        },
+        {
+          "key": "reflowTime",
+          "valueType": "ms",
+          "granularity": 1,
+          "label": "Total reflow time"
+        }
+      ],
+      "items": [
+        {
+          "source": {
+            "type": "text",
+            "value": "[unattributed]"
+          },
+          "reflowTime": 67.967
+        }
+      ]
+    }
+  ]
+}
+--- legacy-javascript-insight ---
+{
+  "type": "table",
+  "headings": [
+    {
+      "key": "url",
+      "valueType": "url",
+      "subItemsHeading": {
+        "key": "location",
+        "valueType": "source-location"
+      },
+      "label": "URL"
+    },
+    {
+      "key": null,
+      "valueType": "code",
+      "subItemsHeading": {
+        "key": "signal"
+      },
+      "label": ""
+    },
+    {
+      "key": "wastedBytes",
+      "valueType": "bytes",
+      "label": "Wasted bytes"
+    }
+  ],
+  "items": [
+    {
+      "url": "http://localhost:3000/_next/static/chunks/255-feef4e31fba60881.js",
+      "wastedBytes": 11878,
+      "subItems": {
+        "type": "subitems",
+        "items": [
+          {
+            "signal": "Array.prototype.at",
+            "location": {
+              "type": "source-location",
+              "url": "http://localhost:3000/_next/static/chunks/255-feef4e31fba60881.js",
+              "urlProvider": "network",
+              "line": 0,
+              "column": 4382
+            }
+          },
+          {
+--- render-blocking-insight ---
+{
+  "type": "table",
+  "headings": [
+    {
+      "key": "url",
+      "valueType": "url",
+      "label": "URL"
+    },
+    {
+      "key": "totalBytes",
+      "valueType": "bytes",
+      "label": "Transfer Size"
+    },
+    {
+      "key": "wastedMs",
+      "valueType": "timespanMs",
+      "label": "Duration"
+    }
+  ],
+  "items": [
+    {
+      "url": "http://localhost:3000/_next/static/css/6c86f5c98b622a28.css",
+      "totalBytes": 14957,
+      "wastedMs": 314
+    },
+    {
+      "url": "http://localhost:3000/_next/static/css/66533754318b77bc.css",
+      "totalBytes": 1632,
+      "wastedMs": 314
+    }
+  ]
+}
