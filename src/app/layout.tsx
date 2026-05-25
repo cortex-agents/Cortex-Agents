@@ -3,6 +3,7 @@ import './globals.css';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import MouseSpotlight from '@/components/ui/MouseSpotlight';
+import LoadingSplash from '@/components/LoadingSplash';
 import { Space_Grotesk, DM_Sans, JetBrains_Mono } from 'next/font/google';
 
 const spaceGrotesk = Space_Grotesk({
@@ -59,6 +60,7 @@ export default function RootLayout({
         <meta name="description" content="Cortex Agents: Building high-end websites, intelligent chatbots, and autonomous AI agents to automate workflows and drive business growth." />
       </head>
       <body className={dmSans.className} suppressHydrationWarning={true}>
+        <LoadingSplash />
         {/* Ambient background glow - pure CSS, no JS/WebGL */}
         <div className="fixed inset-0 -z-10 pointer-events-none" aria-hidden="true">
           <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-sky-500/[0.03] rounded-full blur-[120px]" />
@@ -76,5 +78,3 @@ export default function RootLayout({
     </html>
   );
 }
-
-

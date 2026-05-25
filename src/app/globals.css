@@ -39,6 +39,10 @@ body {
   .animate-scan-line { animation: scanLine 4s ease-in-out infinite; }
   .animate-scan-line-slow { animation: scanLineSlow 8s ease-in-out infinite; }
   .animate-float-particle { animation: floatParticle 6s ease-in-out infinite; }
+  .animate-letter-reveal { animation: letterReveal 0.5s ease-out both; }
+  .animate-scale-up { animation: scaleUp 0.8s ease-out both; }
+  .animate-progress-bar { animation: progressBar 1.5s ease-out forwards; }
+  .animate-page-enter { animation: pageEnter 0.35s ease-out; }
 
   /* Image Fade Carousel */
   .carousel-slide {
@@ -161,4 +165,35 @@ body {
 @keyframes gridMove {
   0% { transform: translate(0, 0); }
   100% { transform: translate(60px, 60px); }
+}
+
+@keyframes letterReveal {
+  from { opacity: 0; transform: translateY(100%); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scaleUp {
+  from { opacity: 0; transform: scale(0.8); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes progressBar {
+  from { width: 0%; }
+  to { width: 100%; }
+}
+
+@keyframes pageEnter {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Loading Splash — self-removing via CSS animation */
+@keyframes splashFade {
+  0%, 70% { opacity: 1; pointer-events: auto; }
+  100% { opacity: 0; pointer-events: none; visibility: hidden; }
+}
+
+@keyframes splashScale {
+  from { opacity: 0; transform: scale(0.85); }
+  to { opacity: 1; transform: scale(1); }
 }

@@ -5,7 +5,7 @@ import Hero from '@/components/Hero'
 import About from '@/components/About'
 import Services from '@/components/Services'
 import Team from '@/components/ourTeam'
-import Portfolio from '@/components/Portfolio'
+import Portfolio from '@/components/portfolio'
 import Contact from '@/components/Contact'
 
 export default function Home() {

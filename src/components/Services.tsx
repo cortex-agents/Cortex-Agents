@@ -18,7 +18,7 @@ const servicesData = [
     icon: CodeIcon,
     iconColor: "text-sky-400",
     gradient: "from-sky-400 to-sky-600",
-    image: "/services/websites.jpeg",
+    image: "/services/websites.webp",
     label: "Most Popular",
   },
   {
@@ -28,7 +28,7 @@ const servicesData = [
     icon: LayersIcon,
     iconColor: "text-cyan-400",
     gradient: "from-cyan-400 to-cyan-600",
-    image: "/services/ui-ux.jpeg",
+    image: "/services/ui-ux.webp",
     label: null,
   },
   {
@@ -38,7 +38,7 @@ const servicesData = [
     icon: MessageSquareIcon,
     iconColor: "text-sky-400",
     gradient: "from-sky-400 to-cyan-400",
-    image: "/services/chatbot.jpeg",
+    image: "/services/chatbot.webp",
     label: "AI Powered",
   },
   {
@@ -48,7 +48,7 @@ const servicesData = [
     icon: BotIcon,
     iconColor: "text-sky-400",
     gradient: "from-sky-400 to-sky-600",
-    image: "/services/AIAgents.jpeg",
+    image: "/services/AIAgents.webp",
     label: "Cutting Edge",
   },
   {
@@ -58,7 +58,7 @@ const servicesData = [
     icon: TrendingUpIcon,
     iconColor: "text-teal-400",
     gradient: "from-teal-400 to-teal-600",
-    image: "/services/SEO.jpeg",
+    image: "/services/SEO.webp",
     label: null,
   },
   {
@@ -68,7 +68,7 @@ const servicesData = [
     icon: CloudIcon,
     iconColor: "text-sky-400",
     gradient: "from-sky-400 to-cyan-400",
-    image: "/services/Clouds.jpeg",
+    image: "/services/Clouds.webp",
     label: null,
   },
 ];

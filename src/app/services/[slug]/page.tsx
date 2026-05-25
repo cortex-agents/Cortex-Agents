@@ -9,12 +9,12 @@ import { servicesData } from "@/lib/services-data";
 const SparklesIcon = () => <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="M5 3v4"/><path d="M19 17v4"/><path d="M3 5h4"/><path d="M17 19h4"/></svg>;
 
 const serviceImages: Record<string, string> = {
-  "web-development": "/services/websites.jpeg",
-  "ui-ux-design": "/services/ui-ux.jpeg",
-  "ai-chatbots": "/services/chatbot.jpeg",
-  "ai-agents": "/services/AIAgents.jpeg",
-  "seo-optimization": "/services/SEO.jpeg",
-  "cloud-solutions": "/services/Clouds.jpeg",
+  "web-development": "/services/websites.webp",
+  "ui-ux-design": "/services/ui-ux.webp",
+  "ai-chatbots": "/services/chatbot.webp",
+  "ai-agents": "/services/AIAgents.webp",
+  "seo-optimization": "/services/SEO.webp",
+  "cloud-solutions": "/services/Clouds.webp",
 };
 
 interface ServicePageProps {
@@ -33,7 +33,7 @@ export default function ServicePage({ params }: ServicePageProps) {
 
   const [activeSection, setActiveSection] = useState("hero");
   const sectionsRef = useRef<{ [key: string]: HTMLElement | null }>({});
-  const serviceImage = serviceImages[resolvedParams.slug] || "/services/websites.jpeg";
+  const serviceImage = serviceImages[resolvedParams.slug] || "/services/websites.webp";
 
   useEffect(() => {
     const handleScroll = () => {
