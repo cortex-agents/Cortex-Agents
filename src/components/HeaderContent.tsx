@@ -10,14 +10,12 @@ const MobileMenu = lazy(() => import("./MobileMenu"));
 
 const ICON_MAP: Record<string, () => React.ReactNode> = {
   Home: () => <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>,
-  Services: () => <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.1a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>,
   Portfolio: () => <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z"/></svg>,
   "About Us": () => <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>,
 };
 
 const NAV_ITEMS = [
   { name: "Home", href: "/" },
-  { name: "Services", href: "/services" },
   { name: "Portfolio", href: "/portfolio" },
   { name: "About Us", href: "/about" },
 ];
@@ -44,7 +42,7 @@ export default function HeaderContent() {
   })), []);
 
   return (
-    <div className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 animate-fade-in-down ${scrolled ? "px-4 pt-4 md:px-6 md:pt-6" : "px-0 pt-0"}`}>
+    <div className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 animate-fade-in-down ${scrolled ? "px-4 pt-2 md:px-6 md:pt-3" : "px-0 pt-0"}`}>
       <nav className={`backdrop-blur-2xl border shadow-2xl transition-all duration-500 relative overflow-hidden ${scrolled ? `bg-[#02040a]/90 border-sky-400/40 rounded-2xl mx-0 shadow-[0_0_30px_rgba(56,189,248,0.15)] ${styles['is-scrolled']} ${styles['navbar-container']}` : "bg-[#02040a]/80 border-sky-400/10 rounded-none"}`}>
         <div className={`absolute inset-0 bg-sky-400/[0.03] animate-aurora pointer-events-none ${styles['navbar-wrapper']}`} style={{ backgroundSize: '200% 100%' }} />
         <div className={`max-w-7xl mx-auto px-4 md:px-6 ${scrolled ? styles['navbar-content'] : ""}`}>
@@ -91,7 +89,7 @@ export default function HeaderContent() {
         </div>
 
         <Suspense fallback={null}>
-          <MobileMenu navItems={itemsWithIcons} pathname={pathname} isOpen={isMenuOpen} />
+          <MobileMenu navItems={itemsWithIcons} pathname={pathname} isOpen={isMenuOpen} onClose={toggleMenu} />
         </Suspense>
       </nav>
     </div>

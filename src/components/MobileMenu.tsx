@@ -16,9 +16,10 @@ interface MobileMenuProps {
   navItems: NavItem[];
   pathname: string;
   isOpen: boolean;
+  onClose: () => void;
 }
 
-const MobileMenu = ({ navItems, pathname, isOpen }: MobileMenuProps) => {
+const MobileMenu = ({ navItems, pathname, isOpen, onClose }: MobileMenuProps) => {
   return (
     <div
       className={`md:hidden overflow-hidden bg-[#02040a]/95 backdrop-blur-xl border-t border-sky-400/20 transition-all duration-300 ease-in-out ${
@@ -39,6 +40,7 @@ const MobileMenu = ({ navItems, pathname, isOpen }: MobileMenuProps) => {
                 <Link
                   href={item.href}
                   prefetch={true}
+                  onClick={onClose}
                   className={`w-full flex items-center space-x-4 p-4 rounded-xl transition-all duration-300 group border relative overflow-hidden ${
                     isActive
                       ? "bg-sky-400/10 border-sky-400/40 shadow-lg shadow-sky-400/20"
@@ -64,6 +66,7 @@ const MobileMenu = ({ navItems, pathname, isOpen }: MobileMenuProps) => {
           <Link
             href="/contact"
             prefetch={true}
+            onClick={onClose}
             className="w-full py-4 px-6 rounded-xl font-medium text-sm flex justify-center items-center gap-3 bg-gradient-to-r from-sky-400 to-sky-600 text-white hover:from-sky-500 hover:to-sky-700 shadow-xl shadow-sky-400/30 transition-all relative overflow-hidden group"
           >
             <div aria-hidden="true">

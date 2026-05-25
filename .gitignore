@@ -40,7 +40,86 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# IDE / Editor
+/.vscode/
+/.idea/
+*.swp
+*.swo
+*~
 
-.env.local
+# Claude Code / AI Agent dev files
+/.agents/
+/.claude/
+AGENTS.md
+CLAUDE.md
+settings.local.json
 
-.public/
+# Lighthouse / Audit reports
+/lighthouse_reports/
+lighthouse-report.html
+lighthouse_report_*.json
+lighthouse_report_*.html
+desktop-report*.json
+desktop-report*.html
+mobile-report*.json
+mobile-report*.html
+new_report*.html
+new_report*.json
+final_report.json
+report.json
+report_after*.html
+*_audit*.json
+*_audit*.html
+*_audit*.txt
+audit_details.txt
+findings.txt
+PERFORMANCE_OPTIMIZATION_FINDINGS.md
+PERFORMANCE_REPORT.md
+performance_audits.txt
+render_blocking_details.json
+new_audit*.json
+final_audit*.json
+verification-*.json
+*-desktop.json
+*-mobile.json
+v*-desktop.json
+v*-mobile.json
+optimized-*.json
+desktop_report*.json
+mobile_report*.json
+new-desktop-*.json
+new-mobile-*.json
+desktop_report_*.html
+desktop_report_*.json
+*_report*.report.html
+*_report*.report.json
+perf_optimization_audit.*
+
+# Dev scripts / logs
+server.log
+error.txt
+clean-build.bat
+read_pdf.py
+send-test-email.js
+link-name*.txt
+failing-links.txt
+desktop_categories.txt
+mobile_categories.txt
+desktop-report*.report.*
+mobile-report*.report.*
+
+# Old / backup files
+*.bak
+*_old.tsx
+Portfolio_old.tsx
+ourTeam_old.tsx
+
+# Design system docs
+/design-system/
+
+# Junior/Senior communication
+/juniorAndSeniorCommunication/
+
+# Misc dev artifacts
+image.png
+design-system/

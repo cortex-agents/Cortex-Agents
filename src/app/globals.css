@@ -25,7 +25,7 @@ body {
   .animation-delay-2000 { animation-delay: 2s; }
   .animation-delay-4000 { animation-delay: 4s; }
   .animate-aurora { animation: aurora 60s linear infinite; }
-  .animate-float-slow { animation: floatSlow 12s ease-in-out infinite; }
+  .animate-float-fast { animation: floatFast 6s ease-in-out infinite; }
   .animate-float-icon { animation: floatIcon 4s ease-in-out infinite; }
   .animate-spin-pulse { animation: spinPulse 4s linear infinite; }
   .animate-fade-in-up { animation: fadeInUp 0.8s ease-out; }
@@ -33,6 +33,27 @@ body {
   .animate-fade-in-down { animation: fadeInDown 0.8s ease-out; }
   .animate-line-drop { animation: lineDrop 4s linear infinite; }
   .animate-progress { animation: progress 5s linear infinite; }
+  .animate-orbit { animation: orbit 20s linear infinite; }
+  .animate-orbit-reverse { animation: orbitReverse 20s linear infinite; }
+  .animate-border-flow { animation: borderFlow 3s linear infinite; background-size: 200% 200%; }
+  .animate-scan-line { animation: scanLine 4s ease-in-out infinite; }
+  .animate-scan-line-slow { animation: scanLineSlow 8s ease-in-out infinite; }
+  .animate-float-particle { animation: floatParticle 6s ease-in-out infinite; }
+
+  /* Image Fade Carousel */
+  .carousel-slide {
+    opacity: 0;
+    animation: carouselFade 20s linear infinite;
+  }
+  .carousel-slide:nth-child(1) { animation-delay: 0s; }
+  .carousel-slide:nth-child(2) { animation-delay: 4s; }
+  .carousel-slide:nth-child(3) { animation-delay: 8s; }
+  .carousel-slide:nth-child(4) { animation-delay: 12s; }
+  .carousel-slide:nth-child(5) { animation-delay: 16s; }
+
+  .carousel-container:hover .carousel-slide {
+    animation-play-state: paused;
+  }
 }
 
 @keyframes blob {
@@ -50,6 +71,12 @@ body {
 @keyframes floatSlow {
   0% { transform: translateY(0px); }
   50% { transform: translateY(15px); }
+  100% { transform: translateY(0px); }
+}
+
+@keyframes floatFast {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-30px); }
   100% { transform: translateY(0px); }
 }
 
@@ -87,4 +114,51 @@ body {
 @keyframes progress {
   from { width: 0%; }
   to { width: 100%; }
+}
+
+@keyframes carouselFade {
+  0%, 16% { opacity: 1; }
+  20%, 100% { opacity: 0; }
+}
+
+@keyframes orbit {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes orbitReverse {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(-360deg); }
+}
+
+@keyframes borderFlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes scanLine {
+  0% { transform: translateY(-100%); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translateY(100vh); opacity: 0; }
+}
+
+@keyframes scanLineSlow {
+  0% { transform: translateY(-100%); opacity: 0; }
+  5% { opacity: 0.6; }
+  95% { opacity: 0.6; }
+  100% { transform: translateY(200vh); opacity: 0; }
+}
+
+@keyframes floatParticle {
+  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.6; }
+  25% { transform: translate(10px, -20px) scale(1.2); opacity: 1; }
+  50% { transform: translate(-5px, -40px) scale(0.8); opacity: 0.4; }
+  75% { transform: translate(15px, -20px) scale(1.1); opacity: 0.8; }
+}
+
+@keyframes gridMove {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(60px, 60px); }
 }

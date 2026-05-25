@@ -2,8 +2,6 @@
 
 import { useState, useEffect } from 'react';
 import { WhatsAppIcon as RiWhatsappFill } from '@/components/ui/BrandIcons';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
 import Notification from '@/components/Notification';
 import FloatingShape from '@/components/ui/FloatingShape';
 
@@ -66,8 +64,7 @@ export default function ContactPage() {
   return (
     <div className="min-h-screen bg-[#02040a]">
       <Notification show={notif.show} type={notif.type} message={notif.message} onClose={() => setNotif((n) => ({ ...n, show: false }))} />
-      <Header />
-      <section className="relative text-white py-20 pt-32 px-4 overflow-hidden">
+      <section className="relative text-white pt-32 pb-32 px-4 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-[#38bdf8]/5 via-transparent to-[#0ea5e9]/5 blur-3xl" />
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute left-[-10%] top-[15%] animate-fade-in" style={{ animationDelay: '0.3s', animationFillMode: 'both' }}>
@@ -160,7 +157,6 @@ export default function ContactPage() {
         </div>
         <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[#02040a] to-transparent pointer-events-none" />
       </section>
-      <Footer />
     </div>
   );
 }

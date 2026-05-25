@@ -4,7 +4,7 @@ import FloatingShape from './ui/FloatingShape';
 
 export default function Contact() {
   return (
-    <section className="relative text-white pt-28 overflow-hidden min-h-screen" id="contact">
+    <section className="relative text-white pt-28 pb-48 overflow-hidden" id="contact" style={{ minHeight: 'calc(100vh + 80px)' }}>
       {/* Background gradients */}
       <div className="absolute inset-0 bg-gradient-to-br from-[#38bdf8]/5 via-transparent to-[#0ea5e9]/5 blur-3xl" />
 

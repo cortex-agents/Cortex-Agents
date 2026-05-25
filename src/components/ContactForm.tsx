@@ -28,51 +28,59 @@ interface OrbitingCardProps {
 
 function OrbitingCard({ info, index, totalCards, isPaused, onHover }: OrbitingCardProps) {
   const angle = (index / totalCards) * 360;
-  const radius = 280; // Distance from center
+  const radius = 280;
 
   return (
     <div
-      className={`absolute top-1/2 left-1/2 ${isPaused ? '' : 'animate-orbit'}`}
+      className="absolute top-1/2 left-1/2"
       style={{
         transformOrigin: "0 0",
         transform: `rotate(${angle}deg)`,
-        animationDuration: '20s',
-        animationPlayState: isPaused ? 'paused' : 'running',
       }}
     >
-      <a
-        href={info.href}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="block transition-transform duration-300 hover:scale-110"
+      <div
+        className="animate-orbit"
         style={{
-          transform: `translateX(${radius}px) translateY(-50%)`,
+          transformOrigin: "0 0",
+          animationDuration: '20s',
+          animationPlayState: isPaused ? 'paused' : 'running',
         }}
-        onMouseEnter={() => onHover(true)}
-        onMouseLeave={() => onHover(false)}
       >
-        <div
-          className={`relative bg-[#02040a]/80 backdrop-blur-xl border border-[#38bdf8]/20 rounded-2xl p-6 shadow-2xl hover:border-[#38bdf8]/50 transition-all duration-300 w-64 ${isPaused ? '' : 'animate-orbit-reverse'}`}
+        <a
+          href={info.href}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="block transition-transform duration-300 hover:scale-110 pointer-events-auto"
           style={{
-            transform: `rotate(${-angle}deg)`,
-            animationDuration: '20s',
-            animationPlayState: isPaused ? 'paused' : 'running',
+            transform: `translateX(${radius}px) translateY(-50%)`,
           }}
+          onMouseEnter={() => onHover(true)}
+          onMouseLeave={() => onHover(false)}
         >
-          <div className={`absolute -inset-1 bg-gradient-to-r from-[#38bdf8] to-[#0ea5e9] rounded-2xl opacity-0 blur-xl group-hover:opacity-20 transition-opacity duration-500`} />
-          <div className="absolute top-0 left-0 w-1/3 h-full bg-gradient-to-br from-[#38bdf8]/10 to-[#0ea5e9]/5 transform skew-x-12 rounded-2xl transition-all duration-500 group-hover:skew-x-0" style={{ transformOrigin: "left" }} />
-          <div className="relative flex items-center gap-4">
-            <div className={`p-3 rounded-lg bg-gradient-to-br ${info.gradient} flex-shrink-0`}>
-              <info.icon className="text-white" />
-            </div>
-            <div>
-              <p className="text-sm text-slate-400 mb-1">{info.label}</p>
-              <p className="text-white font-semibold text-sm">{info.value}</p>
+          <div style={{ transform: `rotate(${-angle}deg)` }}>
+            <div
+              className="relative bg-[#02040a]/80 backdrop-blur-xl border border-[#38bdf8]/20 rounded-2xl p-6 shadow-2xl hover:border-[#38bdf8]/50 transition-all duration-300 w-64 animate-orbit-reverse"
+              style={{
+                animationDuration: '20s',
+                animationPlayState: isPaused ? 'paused' : 'running',
+              }}
+            >
+              <div className="absolute -inset-1 bg-gradient-to-r from-[#38bdf8] to-[#0ea5e9] rounded-2xl opacity-0 blur-xl group-hover:opacity-20 transition-opacity duration-500" />
+              <div className="absolute top-0 left-0 w-1/3 h-full bg-gradient-to-br from-[#38bdf8]/10 to-[#0ea5e9]/5 transform skew-x-12 rounded-2xl transition-all duration-500 group-hover:skew-x-0" style={{ transformOrigin: "left" }} />
+              <div className="relative flex items-center gap-4">
+                <div className={`p-3 rounded-lg bg-gradient-to-br ${info.gradient} flex-shrink-0`}>
+                  <info.icon className="text-white" />
+                </div>
+                <div>
+                  <p className="text-sm text-slate-400 mb-1">{info.label}</p>
+                  <p className="text-white font-semibold text-sm">{info.value}</p>
+                </div>
+              </div>
+              <span className="pointer-events-none absolute top-0 right-0 w-0 h-0 rounded-full opacity-0 bg-[#38bdf8]/10 backdrop-blur-[10px] transition-all duration-500 group-hover:w-20 group-hover:h-24 group-hover:opacity-100 group-hover:top-[-10px] group-hover:right-[-10px] animate-pulse" />
             </div>
           </div>
-          <span className="pointer-events-none absolute top-0 right-0 w-0 h-0 rounded-full opacity-0 bg-[#38bdf8]/10 backdrop-blur-[10px] transition-all duration-500 group-hover:w-20 group-hover:h-24 group-hover:opacity-100 group-hover:top-[-10px] group-hover:right-[-10px] animate-pulse" />
-        </div>
-      </a>
+        </a>
+      </div>
     </div>
   );
 }
@@ -144,16 +152,25 @@ export default function ContactForm() {
         onClose={() => setNotif((n) => ({ ...n, show: false }))}
       />
 
-      <div className="absolute inset-0 hidden xl:block">
+      <div className="absolute inset-0 hidden xl:block z-0 pointer-events-none">
         {contactInfo.map((info, index) => (
           <OrbitingCard key={index} info={info} index={index} totalCards={contactInfo.length} isPaused={isPaused} onHover={setIsPaused} />
         ))}
       </div>
 
       <div className="relative z-10 w-full max-w-2xl px-4 animate-fade-in-up" style={{ animationDelay: '0.2s', animationFillMode: 'both' }}>
-        <div className="relative bg-[#02040a]/80 backdrop-blur-xl border border-[#38bdf8]/20 rounded-2xl p-8 shadow-2xl overflow-hidden">
-          <div className="absolute -inset-1 bg-gradient-to-r from-[#38bdf8] to-[#0ea5e9] rounded-2xl opacity-20 blur-xl animate-pulse" />
-          <div className="absolute top-0 left-0 w-1/3 h-full bg-gradient-to-br from-[#38bdf8]/10 to-[#0ea5e9]/5 transform skew-x-12 rounded-2xl transition-all duration-500" style={{ transformOrigin: "left" }} />
+        <div className="relative bg-[#02040a]/80 backdrop-blur-xl border border-[#38bdf8]/20 rounded-2xl p-8 shadow-2xl overflow-hidden group">
+          {/* Animated border glow */}
+          <div className="absolute -inset-[2px] rounded-2xl bg-gradient-to-r from-[#38bdf8] via-[#0ea5e9] to-[#38bdf8] opacity-20 blur-sm animate-border-flow" />
+          {/* Inner dark fill */}
+          <div className="absolute inset-[1px] rounded-2xl bg-[#02040a]/90" />
+          {/* Corner accents */}
+          <div className="absolute top-0 left-0 w-20 h-20 border-t-2 border-l-2 border-[#38bdf8]/40 rounded-tl-2xl" />
+          <div className="absolute bottom-0 right-0 w-20 h-20 border-b-2 border-r-2 border-[#38bdf8]/40 rounded-br-2xl" />
+          {/* Scanning line */}
+          <div className="absolute inset-0 overflow-hidden rounded-2xl pointer-events-none">
+            <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-[#38bdf8]/60 to-transparent animate-scan-line" />
+          </div>
 
           <form onSubmit={handleSubmit} className="relative space-y-6">
             <div className="grid md:grid-cols-2 gap-6">

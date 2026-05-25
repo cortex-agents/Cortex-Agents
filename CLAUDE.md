@@ -53,5 +53,11 @@ We have recently applied the following optimizations:
 - **Text:** Slate colors (#f8fafc, #e2e8f0, #94a3b8)
 - **Borders:** Blue-tinted (rgba(56, 189, 248, 0.1))
 
+## 💡 AGENCY-GRADE DESIGN PRINCIPLES
+- **Professional & Premium:** Every new animation or UI element must be "agency-grade." Avoid generic AI aesthetics. Prioritize smooth, performant, and sophisticated motion.
+- **Performance-First Design:** All new UI/UX ideas must be built with performance in mind. Use lazy-loading, CSS-driven animations (GPU-accelerated), and minimal JS. If an idea risks the 96%+ performance score, it must be optimized or replaced.
+- **Proactive Communication:** Before implementing any new design or animation, provide a clear explanation of how it works and verify with the user that it aligns with the "Cyber Chrome & Neural Azure" theme.
+- **Strict Approval:** Implementation should only begin after user agreement.
+
 ---
 **End of CLAUDE.md**

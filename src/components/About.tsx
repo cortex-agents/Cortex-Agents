@@ -2,211 +2,330 @@ import React from 'react'
 import AnimatedCounter from './AnimatedCounter'
 import Link from 'next/link'
 import AuroraBackground from './ui/AuroraBackground'
+import Image from 'next/image'
 
-// Inline SVGs for minimal hydration and bundle size
-const CodeIcon = ({ className }: { className?: string }) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>;
-const MessageSquareIcon = ({ className }: { className?: string }) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>;
-const BotIcon = ({ className }: { className?: string }) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg>;
-const SparklesIcon = ({ className }: { className?: string }) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="M5 3v4"/><path d="M19 17v4"/><path d="M3 5h4"/><path d="M17 19h4"/></svg>;
-const ShieldIcon = ({ className }: { className?: string }) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.5 3.8 17 5 19 5a1 1 0 0 1 1 1z"/></svg>;
-const ClockIcon = ({ className }: { className?: string }) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>;
+const CodeIcon = ({ className }: { className?: string }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+    <polyline points="16 18 22 12 16 6" /><polyline points="8 6 2 12 8 18" />
+  </svg>
+)
+const BotIcon = ({ className }: { className?: string }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+    <path d="M12 8V4H8" /><rect width="16" height="12" x="4" y="8" rx="2" /><path d="M2 14h2" /><path d="M20 14h2" /><path d="M15 13v2" /><path d="M9 13v2" />
+  </svg>
+)
+const ZapIcon = ({ className }: { className?: string }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+  </svg>
+)
+
+const carouselImages = [
+  { src: '/about_images/1.webp', alt: 'Cortex Agents team collaborating on AI solutions' },
+  { src: '/about_images/2.webp', alt: 'Futuristic AI workspace with holographic displays' },
+  { src: '/about_images/3.webp', alt: 'Autonomous AI agents working on complex tasks' },
+  { src: '/about_images/4.webp', alt: 'Advanced code editor with modern development tools' },
+  { src: '/about_images/5.webp', alt: 'Neural network visualization representing AI technology' },
+]
+
+const services = [
+  {
+    icon: CodeIcon,
+    title: "High-Performance Web",
+    description: "Immersive digital experiences built for speed and impact.",
+    gradient: "from-sky-400 to-sky-600",
+  },
+  {
+    icon: BotIcon,
+    title: "Autonomous AI Agents",
+    description: "Intelligent digital employees to automate complex operations.",
+    gradient: "from-cyan-400 to-sky-500",
+  },
+  {
+    icon: ZapIcon,
+    title: "AI-Powered Engagement",
+    description: "Smart systems that qualify and convert leads automatically.",
+    gradient: "from-sky-400 to-cyan-400",
+  },
+]
+
+const stats = [
+  { number: 50, suffix: "+", label: "Projects Delivered" },
+  { number: 2, suffix: "+", label: "Years Experience" },
+  { number: 100, suffix: "%", label: "Client Satisfaction" },
+]
 
 function About() {
-  const services = [
-    {
-      icon: CodeIcon,
-      title: "Custom Websites",
-      description: "Modern, responsive, high-performance web applications",
-      iconColor: "text-sky-400",
-      gradient: "from-sky-400 to-sky-600",
-      depth: 20,
-    },
-    {
-      icon: MessageSquareIcon,
-      title: "AI Chatbots",
-      description: "Intelligent conversational interfaces for customer engagement",
-      iconColor: "text-sky-400",
-      gradient: "from-sky-400 to-cyan-400",
-      depth: 40,
-    },
-    {
-      icon: BotIcon,
-      title: "AI Agents",
-      description: "Autonomous systems that automate workflows and enhance productivity",
-      iconColor: "text-sky-400",
-      gradient: "from-cyan-400 to-sky-500",
-      depth: 30,
-    },
-  ]
-
-  const stats = [
-    { number: 50, suffix: "+", label: "Projects Delivered", gradient: "from-sky-400 via-cyan-400 to-sky-500", depth: 25 },
-    { number: 2, suffix: "+", label: "Years Experience", gradient: "from-cyan-400 via-sky-400 to-cyan-500", depth: 35 },
-    { number: 100, suffix: "%", label: "Client Satisfaction", gradient: "from-sky-500 via-cyan-400 to-sky-400", depth: 45 },
-  ]
-
-  const whyChooseUs = [
-    { icon: SparklesIcon, title: "Innovation", description: "Cutting-edge AI technology", iconColor: "text-cyan-400", gradient: "from-cyan-400 to-cyan-600" },
-    { icon: ShieldIcon, title: "Quality", description: "Premium code and design", iconColor: "text-sky-400", gradient: "from-sky-400 to-sky-600" },
-    { icon: BotIcon, title: "AI Expertise", description: "Deep knowledge in AI/ML", iconColor: "text-sky-400", gradient: "from-sky-400 to-cyan-400" },
-    { icon: ClockIcon, title: "24/7 Support", description: "Always available for clients", iconColor: "text-teal-400", gradient: "from-teal-400 to-teal-600" },
-  ]
-
   return (
-    <div className="relative min-h-screen w-full overflow-hidden">
+    <section className="relative w-full overflow-hidden" id="about">
+      {/* === BACKGROUND === */}
+      <div className="absolute inset-0 z-0 bg-[#02040a]">
+        {/* Perspective Grid */}
+        <div className="absolute inset-0" style={{
+          backgroundImage: `
+            linear-gradient(rgba(56,189,248,0.07) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(56,189,248,0.07) 1px, transparent 1px)
+          `,
+          backgroundSize: '80px 80px',
+          maskImage: 'radial-gradient(ellipse 70% 60% at 50% 50%, black 20%, transparent 70%)',
+          WebkitMaskImage: 'radial-gradient(ellipse 70% 60% at 50% 50%, black 20%, transparent 70%)',
+        }} />
+        {/* Glow Orbs */}
+        <div className="absolute top-[15%] left-[10%] w-[400px] h-[400px] rounded-full bg-sky-900/15 blur-[120px] animate-pulse" />
+        <div className="absolute bottom-[20%] right-[8%] w-[350px] h-[350px] rounded-full bg-cyan-900/15 blur-[120px] animate-pulse" style={{ animationDelay: '3s' }} />
+      </div>
+
       <AuroraBackground showRadialGradient={true}>
-        {/* Grid Pattern */}
-        <div
-          className="absolute inset-0 z-[-10]"
-          style={{
-            backgroundImage: 'linear-gradient(to right, rgba(56, 189, 248, 0.05) 1px, transparent 1px), linear-gradient(to bottom, rgba(56, 189, 248, 0.05) 1px, transparent 1px)',
-            backgroundSize: '32px 32px',
-            maskImage: 'radial-gradient(ellipse at center, #020008, transparent)',
-          }}
-        />
+        <div className="relative z-10 w-full py-24 lg:py-32">
 
-        <div className="relative z-10 w-full min-h-screen flex items-center justify-center px-6 py-20">
-          <div className="max-w-7xl mx-auto w-full">
-              <div className="text-center mb-20 animate-fade-in-up" style={{ animationDelay: '0.1s', animationFillMode: 'both' }}>
-                <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-tight mb-6">
-                  <span className="text-white">About </span>
-                  <span className="bg-gradient-to-r from-white via-sky-200 to-sky-400 bg-clip-text text-transparent">
-                    Cortex Agents
-                  </span>
-                </h2>
-                <div className="text-xl text-slate-300 max-w-3xl mx-auto">
-                  We are a team of AI experts specializing in custom websites, intelligent chatbots, and AI agents that transform businesses.
-                </div>
-              </div>
+          {/* === SECTION HEADER === */}
+          <div className="text-center mb-20 px-6 animate-fade-in-up" style={{ animationDelay: '0.1s', animationFillMode: 'both' }}>
+            <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-[#38bdf8]/10 border border-[#38bdf8]/30 mb-6">
+              <span className="text-sm text-[#38bdf8] font-medium tracking-widest uppercase">Who We Are</span>
+            </div>
+            <h2 className="text-4xl md:text-5xl lg:text-7xl font-bold leading-tight mb-5">
+              <span className="text-white">About </span>
+              <span className="bg-gradient-to-r from-white via-[#38bdf8] to-[#0ea5e9] bg-clip-text text-transparent">
+                Cortex Agents
+              </span>
+            </h2>
+            <p className="text-slate-400 text-lg max-w-xl mx-auto leading-relaxed">
+              We bridge the gap between human ambition and AI efficiency.
+            </p>
+          </div>
 
-            {/* Central Mission Card */}
-            <div
-              className="relative mb-20 animate-fade-in-up"
-              style={{
-                animationDelay: '0.2s',
-                animationFillMode: 'both',
-              }}
-            >
-              <div className="max-w-4xl mx-auto bg-gradient-to-br from-sky-400/10 to-cyan-400/10 backdrop-blur-xl border border-sky-400/20 rounded-3xl p-12 text-center shadow-2xl shadow-sky-400/10 relative overflow-hidden">
-                <div
-                  className="absolute inset-0 bg-gradient-to-r from-sky-400/5 via-cyan-400/5 to-sky-400/5 rounded-3xl animate-aurora"
-                  style={{
-                    backgroundSize: '200% 100%',
-                  }}
-                />
-                <div className="relative z-10">
-                  <h3 className="text-4xl md:text-5xl font-bold mb-6">
-                    <span className="text-white">We Build the </span>
-                    <span className="bg-gradient-to-r from-white via-sky-200 to-sky-400 bg-clip-text text-transparent">Future</span>
-                    <span className="text-white"> with </span>
-                    <span className="text-[#38bdf8]">AI</span>
-                  </h3>
-                  <p className="text-xl text-slate-300 leading-relaxed">
-                    Transform your business with cutting-edge AI technology. We create intelligent solutions that automate workflows, enhance customer experiences, and drive growth.
-                  </p>
+          {/* === MAIN TWO-COLUMN LAYOUT === */}
+          <div className="max-w-7xl mx-auto px-6 lg:px-12">
+
+            {/* === IMAGE DISPLAY — mobile: after heading, desktop: right column === */}
+            <div className="lg:hidden mb-12 animate-fade-in-up" style={{ animationDelay: '0.25s', animationFillMode: 'both' }}>
+              <div className="relative">
+                {/* Outer Glow */}
+                <div className="absolute -inset-3 bg-gradient-to-br from-[#38bdf8]/8 via-transparent to-[#0ea5e9]/8 rounded-[2rem] blur-xl" />
+
+                {/* Main Frame */}
+                <div className="relative rounded-2xl overflow-hidden border border-[#38bdf8]/20 bg-[#02040a]/50">
+                  {/* Top Bar */}
+                  <div className="flex items-center gap-2 px-4 py-2.5 border-b border-[#38bdf8]/10 bg-[#02040a]/60">
+                    <div className="flex gap-1.5">
+                      <div className="w-2.5 h-2.5 rounded-full bg-[#38bdf8]/40" />
+                      <div className="w-2.5 h-2.5 rounded-full bg-[#0ea5e9]/30" />
+                      <div className="w-2.5 h-2.5 rounded-full bg-cyan-500/20" />
+                    </div>
+                    <div className="flex-1 text-center">
+                      <span className="text-[10px] text-[#38bdf8]/50 font-mono tracking-[0.2em] uppercase">cortex_display.exe</span>
+                    </div>
+                    <div className="w-12" />
+                  </div>
+
+                  {/* Image Area */}
+                  <div className="relative aspect-[16/10]">
+                    <div className="carousel-container absolute inset-0">
+                      {carouselImages.map((img, index) => (
+                        <div key={index} className="carousel-slide absolute inset-0">
+                          <Image
+                            src={img.src}
+                            alt={img.alt}
+                            fill
+                            className="object-cover"
+                            sizes="(max-width: 1024px) 100vw, 55vw"
+                            loading={index === 0 ? "eager" : "lazy"}
+                            quality={80}
+                          />
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* Scan Line */}
+                    <div className="absolute inset-0 overflow-hidden pointer-events-none z-10">
+                      <div className="absolute left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[#38bdf8]/30 to-transparent animate-scan-line" />
+                    </div>
+
+                    {/* Corner Brackets */}
+                    <div className="absolute top-3 left-3 w-8 h-8 border-t-2 border-l-2 border-[#38bdf8]/40 rounded-tl-md z-10" />
+                    <div className="absolute top-3 right-3 w-8 h-8 border-t-2 border-r-2 border-[#38bdf8]/25 rounded-tr-md z-10" />
+                    <div className="absolute bottom-3 left-3 w-8 h-8 border-b-2 border-l-2 border-[#38bdf8]/25 rounded-bl-md z-10" />
+                    <div className="absolute bottom-3 right-3 w-8 h-8 border-b-2 border-r-2 border-[#38bdf8]/40 rounded-br-md z-10" />
+
+                    {/* Bottom Gradient */}
+                    <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-[#02040a]/80 to-transparent z-10" />
+
+                    {/* Status Indicator */}
+                    <div className="absolute bottom-4 left-4 flex items-center gap-2 z-20">
+                      <div className="w-2 h-2 rounded-full bg-[#38bdf8] animate-pulse" />
+                      <span className="text-[10px] text-[#38bdf8]/70 font-mono tracking-wider">LIVE</span>
+                    </div>
+                  </div>
+
+                  {/* Bottom Bar */}
+                  <div className="flex items-center justify-between px-4 py-2 border-t border-[#38bdf8]/10 bg-[#02040a]/60">
+                    <span className="text-[10px] text-slate-500 font-mono">5 assets loaded</span>
+                    <div className="flex gap-1">
+                      {carouselImages.map((_, i) => (
+                        <div key={i} className={`w-1.5 h-1.5 rounded-full ${i === 0 ? 'bg-[#38bdf8]' : 'bg-[#38bdf8]/20'}`} />
+                      ))}
+                    </div>
+                    <span className="text-[10px] text-slate-500 font-mono">auto-rotate</span>
+                  </div>
                 </div>
               </div>
             </div>
 
-            {/* Floating Service Cards */}
-            <div className="grid md:grid-cols-3 gap-8 mb-20">
-              {services.map((service, index) => (
-                <div
-                  key={index}
-                  style={{
-                    animationDelay: `${0.3 + index * 0.1}s`,
-                    animationFillMode: 'both',
-                    transform: `translate3d(calc((var(--mouse-x, 50%) - 50%) * 0.05), calc((var(--mouse-y, 50%) - 50%) * 0.05), ${service.depth}px)`,
-                    transformStyle: 'preserve-3d',
-                  }}
-                  className="relative group animate-fade-in-up"
-                >
-                  <div className="bg-sky-400/5 backdrop-blur-xl border border-sky-400/20 rounded-2xl p-8 h-full transition-all duration-300 hover:border-sky-400/40 hover:shadow-2xl hover:shadow-sky-400/20 hover:scale-[1.02]">
-                      <div className={`w-16 h-16 rounded-xl bg-gradient-to-br ${service.gradient} p-0.5 mb-6 group-hover:scale-110 transition-transform duration-300`} aria-hidden="true">
-                      <div className="w-full h-full bg-[#02040a] rounded-xl flex items-center justify-center">
-                        <service.icon className={`w-8 h-8 ${service.iconColor}`} />
+            <div className="grid lg:grid-cols-5 gap-12 lg:gap-16 items-start mb-24">
+
+              {/* LEFT COLUMN — Content (2/5) */}
+              <div className="lg:col-span-2 space-y-6 animate-fade-in-up" style={{ animationDelay: '0.2s', animationFillMode: 'both' }}>
+
+                {/* Mission Panel */}
+                <div className="relative p-7 bg-[#02040a]/70 backdrop-blur-xl border border-[#38bdf8]/15 rounded-2xl overflow-hidden group">
+                  <div className="absolute -inset-[1px] rounded-2xl bg-gradient-to-br from-[#38bdf8]/15 via-transparent to-[#0ea5e9]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  <div className="absolute inset-[1px] rounded-2xl bg-[#02040a]/80" />
+                  <div className="relative z-10">
+                    <div className="flex items-center gap-3 mb-4">
+                      <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-[#38bdf8] to-[#0ea5e9] p-0.5 shrink-0">
+                        <div className="w-full h-full bg-[#02040a] rounded-[7px] flex items-center justify-center">
+                          <BotIcon className="w-5 h-5 text-[#38bdf8]" />
+                        </div>
+                      </div>
+                      <h3 className="text-xl md:text-2xl font-bold text-white leading-tight">
+                        The Future is <span className="text-[#38bdf8]">Autonomous</span>
+                      </h3>
+                    </div>
+                    <p className="text-slate-300 text-[15px] leading-relaxed">
+                      We don&apos;t just build software; we build intelligence. Our agency creates autonomous digital assets that work while you sleep — scaling your capabilities without scaling your effort.
+                    </p>
+                  </div>
+                </div>
+
+                {/* Service Cards */}
+                {services.map((service, i) => (
+                  <div
+                    key={i}
+                    className="relative group flex items-start gap-4 p-5 bg-[#02040a]/50 backdrop-blur-sm border border-[#38bdf8]/10 rounded-xl hover:border-[#38bdf8]/30 hover:bg-[#02040a]/70 transition-all duration-300 animate-fade-in-up"
+                    style={{ animationDelay: `${0.3 + i * 0.08}s`, animationFillMode: 'both' }}
+                  >
+                    <div className={`flex-shrink-0 w-11 h-11 rounded-lg bg-gradient-to-br ${service.gradient} p-0.5 group-hover:scale-105 transition-transform duration-300`}>
+                      <div className="w-full h-full bg-[#02040a] rounded-[7px] flex items-center justify-center">
+                        <service.icon className="w-[18px] h-[18px] text-[#38bdf8]" />
                       </div>
                     </div>
-                    <h3 className="text-2xl font-bold text-slate-100 mb-3">{service.title}</h3>
-                    <p className="text-slate-300 leading-relaxed text-sm">{service.description}</p>
+                    <div>
+                      <h4 className="text-[15px] font-semibold text-white mb-1">{service.title}</h4>
+                      <p className="text-sm text-slate-400 leading-relaxed">{service.description}</p>
+                    </div>
+                  </div>
+                ))}
+
+                {/* CTA */}
+                <div className="pt-2 text-center lg:text-left animate-fade-in-up" style={{ animationDelay: '0.55s', animationFillMode: 'both' }}>
+                  <Link
+                    href="/about"
+                    aria-label="Discover Cortex Agents"
+                    className="inline-flex items-center gap-2.5 px-7 py-3.5 bg-gradient-to-r from-[#38bdf8] to-[#0ea5e9] hover:from-[#0ea5e9] hover:to-[#38bdf8] text-white font-semibold rounded-full shadow-lg shadow-[#38bdf8]/25 hover:shadow-[#38bdf8]/40 transition-all duration-300 relative overflow-hidden group text-[15px]"
+                  >
+                    <span className="relative z-10">Discover Cortex Agents</span>
+                    <svg className="w-4 h-4 relative z-10 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                    </svg>
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-700" style={{ width: '200%' }} />
+                  </Link>
+                </div>
+              </div>
+
+              {/* RIGHT COLUMN — Holographic Image Display (3/5) — desktop only */}
+              <div className="hidden lg:col-span-3 lg:block lg:animate-fade-in-up" style={{ animationDelay: '0.35s', animationFillMode: 'both' }}>
+                <div className="relative">
+                  {/* Outer Glow */}
+                  <div className="absolute -inset-3 bg-gradient-to-br from-[#38bdf8]/8 via-transparent to-[#0ea5e9]/8 rounded-[2rem] blur-xl" />
+
+                  {/* Main Frame */}
+                  <div className="relative rounded-2xl overflow-hidden border border-[#38bdf8]/20 bg-[#02040a]/50">
+                    {/* Top Bar */}
+                    <div className="flex items-center gap-2 px-4 py-2.5 border-b border-[#38bdf8]/10 bg-[#02040a]/60">
+                      <div className="flex gap-1.5">
+                        <div className="w-2.5 h-2.5 rounded-full bg-[#38bdf8]/40" />
+                        <div className="w-2.5 h-2.5 rounded-full bg-[#0ea5e9]/30" />
+                        <div className="w-2.5 h-2.5 rounded-full bg-cyan-500/20" />
+                      </div>
+                      <div className="flex-1 text-center">
+                        <span className="text-[10px] text-[#38bdf8]/50 font-mono tracking-[0.2em] uppercase">cortex_display.exe</span>
+                      </div>
+                      <div className="w-12" />
+                    </div>
+
+                    {/* Image Area */}
+                    <div className="relative aspect-[16/10]">
+                      <div className="carousel-container absolute inset-0">
+                        {carouselImages.map((img, index) => (
+                          <div key={index} className="carousel-slide absolute inset-0">
+                            <Image
+                              src={img.src}
+                              alt={img.alt}
+                              fill
+                              className="object-cover"
+                              sizes="(max-width: 1024px) 100vw, 55vw"
+                              loading={index === 0 ? "eager" : "lazy"}
+                              quality={80}
+                            />
+                          </div>
+                        ))}
+                      </div>
+
+                      {/* Scan Line */}
+                      <div className="absolute inset-0 overflow-hidden pointer-events-none z-10">
+                        <div className="absolute left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[#38bdf8]/30 to-transparent animate-scan-line" />
+                      </div>
+
+                      {/* Corner Brackets */}
+                      <div className="absolute top-3 left-3 w-8 h-8 border-t-2 border-l-2 border-[#38bdf8]/40 rounded-tl-md z-10" />
+                      <div className="absolute top-3 right-3 w-8 h-8 border-t-2 border-r-2 border-[#38bdf8]/25 rounded-tr-md z-10" />
+                      <div className="absolute bottom-3 left-3 w-8 h-8 border-b-2 border-l-2 border-[#38bdf8]/25 rounded-bl-md z-10" />
+                      <div className="absolute bottom-3 right-3 w-8 h-8 border-b-2 border-r-2 border-[#38bdf8]/40 rounded-br-md z-10" />
+
+                      {/* Bottom Gradient */}
+                      <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-[#02040a]/80 to-transparent z-10" />
+
+                      {/* Status Indicator */}
+                      <div className="absolute bottom-4 left-4 flex items-center gap-2 z-20">
+                        <div className="w-2 h-2 rounded-full bg-[#38bdf8] animate-pulse" />
+                        <span className="text-[10px] text-[#38bdf8]/70 font-mono tracking-wider">LIVE</span>
+                      </div>
+                    </div>
+
+                    {/* Bottom Bar */}
+                    <div className="flex items-center justify-between px-4 py-2 border-t border-[#38bdf8]/10 bg-[#02040a]/60">
+                      <span className="text-[10px] text-slate-500 font-mono">5 assets loaded</span>
+                      <div className="flex gap-1">
+                        {carouselImages.map((_, i) => (
+                          <div key={i} className={`w-1.5 h-1.5 rounded-full ${i === 0 ? 'bg-[#38bdf8]' : 'bg-[#38bdf8]/20'}`} />
+                        ))}
+                      </div>
+                      <span className="text-[10px] text-slate-500 font-mono">auto-rotate</span>
+                    </div>
                   </div>
                 </div>
-              ))}
+              </div>
             </div>
 
-            {/* Floating Stats Cards */}
-            <div className="grid md:grid-cols-3 gap-8 mb-20">
-              {stats.map((stat, index) => (
-                <div
-                  key={index}
-                  style={{
-                    animationDelay: `${0.5 + index * 0.1}s`,
-                    animationFillMode: 'both',
-                    transform: `translate3d(calc((var(--mouse-x, 50%) - 50%) * 0.02), calc((var(--mouse-y, 50%) - 50%) * 0.02), ${stat.depth}px)`,
-                  }}
-                  className="relative animate-fade-in"
-                >
-                  <div className="bg-sky-400/5 backdrop-blur-xl border border-sky-400/20 rounded-2xl p-8 text-center hover:border-sky-400/40 transition-all duration-300 hover:shadow-2xl hover:shadow-sky-400/20 hover:scale-[1.05]">
-                    <div className={`text-5xl font-black mb-2 bg-gradient-to-r ${stat.gradient} text-transparent bg-clip-text`}>
+            {/* === STATS BAR === */}
+            <div className="relative animate-fade-in-up" style={{ animationDelay: '0.65s', animationFillMode: 'both' }}>
+              <div className="absolute -inset-[1px] rounded-2xl bg-gradient-to-r from-[#38bdf8]/15 via-[#0ea5e9]/10 to-[#38bdf8]/15 blur-sm" />
+              <div className="relative grid grid-cols-3 divide-x divide-[#38bdf8]/10 bg-[#02040a]/70 backdrop-blur-xl border border-[#38bdf8]/15 rounded-2xl overflow-hidden">
+                {stats.map((stat, i) => (
+                  <div key={i} className="relative group text-center py-8 px-4 hover:bg-[#38bdf8]/5 transition-colors duration-300">
+                    <div className="text-3xl md:text-4xl lg:text-5xl font-black mb-2 bg-gradient-to-r from-[#38bdf8] via-[#0ea5e9] to-[#38bdf8] bg-clip-text text-transparent">
                       <AnimatedCounter target={stat.number} suffix={stat.suffix} duration={2000} />
                     </div>
-                    <div className="text-slate-400 text-sm font-medium tracking-wider uppercase">{stat.label}</div>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* Why Choose Us */}
-            <div
-              className="mb-20 animate-fade-in-up"
-              style={{ animationDelay: '0.7s', animationFillMode: 'both' }}
-            >
-              <h3 className="text-4xl font-bold text-white text-center mb-12">
-                Why Choose{' '}
-                <span className="bg-gradient-to-r from-slate-50 via-slate-200 to-slate-400 bg-clip-text text-transparent">
-                  Cortex Agents
-                </span>
-              </h3>
-              <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-                {whyChooseUs.map((item, index) => (
-                  <div
-                    key={index}
-                    className="bg-sky-400/5 backdrop-blur-xl border border-sky-400/20 rounded-2xl p-8 text-center hover:border-sky-400/40 transition-all duration-300 hover:shadow-xl hover:shadow-sky-400/20 hover:scale-105 group"
-                  >
-                    <div
-                      className={`w-16 h-16 mx-auto mb-6 bg-gradient-to-br ${item.gradient} rounded-xl flex items-center justify-center transition-transform duration-500 group-hover:rotate-[360deg]`}
-                      aria-hidden="true"
-                    >
-                      <item.icon className={`w-8 h-8 ${item.iconColor}`} />
-                    </div>
-                    <h4 className="text-xl font-bold text-white mb-3">{item.title}</h4>
-                    <p className="text-slate-300 text-sm leading-relaxed">{item.description}</p>
+                    <div className="text-slate-500 text-xs md:text-sm font-medium tracking-wider uppercase">{stat.label}</div>
                   </div>
                 ))}
               </div>
             </div>
-
-            {/* CTA */}
-            <div
-              className="text-center animate-fade-in-up"
-              style={{ animationDelay: '0.9s', animationFillMode: 'both' }}
-            >
-              <Link
-                href="/about"
-                aria-label="Discover Cortex Agents"
-                className="inline-flex items-center gap-3 px-10 py-4 bg-gradient-to-r from-sky-400 to-sky-600 hover:from-sky-500 hover:to-sky-700 text-white text-lg font-semibold rounded-full shadow-lg shadow-sky-400/30 hover:shadow-xl hover:shadow-sky-400/50 transition-all duration-300 relative overflow-hidden group"
-              >
-                <span className="relative z-10">Discover Cortex Agents</span>
-                <div
-                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"
-                  style={{ width: '200%' }}
-                />
-              </Link>
-            </div>
           </div>
+
         </div>
       </AuroraBackground>
-    </div>
+    </section>
   )
 }
 

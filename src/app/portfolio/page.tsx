@@ -82,13 +82,13 @@ export default function PortfolioPage() {
               return (
                 <div
                   key={project.id}
-                  className="group relative animate-fade-in-up"
+                  className="group relative animate-fade-in-up h-full"
                   style={{ animationDelay: `${0.1 + index * 0.05}s`, animationFillMode: 'both' }}
                   onMouseEnter={() => setHoveredId(project.id)}
                   onMouseLeave={() => setHoveredId(null)}
                 >
                   <div
-                    className="relative transition-transform duration-300 ease-out"
+                    className="relative h-full transition-transform duration-300 ease-out"
                     style={{
                       transformStyle: "preserve-3d",
                       transform: isHovered
@@ -100,7 +100,7 @@ export default function PortfolioPage() {
                     <div className={`absolute -inset-1 bg-gradient-to-r from-[#38bdf8] to-[#0ea5e9] rounded-2xl blur-xl transition-opacity duration-500 ${isHovered ? 'opacity-30 scale-105' : 'opacity-0 scale-100'}`} />
 
                     {/* Card container */}
-                    <div className="relative bg-[#02040a]/80 backdrop-blur-xl border border-[#38bdf8]/20 rounded-2xl overflow-hidden shadow-2xl">
+                    <div className="relative bg-[#02040a]/80 backdrop-blur-xl border border-[#38bdf8]/20 rounded-2xl overflow-hidden shadow-2xl h-full flex flex-col">
                       <div className="absolute top-0 left-0 w-1/3 h-full bg-gradient-to-br from-[#38bdf8]/10 to-[#0ea5e9]/5 transform skew-x-12 transition-all duration-500 group-hover:skew-x-0 group-hover:w-full" style={{ transformOrigin: "left" }} />
 
                       {/* Image section */}
@@ -112,7 +112,7 @@ export default function PortfolioPage() {
                       </div>
 
                       {/* Content section */}
-                      <div className="relative p-6 space-y-4" style={{ transform: "translateZ(30px)" }}>
+                      <div className="relative p-6 space-y-4 flex flex-col flex-1" style={{ transform: "translateZ(30px)" }}>
                         <h3 className="text-2xl font-bold text-white group-hover:text-[#38bdf8] transition-all duration-300">{project.title}</h3>
                         <p className="text-slate-400 text-sm leading-relaxed line-clamp-2">{project.description}</p>
                         <div className="flex flex-wrap gap-2">
@@ -120,7 +120,7 @@ export default function PortfolioPage() {
                             <span key={tag} className="text-xs px-3 py-1.5 bg-[#38bdf8]/10 text-[#38bdf8] border border-[#38bdf8]/30 rounded-full hover:bg-[#38bdf8]/20 transition-colors">{tag}</span>
                           ))}
                         </div>
-                        <div>
+                        <div className="mt-auto">
                           <Link href={project.link} target="_blank" rel="noopener noreferrer" aria-label={`View Project: ${project.title}`} className="inline-flex items-center gap-2 px-6 py-3 bg-[#38bdf8] hover:bg-[#0ea5e9] text-[#02040a] font-semibold rounded-lg shadow-lg transition-all duration-300">
                             <ExternalLinkIcon /> View Project
                           </Link>

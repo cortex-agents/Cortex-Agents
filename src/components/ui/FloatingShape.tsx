@@ -24,7 +24,7 @@ export default function FloatingShape({
       aria-hidden="true"
     >
       <div
-        className="animate-float-slow"
+        className="animate-float-fast"
         style={{
           animationDelay: `${delay}s`
         }}

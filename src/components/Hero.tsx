@@ -1,10 +1,25 @@
 import React from 'react'
 import Link from 'next/link'
-import HeroShowcase from './HeroShowcase';
+import AutoFanOutServices from './AutoFanOutServices';
 import AuroraBackground from './ui/AuroraBackground'
 
 // Inline SVGs for minimal hydration - updated to accept className
 const ArrowRightIcon = () => <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>;
+
+// Floating particle for hero background
+function HeroParticle({ delay, x, y }: { delay: number; x: number; y: number }) {
+  return (
+    <div
+      className="absolute w-1.5 h-1.5 bg-[#38bdf8] rounded-full animate-float-particle opacity-70"
+      style={{
+        left: `${x}%`,
+        top: `${y}%`,
+        animationDelay: `${delay}s`,
+        animationDuration: `${4 + Math.random() * 4}s`,
+      }}
+    />
+  );
+}
 const BotIcon = ({ className, size = 40 }: { className?: string; size?: number }) => <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg>;
 const CodeIcon = ({ className, size = 40 }: { className?: string; size?: number }) => <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>;
 const MessageSquareIcon = ({ className, size = 40 }: { className?: string; size?: number }) => <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>;
@@ -77,6 +92,30 @@ function Hero() {
     <div className="relative min-h-screen w-full overflow-hidden" style={{ background: '#02040a' }}>
       <AuroraBackground showRadialGradient={true}>
         <BGPattern variant="grid" mask="fade-edges" size={32} fill="rgba(56, 189, 248, 0.08)" />
+
+        {/* Animated moving grid */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-40">
+          <div className="absolute inset-0" style={{
+            backgroundImage: `
+              linear-gradient(rgba(56, 189, 248, 0.12) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(56, 189, 248, 0.12) 1px, transparent 1px)
+            `,
+            backgroundSize: '60px 60px',
+            animation: 'gridMove 20s linear infinite',
+          }} />
+        </div>
+
+        {/* Bright gradient orbs */}
+        <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-[#38bdf8]/15 rounded-full blur-[150px] animate-pulse" />
+        <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-[#0ea5e9]/15 rounded-full blur-[120px] animate-pulse" style={{ animationDelay: '1s' }} />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#06b6d4]/10 rounded-full blur-[180px] animate-pulse" style={{ animationDelay: '2s' }} />
+
+        {/* Floating particles */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          {Array.from({ length: 20 }).map((_, i) => (
+            <HeroParticle key={i} delay={i * 0.25} x={Math.random() * 100} y={Math.random() * 100} />
+          ))}
+        </div>
 
         <div
           className="absolute inset-0 pointer-events-none"
@@ -193,7 +232,7 @@ function Hero() {
             </div>
 
             <div className="relative hidden lg:block animate-fade-in" style={{ animationDelay: '0.2s', animationFillMode: 'both' }}>
-              <HeroShowcase />
+              <AutoFanOutServices />
             </div>
           </div>
         </div>

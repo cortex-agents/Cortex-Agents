@@ -64,20 +64,20 @@ export default function Portfolio() {
           </p>
         </div>
 
-        {/* Projects grid - Combined Cards into single Client Component boundary */}
+        {/* Projects grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {displayedProjects.map((project: Product, index: number) => {
             const isHovered = hoveredId === project.id;
             return (
               <div
                 key={project.id}
-                className="group relative animate-fade-in-up"
+                className="group relative animate-fade-in-up h-full"
                 style={{ animationDelay: `${0.2 + index * 0.1}s`, animationFillMode: 'both' }}
                 onMouseEnter={() => setHoveredId(project.id)}
                 onMouseLeave={() => setHoveredId(null)}
               >
                 <div
-                  className="relative transition-transform duration-300 ease-out"
+                  className="relative z-10 h-full transition-transform duration-300 ease-out"
                   style={{
                     transformStyle: "preserve-3d",
                     transform: isHovered
@@ -85,36 +85,31 @@ export default function Portfolio() {
                       : 'none',
                   }}
                 >
-                  {/* Glow effect */}
-                  <div className={`absolute -inset-2 bg-gradient-to-r from-[#38bdf8] to-[#0ea5e9] rounded-2xl blur-2xl transition-opacity duration-500 ${isHovered ? 'opacity-50 scale-105' : 'opacity-0 scale-100'}`} style={{ willChange: 'opacity' }} />
-
                   {/* Card container */}
-                  <div className="relative bg-[#02040a]/80 backdrop-blur-xl border border-[#38bdf8]/30 rounded-2xl overflow-hidden shadow-2xl">
+                  <div className="relative bg-[#02040a]/80 backdrop-blur-xl border border-[#38bdf8]/20 rounded-2xl overflow-hidden shadow-2xl h-full flex flex-col">
+
                     <div className="absolute top-0 left-0 w-1/3 h-full bg-gradient-to-br from-[#38bdf8]/10 to-[#0ea5e9]/5 transform skew-x-12 transition-all duration-500 group-hover:skew-x-0 group-hover:w-full" style={{ transformOrigin: "left" }} />
 
                     {/* Image section */}
                     <div className="relative h-56 overflow-hidden">
                       <div className="w-full h-full transition-transform duration-700 group-hover:scale-110">
-                        <Image src={project.image} alt={project.title} width={600} height={224} className="w-full h-full object-cover" sizes="(max-width: 768px) 100vw, 33vw" loading="lazy" />
+                        <Image src={project.image} alt={project.title} fill className="object-cover" sizes="(max-width: 768px) 100vw, 33vw" loading="lazy" />
                       </div>
                       <div className="absolute inset-0 bg-gradient-to-t from-[#02040a] via-[#02040a]/50 to-transparent" />
                     </div>
 
                     {/* Content section */}
-                    <div className="relative p-6 space-y-4" style={{ transform: "translateZ(30px)" }}>
+                    <div className="relative p-6 space-y-4 flex flex-col flex-1" style={{ transform: "translateZ(30px)" }}>
                       <h3 className="text-2xl font-bold text-white group-hover:text-[#38bdf8] transition-all duration-300">{project.title}</h3>
-                      <div className="text-slate-400 text-sm leading-relaxed line-clamp-2">{project.description}</div>
+                      <p className="text-slate-400 text-sm leading-relaxed line-clamp-2">{project.description}</p>
                       <div className="flex flex-wrap gap-2">
                         {project.tags.map((tag: string) => (
-                          <span key={tag} className="text-xs px-3 py-1.5 bg-[#38bdf8]/20 text-[#e0f2fe] border border-[#38bdf8]/40 rounded-full hover:bg-[#38bdf8]/30 transition-colors">{tag}</span>
+                          <span key={tag} className="text-xs px-3 py-1.5 bg-[#38bdf8]/10 text-[#38bdf8] border border-[#38bdf8]/30 rounded-full hover:bg-[#38bdf8]/20 transition-colors">{tag}</span>
                         ))}
                       </div>
-                      <div>
+                      <div className="mt-auto">
                         <Link href={project.link} target="_blank" rel="noopener noreferrer" aria-label={`View Project: ${project.title}`} className="inline-flex items-center gap-2 px-6 py-3 bg-[#38bdf8] hover:bg-[#0ea5e9] text-[#02040a] font-semibold rounded-lg shadow-lg transition-all duration-300">
-                          <div aria-hidden="true">
-                            <ExternalLinkIcon />
-                          </div>
-                          <span>View Project</span>
+                          <ExternalLinkIcon /> View Project
                         </Link>
                       </div>
                     </div>

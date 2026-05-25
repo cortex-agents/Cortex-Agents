@@ -1,8 +1,7 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
-import AuroraBackground from './ui/AuroraBackground';
 
 // Inline SVGs for minimal hydration
 const GithubIcon = () => <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.28 1.15-.28 2.35 0 3.5-.73 1.02-1.08 2.25-1 3.5 0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>;
@@ -24,25 +23,19 @@ const ICON_MAP: Record<string, React.FC> = {
 
 const teamMembers = [
   { id: 1, name: "Okasha Nadeem", role: "Full Stack & AI Developer", expertise: ["Next.js", "AI/ML", "TypeScript", "Python"], description: "Passionate about building intelligent applications with cutting-edge technology.", image: "/okasha.webp", gradient: "from-sky-400 to-sky-600", iconName: "Brain", socials: { github: "https://github.com/Okashanadeem", linkedin: "https://www.linkedin.com/in/okasha-nadeem/", email: "okashanadeem0101@gmail.com" } },
-  { id: 2, name: "Taha Qureshi", role: "AI Expert | Frontend Developer | Content Writer", expertise: ["React", "Next.js", "UI/UX", "Tailwind", "Content Writing"], description: "Crafting elegant, intuitive interfaces, intelligent AI agents, and compelling content that people love.", image: "/taha.webp", gradient: "from-cyan-400 to-cyan-600", iconName: "Palette", socials: { github: "https://github.com/Tahaimran56", linkedin: "https://www.linkedin.com/in/taha-qureshi-37a5792a6/", email: "tahaqureshidev@gmail.com" } },
+
+  { id: 2, name: "Syed Hamza Ali", role: "Claude Native Agentic AI Developer", expertise: ["Python", "Node.js", "Docker", "Express", "React.js", "Next.js"], description: "Specializing in Claude-powered AI agents and intelligent automation systems.", image: "/hamza_ali.webp", gradient: "from-sky-400 to-sky-600", iconName: "Bot", socials: { github: "https://github.com/Syed-Hamza-Ali-8", linkedin: "https://www.linkedin.com/in/hamza-ali-b72b582ab/", email: "ha5755420@gmail.com" } },
+
   { id: 3, name: "Muhammad Ubaid Raza", role: "Full Stack & Agentic AI Developer", expertise: ["Next.js", "Python", "FastAPI", "OpenAI Agent SDK", "CMS"], description: "Full Stack developer and AI specialist building intelligent agents, Digital FTEs, and scalable web applications that run 24/7.", image: "/ubaid.webp", gradient: "from-sky-400 to-cyan-400", iconName: "BrainCircuit", socials: { github: "https://github.com/mub7865", linkedin: "https://www.linkedin.com/in/muhammad-ubaid-raza-8207332ba/", email: "muhammadubaidansari145@gmail.com" } },
-  { id: 4, name: "Syed Ahsan Raza Bukhari", role: "Frontend Developer", expertise: ["Next.js", "CMS", "Tailwind", "3D Animation"], description: "Building advanced, visually stunning frontends with Next.js, CMS integrations, and immersive 3D animations.", image: "/ahsan.webp", gradient: "from-sky-400 to-sky-600", iconName: "Code", socials: { github: "https://github.com/syedahsanrazabukhari", linkedin: "https://www.linkedin.com/in/syedahsanrazabukhari/", email: "syedahsanrazabukhari10@gmail.com" } },
-  { id: 5, name: "Syed Hamza Ali", role: "Claude Native Agentic AI Developer", expertise: ["Python", "Node.js", "Docker", "Express", "React.js", "Next.js"], description: "Specializing in Claude-powered AI agents and intelligent automation systems.", image: "/hamza_ali.webp", gradient: "from-sky-400 to-sky-600", iconName: "Bot", socials: { github: "#", linkedin: "#", email: "hamza@cortexagents.com" } },
+  
+  { id: 4, name: "Syed Muhammad Huzaifa", role: "Full stack Agentic ai developer", expertise: ["NEXTJS" , "PYTHON" , "TYPESCRIPT" , "FASTAPI" , "OPENAI AGENT SDK" , 'MYSQL' , 'POSTGRESQL' , 'RAG'], description: "AI Full Stack Developer building intelligent agents, RAG systems, and scalable web apps with Next.js, Python, FastAPI, and TypeScript.", image: "/huzaifa.webp", gradient: "from-cyan-400 to-cyan-600", iconName: "Palette", socials: { github: "https://github.com/Syed-muhammad-huzaifa", linkedin: "https://www.linkedin.com/in/syed-muhammad-huzaifa-0ba721351?utm_source=share_via&utm_content=profile&utm_medium=member_android", email: "https://github.com/Syed-muhammad-huzaifa" } },
+
+  { id: 5, name: "Syed Ahsan Raza Bukhari", role: "Frontend Developer", expertise: ["Next.js", "CMS", "Tailwind", "3D Animation"], description: "Building advanced, visually stunning frontends with Next.js, CMS integrations, and immersive 3D animations.", image: "/ahsan.webp", gradient: "from-sky-400 to-sky-600", iconName: "Code", socials: { github: "https://github.com/syedahsanrazabukhari", linkedin: "https://www.linkedin.com/in/syedahsanrazabukhari/", email: "syedahsanrazabukhari10@gmail.com" } }, 
+  { id: 6, name: "Taha Qureshi", role: "AI Expert | Frontend Developer | Content Writer", expertise: ["React", "Next.js", "UI/UX", "Tailwind", "Content Writing"], description: "Crafting elegant, intuitive interfaces, intelligent AI agents, and compelling content that people love.", image: "/taha.webp", gradient: "from-cyan-400 to-cyan-600", iconName: "Palette", socials: { github: "https://github.com/Tahaimran56", linkedin: "https://www.linkedin.com/in/taha-qureshi-37a5792a6/", email: "tahaqureshidev@gmail.com" } },
 ];
 
 export default function Team() {
   const [flippedCards, setFlippedCards] = useState<Set<number>>(new Set());
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      const x = (e.clientX / window.innerWidth) * 100;
-      const y = (e.clientY / window.innerHeight) * 100;
-      setMousePosition({ x, y });
-    };
-    window.addEventListener("mousemove", handleMouseMove, { passive: true });
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, []);
 
   const toggleFlip = (id: number) => {
     setFlippedCards(prev => {
@@ -55,24 +48,18 @@ export default function Team() {
 
   return (
     <section className="relative min-h-screen w-full overflow-hidden py-20" id="team">
-      <AuroraBackground showRadialGradient={true}>
-        {/* Animated Background Line */}
-        <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-0 left-1/3 w-px h-full bg-gradient-to-b from-transparent via-sky-400/30 to-transparent animate-line-drop" />
+      <div className="max-w-7xl mx-auto px-6 w-full">
+        {/* Section Title */}
+        <div className="text-center mb-20 animate-fade-in-up" style={{ animationDelay: '0.1s', animationFillMode: 'both' }}>
+          <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-tight mb-6">
+            <span className="text-white">Meet Our </span>
+            <span className="bg-gradient-to-r from-white via-sky-200 to-sky-400 bg-clip-text text-transparent">Team</span>
+          </h2>
+          <p className="text-xl max-w-3xl mx-auto text-slate-300">Talented individuals working together to create amazing AI solutions</p>
         </div>
 
-        <div className="max-w-7xl mx-auto px-6 w-full relative z-10">
-          {/* Section Title */}
-          <div className="text-center mb-20 animate-fade-in-up" style={{ animationDelay: '0.1s', animationFillMode: 'both' }}>
-            <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-tight mb-6">
-              <span className="text-white">Meet Our </span>
-              <span className="bg-gradient-to-r from-white via-sky-200 to-sky-400 bg-clip-text text-transparent">Team</span>
-            </h2>
-            <p className="text-xl max-w-3xl mx-auto text-slate-300">Talented individuals working together to create amazing AI solutions</p>
-          </div>
-
-          {/* Team Grid - Single client component boundary */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        {/* Team Grid - Single client component boundary */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
           {teamMembers.map((member, index) => {
             const Icon = ICON_MAP[member.iconName] || CodeIcon;
             const isFlipped = flippedCards.has(member.id);
@@ -91,7 +78,7 @@ export default function Team() {
                   className="relative w-full h-full transition-transform duration-500 ease-in-out"
                   style={{
                     transformStyle: 'preserve-3d',
-                    transform: `rotateY(${isFlipped ? 180 : 0}deg) rotateX(${(mousePosition.y - 50) * -0.1}deg) rotateY(${(mousePosition.x - 50) * 0.1}deg)`,
+                    transform: `rotateY(${isFlipped ? 180 : 0}deg)`,
                   }}
                 >
                   {/* Front Side */}
@@ -100,7 +87,7 @@ export default function Team() {
                       <div className="relative h-[60%] overflow-hidden">
                         <Image src={member.image} alt={member.name} fill className="object-cover object-[center_20%] transition-transform duration-700 group-hover:scale-110" sizes="(max-width: 768px) 100vw, 33vw" loading="lazy" />
                         <div className="absolute inset-0 bg-gradient-to-t from-[#02040a] via-[#02040a]/30 to-transparent" />
-                        <div className={`absolute top-6 right-6 p-3 rounded-xl bg-gradient-to-br ${member.gradient} shadow-lg`} aria-hidden="true"><Icon /></div>
+                        <div className={`absolute top-6 right-6 p-3 rounded-xl bg-gradient-to-br ${member.gradient} shadow-lg`}><Icon /></div>
                       </div>
                       <div className="relative h-[40%] p-6 flex flex-col justify-center">
                         <h3 className="text-2xl font-bold text-slate-100 mb-2">{member.name}</h3>
@@ -114,7 +101,7 @@ export default function Team() {
                   <div className="absolute inset-0 w-full h-full rounded-2xl overflow-hidden" style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}>
                     <div className="relative w-full h-full bg-[#02040a]/90 backdrop-blur-xl border border-sky-400/20 rounded-2xl p-8 flex flex-col justify-between transition-all duration-300">
                       <div>
-                        <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${member.gradient} flex items-center justify-center mb-4`} aria-hidden="true"><Icon /></div>
+                        <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${member.gradient} flex items-center justify-center mb-4`}><Icon /></div>
                         <h3 className="text-2xl font-bold text-slate-100 mb-2">{member.name}</h3>
                         <p className={`text-sm font-semibold mb-4 bg-gradient-to-r ${member.gradient} text-transparent bg-clip-text`}>{member.role}</p>
                       </div>
@@ -127,9 +114,9 @@ export default function Team() {
                         </div>
                       </div>
                       <div className="flex gap-3">
-                        <a href={member.socials.github} target="_blank" rel="noopener noreferrer" className="flex-1 flex items-center justify-center gap-2 py-3 bg-sky-400/5 hover:bg-sky-400/10 border border-sky-400/30 rounded-xl transition-all duration-300" aria-label={`GitHub profile for ${member.name}`}><GithubIcon /></a>
-                        <a href={member.socials.linkedin} target="_blank" rel="noopener noreferrer" className="flex-1 flex items-center justify-center gap-2 py-3 bg-sky-400/5 hover:bg-sky-400/10 border border-sky-400/30 rounded-xl transition-all duration-300" aria-label={`LinkedIn profile for ${member.name}`}><LinkedinIcon /></a>
-                        <a href={`mailto:${member.socials.email}`} className="flex-1 flex items-center justify-center gap-2 py-3 bg-sky-400/5 hover:bg-sky-400/10 border border-sky-400/30 rounded-xl transition-all duration-300" aria-label={`Send email to ${member.name}`}><MailIcon /></a>
+                        <a href={member.socials.github} target="_blank" rel="noopener noreferrer" className="flex-1 flex items-center justify-center gap-2 py-3 bg-sky-400/5 hover:bg-sky-400/10 border border-sky-400/30 rounded-xl transition-all duration-300" aria-label="GitHub"><GithubIcon /></a>
+                        <a href={member.socials.linkedin} target="_blank" rel="noopener noreferrer" className="flex-1 flex items-center justify-center gap-2 py-3 bg-sky-400/5 hover:bg-sky-400/10 border border-sky-400/30 rounded-xl transition-all duration-300" aria-label="LinkedIn"><LinkedinIcon /></a>
+                        <a href={`mailto:${member.socials.email}`} className="flex-1 flex items-center justify-center gap-2 py-3 bg-sky-400/5 hover:bg-sky-400/10 border border-sky-400/30 rounded-xl transition-all duration-300" aria-label="Email"><MailIcon /></a>
                       </div>
                     </div>
                   </div>
@@ -139,7 +126,6 @@ export default function Team() {
           })}
         </div>
       </div>
-      </AuroraBackground>
     </section>
   );
 }

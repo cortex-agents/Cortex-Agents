@@ -1,8 +1,0 @@
-first-contentful-paint
-largest-contentful-paint
-total-blocking-time
-cumulative-layout-shift
-speed-index
-cache-insight
-cls-culprits-insight
-document-latency-insight
