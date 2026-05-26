@@ -107,15 +107,12 @@ function About() {
                 <div className="relative rounded-2xl overflow-hidden border border-[#38bdf8]/20 bg-[#02040a]/50">
                   {/* Top Bar */}
                   <div className="flex items-center gap-2 px-4 py-2.5 border-b border-[#38bdf8]/10 bg-[#02040a]/60">
-                    <div className="flex gap-1.5">
-                      <div className="w-2.5 h-2.5 rounded-full bg-[#38bdf8]/40" />
-                      <div className="w-2.5 h-2.5 rounded-full bg-[#0ea5e9]/30" />
-                      <div className="w-2.5 h-2.5 rounded-full bg-cyan-500/20" />
+                    <span className="text-[10px] text-[#38bdf8]/70 font-medium tracking-wider uppercase">Showcase</span>
+                    <div className="flex-1" />
+                    <div className="flex items-center gap-2">
+                      <div className="w-2 h-2 rounded-full bg-emerald-500/80" />
+                      <span className="text-[10px] text-slate-500 font-medium">Verified Work</span>
                     </div>
-                    <div className="flex-1 text-center">
-                      <span className="text-[10px] text-[#38bdf8]/50 font-mono tracking-[0.2em] uppercase">cortex_display.exe</span>
-                    </div>
-                    <div className="w-12" />
                   </div>
 
                   {/* Image Area */}
@@ -159,13 +156,15 @@ function About() {
 
                   {/* Bottom Bar */}
                   <div className="flex items-center justify-between px-4 py-2 border-t border-[#38bdf8]/10 bg-[#02040a]/60">
-                    <span className="text-[10px] text-slate-500 font-mono">5 assets loaded</span>
-                    <div className="flex gap-1">
-                      {carouselImages.map((_, i) => (
-                        <div key={i} className={`w-1.5 h-1.5 rounded-full ${i === 0 ? 'bg-[#38bdf8]' : 'bg-[#38bdf8]/20'}`} />
-                      ))}
+                    <span className="text-[10px] text-slate-500 font-medium">Projects Portfolio</span>
+                    <div className="flex items-center gap-1.5">
+                      <svg className="w-3 h-3 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                      <span className="text-[10px] text-slate-500 font-medium">Auto-play</span>
                     </div>
-                    <span className="text-[10px] text-slate-500 font-mono">auto-rotate</span>
+                    <span className="text-[10px] text-slate-500 font-medium">5 Projects</span>
                   </div>
                 </div>
               </div>
