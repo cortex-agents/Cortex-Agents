@@ -1,4 +1,4 @@
-export interface ServiceFeature {
+﻿export interface ServiceFeature {
   icon: string;
   title: string;
   description: string;
@@ -292,7 +292,7 @@ export const servicesData: ServiceData[] = [
         {
           icon: "RefreshCw",
           title: "Redesign & Revamp",
-          description: "Have an existing product that needs a refresh? We analyze what's not working, redesign with purpose, and give your product a modern, competitive look.",
+          description: "Have an existing product that needs a refresh- We analyze what's not working, redesign with purpose, and give your product a modern, competitive look.",
         },
         {
           icon: "Users",
