@@ -5,6 +5,7 @@ import { Section } from '@/components/ui/Section';
 import { Button } from '@/components/ui/Button';
 import products from '@/components/data/products';
 import { Product } from '@/components/data/products_types';
+import { FadeInUp, AccentBar, StaggerGroup, StaggerItem } from '@/components/ui/Animations';
 
 export const metadata = {
   title: 'Portfolio',
@@ -21,27 +22,26 @@ export default function PortfolioPage() {
     <main className="bg-background text-foreground min-h-screen">
       <Section spacing="loose" className="pt-32 pb-20">
         <div className="mb-20">
-          <div className="mb-8">
+          <FadeInUp className="mb-8">
             <span className="font-mono text-sm tracking-widest uppercase text-accent border border-accent px-3 py-1">
-              All Projects
+              Case Studies
             </span>
-          </div>
+          </FadeInUp>
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter uppercase leading-[0.9] mb-8">
-            OUR COMPLETE PORTFOLIO
+            ENGINEERED OUTCOMES
           </h1>
-          <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed max-w-2xl">
-            Explore all our projects featuring cutting-edge technologies and editorial design.
-          </p>
+          <FadeInUp delay={0.1}>
+            <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed max-w-2xl">
+              We don&apos;t showcase pretty pictures. We showcase systems that scale operations, dominate search rankings, and automate revenue.
+            </p>
+          </FadeInUp>
+          <AccentBar className="w-16 h-1 bg-accent mt-10" />
         </div>
 
-        {/* Perfect grid for portfolio items */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-y-20 gap-x-8 lg:gap-x-12">
-          {products.map((project: Product) => {
-            return (
-              <div 
-                key={project.id}
-                className="group flex flex-col"
-              >
+        <StaggerGroup className="grid grid-cols-1 md:grid-cols-2 gap-y-20 gap-x-8 lg:gap-x-12">
+          {products.map((project: Product) => (
+            <StaggerItem key={project.id}>
+              <div className="group flex flex-col">
                 <div className="relative aspect-[4/3] w-full overflow-hidden bg-muted border border-border mb-6">
                   <Image 
                     src={project.image} 
@@ -78,17 +78,18 @@ export default function PortfolioPage() {
                   </Link>
                 </div>
               </div>
-            );
-          })}
-        </div>
+            </StaggerItem>
+          ))}
+        </StaggerGroup>
         
         {/* Back to Home CTA */}
-        <div className="mt-32 pt-16 border-t border-border flex justify-center">
+        <FadeInUp className="mt-32 pt-16 border-t border-border flex justify-center">
           <Button variant="ghost" href="/">
             ← Back to Home
           </Button>
-        </div>
+        </FadeInUp>
       </Section>
     </main>
   );
 }
+

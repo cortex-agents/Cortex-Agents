@@ -1,6 +1,8 @@
 import Link from 'next/link';
 import { FacebookIcon, InstagramIcon, WhatsAppIcon } from './ui/BrandIcons';
 import { Section } from './ui/Section';
+import { FadeInUp } from './ui/Animations';
+
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -23,17 +25,17 @@ export default function Footer() {
   return (
     <footer className="bg-background text-foreground border-t border-border">
       <Section spacing="standard">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-8">
           
-          {/* Brand Column (Spans 5) */}
-          <div className="lg:col-span-5 flex flex-col justify-between">
+          {/* Brand Column */}
+          <FadeInUp className="lg:col-span-5 flex flex-col justify-between">
             <div>
               <h2 className="font-display text-4xl md:text-5xl font-bold tracking-tighter mb-6 uppercase">
                 Cortex<br />
                 <span className="text-accent italic font-serif tracking-normal">Agents.</span>
               </h2>
-              <p className="text-muted-foreground text-lg max-w-sm mb-12">
-                Empowering businesses with intelligent automation, AI innovation, and next-generation digital solutions.
+              <p className="text-muted-foreground text-lg max-w-sm mb-8 md:mb-12">
+                Engineering intelligent systems, autonomous AI agents, and high-performance digital infrastructure for ambitious businesses.
               </p>
             </div>
             
@@ -52,10 +54,10 @@ export default function Footer() {
                 </Link>
               ))}
             </div>
-          </div>
+          </FadeInUp>
 
-          {/* Quick Links (Spans 3) */}
-          <div className="lg:col-span-3 lg:col-start-7">
+          {/* Quick Links */}
+          <FadeInUp delay={0.1} className="lg:col-span-3 lg:col-start-7">
             <h3 className="font-mono text-sm tracking-widest uppercase text-muted-foreground mb-8">
               Navigation
             </h3>
@@ -72,10 +74,10 @@ export default function Footer() {
                 </li>
               ))}
             </ul>
-          </div>
+          </FadeInUp>
 
-          {/* Contact (Spans 3) */}
-          <div className="lg:col-span-3">
+          {/* Contact */}
+          <FadeInUp delay={0.15} className="lg:col-span-3">
             <h3 className="font-mono text-sm tracking-widest uppercase text-muted-foreground mb-8">
               Contact
             </h3>
@@ -99,7 +101,7 @@ export default function Footer() {
                 </p>
               </div>
             </div>
-          </div>
+          </FadeInUp>
         </div>
       </Section>
 
@@ -109,10 +111,6 @@ export default function Footer() {
           <p>
             &copy; {currentYear} CORTEX AGENTS. ALL RIGHTS RESERVED.
           </p>
-          <a href="#main-content" className="flex items-center gap-2 group hover:text-accent transition-colors duration-150 p-2 -m-2">
-            <span>BACK TO TOP</span>
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square" strokeLinejoin="miter" className="transition-transform duration-150 group-hover:-translate-y-1"><path d="m18 15-6-6-6 6"/></svg>
-          </a>
         </div>
       </div>
     </footer>

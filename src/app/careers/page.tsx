@@ -3,6 +3,7 @@ import fs from 'fs';
 import path from 'path';
 import { Section } from '@/components/ui/Section';
 import CareersClient from '@/components/careers/CareersClient';
+import { FadeInUp, AccentBar } from '@/components/ui/Animations';
 
 export const metadata = {
   title: 'Careers',
@@ -40,17 +41,20 @@ export default function CareersPage() {
     <main className="bg-background text-foreground min-h-screen">
       <Section spacing="loose" className="pt-32 pb-20">
         <div className="mb-20">
-          <div className="mb-8">
+          <FadeInUp className="mb-8">
             <span className="font-mono text-sm tracking-widest uppercase text-accent border border-accent px-3 py-1">
-              Join Us
+              The Engineering Unit
             </span>
-          </div>
+          </FadeInUp>
           <h1 className="font-display text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter uppercase leading-[0.9] mb-8">
-            CAREERS
+            JOIN THE UNIT
           </h1>
-          <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed max-w-2xl">
-            We are always looking for driven individuals to help us build intelligent systems and beautiful websites.
-          </p>
+          <FadeInUp delay={0.1}>
+            <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed max-w-2xl">
+              We don&apos;t hire employees. We recruit operators. If you write fast code, build scalable systems, and despise bureaucracy, you belong here.
+            </p>
+          </FadeInUp>
+          <AccentBar className="w-16 h-1 bg-accent mt-10" />
         </div>
 
         <CareersClient jobs={jobs} />

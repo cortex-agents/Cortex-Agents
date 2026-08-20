@@ -1,76 +1,31 @@
-export interface ServiceFeature {
-  icon: string;
-  title: string;
-  description: string;
+const fs = require('fs');
+
+function replaceService(code, slug, newObjStr) {
+  const marker = `slug: "${slug}"`;
+  const slugIdx = code.indexOf(marker);
+  if (slugIdx === -1) {
+    console.log("Could not find slug:", slug);
+    return code;
+  }
+  
+  const startIdx = code.lastIndexOf('{', slugIdx);
+  let braceCount = 0;
+  let endIdx = -1;
+  for (let i = startIdx; i < code.length; i++) {
+    if (code[i] === '{') braceCount++;
+    if (code[i] === '}') braceCount--;
+    if (braceCount === 0) {
+      endIdx = i + 1;
+      break;
+    }
+  }
+  
+  return code.substring(0, startIdx) + newObjStr + code.substring(endIdx);
 }
 
-export interface ProcessStep {
-  number: string;
-  title: string;
-  description: string;
-  duration: string;
-}
+let code = fs.readFileSync('src/lib/services-data.ts', 'utf8');
 
-export interface PricingTier {
-  name: string;
-  price: string;
-  badge?: string;
-  description: string;
-  features: string[];
-}
-
-export interface FAQ {
-  q: string;
-  a: string;
-}
-
-export interface ServiceData {
-  slug: string;
-  icon: string;
-  label?: string;
-  title: string;
-  shortDescription: string;
-  hero: {
-    badge: string;
-    tagline: string;
-    title: string;
-    subtitle: string;
-    heroDescription: string;
-  };
-  problems: {
-    heading: string;
-    subheading?: string;
-    problems: string[];
-  };
-  features: {
-    heading: string;
-    description: string;
-    features: ServiceFeature[];
-  };
-  process: {
-    heading: string;
-    description: string;
-    steps: ProcessStep[];
-  };
-  pricing: {
-    heading: string;
-    subheading: string;
-    tiers: PricingTier[];
-  };
-  faqs: FAQ[];
-  cta: {
-    heading: string;
-    subheading: string;
-    primaryCTA: string;
-    primaryLink: string;
-    secondaryCTA: string;
-    secondaryLink: string;
-    note: string;
-  };
-}
-
-export const servicesData: ServiceData[] = [
-  {
+const webDev = `{
     slug: "web-development",
     icon: "Globe",
     label: "Most Popular",
@@ -244,8 +199,9 @@ export const servicesData: ServiceData[] = [
       secondaryLink: "/portfolio",
       note: "Free architecture audit • Clear pricing • 100% code ownership",
     },
-  },
-  {
+  }`;
+
+const uiUx = `{
     slug: "ui-ux-design",
     icon: "Palette",
     title: "UI/UX Design",
@@ -417,8 +373,9 @@ export const servicesData: ServiceData[] = [
       secondaryLink: "/portfolio",
       note: "Free UX tear-down • Figma handoff • 100% IP ownership",
     },
-  },
-  {
+  }`;
+
+const chatbots = `{
     slug: "ai-chatbots",
     icon: "MessageSquare",
     label: "High ROI",
@@ -588,8 +545,9 @@ export const servicesData: ServiceData[] = [
       secondaryLink: "/portfolio",
       note: "Live in 14 days • Custom trained • Integrates with your CRM",
     },
-  },
-  {
+  }`;
+
+const agents = `{
     slug: "ai-agents",
     icon: "Cpu",
     title: "AI Agents & Automation",
@@ -758,8 +716,9 @@ export const servicesData: ServiceData[] = [
       secondaryLink: "https://wa.me/923212322687",
       note: "Custom Python & LangChain • Secure API handling",
     },
-  },
-  {
+  }`;
+
+const seo = `{
     slug: "seo-optimization",
     icon: "TrendingUp",
     title: "SEO & AI Visibility",
@@ -928,695 +887,13 @@ export const servicesData: ServiceData[] = [
       secondaryLink: "/about",
       note: "Zero black-hat tactics • Month-to-month • Full technical overhaul",
     },
-  },
-  {
-    slug: "cloud-solutions",
-    icon: "Cloud",
-    title: "Cloud Solutions",
-    shortDescription: "Scalable, secure cloud infrastructure that grows with your business — deployed and managed by experts.",
-    hero: {
-      badge: "Scale Without Limits",
-      tagline: "Your Infrastructure Should Never Hold You Back.",
-      title: "Cloud Solutions",
-      subtitle: "Modern cloud infrastructure that's fast, secure, scalable, and always online — so your business never goes down.",
-      heroDescription: "Whether you're launching a new product, experiencing rapid growth, or struggling with slow, unreliable hosting — we architect and deploy cloud solutions that handle whatever your business throws at them. Built on AWS, Vercel, and modern DevOps practices.",
-    },
-    problems: {
-      heading: "Is Your Infrastructure Slowing You Down?",
-      problems: [
-        "Your website or app goes down during traffic spikes — you lose customers and credibility",
-        "Shared hosting is slow, unreliable, and you've outgrown it",
-        "Deployments are manual and stressful — one mistake breaks everything",
-        "No backups, no monitoring — you only find out something broke when a client calls",
-        "Your app is slow in production even though it works fine locally",
-        "You're paying for servers you don't understand and can't manage efficiently",
-      ],
-    },
-    features: {
-      heading: "Our Cloud Services",
-      description: "We architect, deploy, and manage cloud infrastructure on AWS, Vercel, and other leading platforms — so your team can focus on building products, not fighting servers.",
-      features: [
-        {
-          icon: "Server",
-          title: "Cloud Deployment & Hosting",
-          description: "We deploy your application on the right platform — Vercel for Next.js, AWS EC2 for custom backends, S3 for storage, RDS for databases. Optimized for performance and cost.",
-        },
-        {
-          icon: "GitBranch",
-          title: "CI/CD Pipeline Setup",
-          description: "Automated deployment pipelines using GitHub Actions or Vercel. Every code push is automatically tested, built, and deployed — safely, reliably, and without manual steps.",
-        },
-        {
-          icon: "Shield",
-          title: "Security & SSL Configuration",
-          description: "HTTPS everywhere, environment variable management, IAM roles, firewall rules, and security best practices — your infrastructure is locked down from day one.",
-        },
-        {
-          icon: "Activity",
-          title: "Monitoring & Alerting",
-          description: "Real-time monitoring of uptime, performance, errors, and resource usage. You get alerts before users notice problems — and we fix issues before they affect your business.",
-        },
-        {
-          icon: "Database",
-          title: "Database Setup & Management",
-          description: "Managed databases (PostgreSQL, MongoDB, MySQL) with automated backups, read replicas for performance, and proper indexing. Your data is always safe and fast.",
-        },
-        {
-          icon: "TrendingUp",
-          title: "Auto-Scaling Infrastructure",
-          description: "Your app handles 10 users or 10,000 users without breaking a sweat. We configure auto-scaling so your infrastructure grows automatically with your traffic.",
-        },
-      ],
-    },
-    process: {
-      heading: "How We Set Up Your Cloud",
-      description: "A clear, collaborative process — so you always know what's happening.",
-      steps: [
-        {
-          number: "01",
-          title: "Infrastructure Audit",
-          description: "We review your current setup — hosting, deployments, databases, security, performance. We identify what's working, what's not, and the fastest path to improvement.",
-          duration: "Day 1–2",
-        },
-        {
-          number: "02",
-          title: "Architecture Planning",
-          description: "We design your target infrastructure — which cloud services to use, how they connect, security setup, and cost estimate. You approve before we touch anything.",
-          duration: "Day 3–4",
-        },
-        {
-          number: "03",
-          title: "Setup & Migration",
-          description: "We set up all cloud services, migrate your application and data (with zero downtime when possible), and configure everything properly.",
-          duration: "Day 5–10",
-        },
-        {
-          number: "04",
-          title: "CI/CD & Automation",
-          description: "We set up automated deployment pipelines, testing, and monitoring. From now on, deploying your app is one click — or fully automatic.",
-          duration: "Day 11–13",
-        },
-        {
-          number: "05",
-          title: "Handover & Documentation",
-          description: "We hand over full access, document everything clearly, and train your team. You're never dependent on us — but we're always available when needed.",
-          duration: "Day 14",
-        },
-      ],
-    },
-    pricing: {
-      heading: "Simple, Transparent Pricing",
-      subheading: "No hidden fees. No surprises. Just great work.",
-      tiers: [
-        {
-          name: "Starter Setup",
-          price: "PKR 25,000",
-          description: "Get your project properly deployed on modern cloud infrastructure.",
-          features: [
-            "Vercel or AWS deployment",
-            "Domain & SSL configuration",
-            "Environment variables setup",
-            "Basic monitoring setup",
-            "GitHub deployment pipeline",
-            "2 weeks post-launch support",
-          ],
-        },
-        {
-          name: "Full Infrastructure",
-          price: "PKR 60,000",
-          badge: "Most Popular",
-          description: "Complete cloud setup with CI/CD, monitoring, and databases.",
-          features: [
-            "All Starter features",
-            "Database setup & optimization",
-            "Full CI/CD pipeline",
-            "Uptime & error monitoring",
-            "Auto-scaling configuration",
-            "Security hardening",
-            "1 month managed support",
-          ],
-        },
-        {
-          name: "Managed Cloud",
-          price: "PKR 15,000 / month",
-          description: "Ongoing management — we handle your cloud so you don't have to.",
-          features: [
-            "All infrastructure managed by us",
-            "24/7 uptime monitoring",
-            "Incident response & fixes",
-            "Monthly performance reports",
-            "Regular security updates",
-            "Backup verification",
-            "On-call support",
-          ],
-        },
-      ],
-    },
-    faqs: [
-      {
-        q: "Which cloud platforms do you work with?",
-        a: "Primarily AWS and Vercel — the two most powerful and widely-used platforms. We also work with DigitalOcean, Railway, and Render depending on your specific needs and budget.",
-      },
-      {
-        q: "Will I own my cloud accounts and infrastructure?",
-        a: "Yes, always. We work inside your own AWS or cloud accounts — you own everything. We never lock you into our accounts or make you dependent on us.",
-      },
-      {
-        q: "Can you migrate my existing site without downtime?",
-        a: "In most cases, yes. We plan migrations carefully — setting up the new environment first, testing thoroughly, then switching over with minimal or zero downtime.",
-      },
-      {
-        q: "How much does cloud hosting cost monthly?",
-        a: "For a standard Next.js website, Vercel's free or Pro plan (PKR 5,000–6,000/month) handles most traffic. AWS costs vary by usage — we always give you a clear cost estimate before starting.",
-      },
-      {
-        q: "Do you provide ongoing management after setup?",
-        a: "Yes — our Managed Cloud plan covers ongoing monitoring, updates, security patches, and incident response. Most clients prefer this so they never have to think about infrastructure.",
-      },
-    ],
-    cta: {
-      heading: "Build Infrastructure That Never Lets You Down",
-      subheading: "Stop worrying about servers. Focus on growing your business.",
-      primaryCTA: "Set Up My Cloud",
-      primaryLink: "/contact",
-      secondaryCTA: "WhatsApp Us",
-      secondaryLink: "https://wa.me/923212322687",
-      note: "Free infrastructure audit • Clear cost estimate upfront • You own everything",
-    },
-  },
-  {
-    slug: "custom-saas-enterprise",
-    icon: "Blocks",
-    label: "High Scale",
-    title: "Custom SaaS & Enterprise",
-    shortDescription: "Scalable, secure, and complex web applications—from multi-tenant SaaS products to custom ERPs and internal portals.",
-    hero: {
-      badge: "Enterprise Grade",
-      tagline: "Build Systems, Not Just Websites.",
-      title: "Custom SaaS & Enterprise Software",
-      subtitle: "Off-the-shelf software doesn't fit your business. We engineer custom, scalable platforms that run your entire operation.",
-      heroDescription: "When your business outgrows Excel, WordPress, and generic software, you need custom architecture. We build massive, scalable, multi-tenant web applications, CRMs, and internal portals using Node.js, PostgreSQL, and Next.js—designed to handle millions of rows of data without breaking a sweat.",
-    },
-    problems: {
-      heading: "Is Generic Software Holding You Back?",
-      problems: [
-        "You are using 5 different tools that don't talk to each other",
-        "Your team spends hours doing manual data entry between systems",
-        "Off-the-shelf software lacks the specific features your business actually needs",
-        "You're paying massive monthly subscription fees for enterprise tools you only use 10% of",
-        "Your current software crashes or slows down when dealing with large datasets",
-        "You want to launch a SaaS product but don't have the technical team to build it",
-      ],
-    },
-    features: {
-      heading: "What We Build",
-      description: "We don't do simple websites here. This is hardcore software engineering. We build secure, compliant, and scalable platforms.",
-      features: [
-        {
-          icon: "Database",
-          title: "Complex Database Architecture",
-          description: "We design robust relational databases (PostgreSQL) that can handle complex queries, massive datasets, and real-time updates without slowing down.",
-        },
-        {
-          icon: "Users",
-          title: "Multi-Tenant SaaS Platforms",
-          description: "Building a software product to sell to other businesses? We build multi-tenant architectures where every client gets their own secure workspace and data isolation.",
-        },
-        {
-          icon: "Lock",
-          title: "Enterprise-Grade Security",
-          description: "Role-based access control (RBAC), end-to-end encryption, JWT authentication, and automated backups. Your business data is locked down.",
-        },
-        {
-          icon: "Activity",
-          title: "Custom CRMs & Dashboards",
-          description: "Stop using spreadsheets. We build internal tools that visualize your data, track KPIs, and manage your workforce exactly the way you operate.",
-        },
-        {
-          icon: "Link",
-          title: "3rd-Party API Integrations",
-          description: "We connect your custom software to Stripe for payments, Twilio for SMS, SendGrid for emails, and any other API your business relies on.",
-        },
-        {
-          icon: "Cpu",
-          title: "Serverless & Microservices",
-          description: "We architect your software so it automatically scales up during traffic spikes and scales down to save costs when traffic is low.",
-        },
-      ],
-    },
-    process: {
-      heading: "How We Engineer Your Platform",
-      description: "Building enterprise software requires extreme precision. We follow strict Agile methodologies.",
-      steps: [
-        {
-          number: "01",
-          title: "Requirements Gathering",
-          description: "We map out every single feature, user role, and database relationship required. We leave zero room for assumptions.",
-          duration: "Week 1",
-        },
-        {
-          number: "02",
-          title: "Architecture & UI Design",
-          description: "We design the database schema and create high-fidelity Figma prototypes of the entire application.",
-          duration: "Week 2-3",
-        },
-        {
-          number: "03",
-          title: "Core Development",
-          description: "We build the backend logic, APIs, and front-end interface in iterative sprints, showing you progress every week.",
-          duration: "Week 4-10",
-        },
-        {
-          number: "04",
-          title: "QA & Penetration Testing",
-          description: "We rigorously test the platform for bugs, security vulnerabilities, and load capacity before it ever sees production.",
-          duration: "Week 11-12",
-        },
-        {
-          number: "05",
-          title: "Deployment & Scaling",
-          description: "We deploy the application to AWS or GCP, set up automated backups, and officially launch your platform.",
-          duration: "Week 13+",
-        },
-      ],
-    },
-    pricing: {
-      heading: "Investment Tiers",
-      subheading: "Custom software is an asset that appreciates. Pricing depends on complexity.",
-      tiers: [
-        {
-          name: "SaaS MVP",
-          price: "PKR 150,000+",
-          description: "A functional, core-feature version of your idea to test the market.",
-          features: [
-            "User Authentication",
-            "Core database setup",
-            "1-2 main features",
-            "Stripe payment integration",
-            "Next.js frontend",
-            "Delivered in 4-6 weeks",
-          ],
-        },
-        {
-          name: "Full Platform",
-          price: "PKR 350,000+",
-          badge: "Most Common",
-          description: "A complete, production-ready internal tool or SaaS product.",
-          features: [
-            "Multi-tenant architecture",
-            "Complex role-based access",
-            "Admin dashboard panel",
-            "3rd party API integrations",
-            "Automated email flows",
-            "Delivered in 8-12 weeks",
-          ],
-        },
-        {
-          name: "Enterprise",
-          price: "Custom",
-          description: "For large organizations replacing legacy systems.",
-          features: [
-            "Microservices architecture",
-            "Legacy data migration",
-            "Custom AI integration",
-            "Advanced security compliance",
-            "SLA-backed support",
-            "Dedicated project manager",
-          ],
-        },
-      ],
-    },
-    faqs: [
-      {
-        q: "Who owns the code?",
-        a: "You do. 100%. Once the project is paid for and delivered, the entire codebase, intellectual property, and infrastructure belong to your company.",
-      },
-      {
-        q: "What tech stack do you use?",
-        a: "We use the modern enterprise stack: Next.js (React) for the frontend, Node.js or Python for the backend, and PostgreSQL for the database, usually hosted on AWS or Vercel.",
-      },
-      {
-        q: "Can you rescue an existing project?",
-        a: "Yes. If your previous developers left a messy codebase, we offer a 'Code Audit & Rescue' service to stabilize, refactor, and finish your software.",
-      },
-      {
-        q: "Will this integrate with my existing tools?",
-        a: "Absolutely. As long as your existing tools (like Salesforce, QuickBooks, etc.) have an API, we can seamlessly pull and push data to them.",
-      },
-      {
-        q: "Do you offer post-launch support?",
-        a: "Yes. Custom software requires maintenance. We offer SLA-backed retainers to handle updates, bug fixes, and server scaling after launch.",
-      },
-    ],
-    cta: {
-      heading: "Stop Forcing Generic Software to Fit Your Business",
-      subheading: "Let's build a platform that works exactly the way you do.",
-      primaryCTA: "Book Strategy Call",
-      primaryLink: "/contact",
-      secondaryCTA: "WhatsApp Us",
-      secondaryLink: "https://wa.me/923212322687",
-      note: "NDA available • Free architecture planning • Scalable from day one",
-    },
-  },
-  {
-    slug: "dedicated-teams",
-    icon: "Users",
-    title: "Dedicated Teams",
-    shortDescription: "Scale your engineering capacity instantly. Hire our pre-vetted Next.js and AI developers on a monthly retainer.",
-    hero: {
-      badge: "Staff Augmentation",
-      tagline: "Your Tech Team, Ready on Day One.",
-      title: "Dedicated Teams & Staff Augmentation",
-      subtitle: "Skip the painful hiring process. Inject top-tier software engineers directly into your workflow on a monthly basis.",
-      heroDescription: "Hiring good developers is incredibly difficult, expensive, and risky. Firing bad ones is even worse. With Cortex Agents, you can instantly augment your existing IT team with our senior Next.js, AI, and backend engineers. We work in your Slack, push to your GitHub, and attend your daily standups.",
-    },
-    problems: {
-      heading: "The Nightmare of Hiring In-House",
-      problems: [
-        "Recruiting takes months, and you still aren't sure if the developer is good",
-        "Local senior talent is too expensive for your current budget",
-        "Freelancers are unreliable and disappear when you need them most",
-        "You have a massive backlog of features but not enough hands to code them",
-        "You need specific expertise (like AI or Next.js) for only a few months",
-        "Onboarding takes weeks before a new hire actually contributes code",
-      ],
-    },
-    features: {
-      heading: "Why Hire Our Engineers?",
-      description: "We don't just provide 'coders'. We provide product-minded engineers who understand architecture, write clean code, and communicate flawlessly.",
-      features: [
-        {
-          icon: "Zap",
-          title: "Zero Onboarding Time",
-          description: "Our engineers are experienced professionals. They clone your repo, read the docs, and start pushing production-ready code in their first week.",
-        },
-        {
-          icon: "Shield",
-          title: "Pre-Vetted Talent",
-          description: "You don't need to conduct technical interviews. Every engineer on our team has built complex, scalable applications and passed rigorous internal testing.",
-        },
-        {
-          icon: "MessageSquare",
-          title: "Seamless Integration",
-          description: "We adapt to your culture. We use your Slack, your Jira, your GitHub, and follow your Agile/Scrum ceremonies just like a full-time employee.",
-        },
-        {
-          icon: "Briefcase",
-          title: "No HR Overhead",
-          description: "No benefits, no taxes, no office space, no severance packages. Just a simple monthly invoice for the exact engineering capacity you need.",
-        },
-        {
-          icon: "RefreshCw",
-          title: "Flexibility to Scale",
-          description: "Need to push hard for a launch? Add two more developers next week. Project slowing down? Scale back. You have total flexibility.",
-        },
-        {
-          icon: "Award",
-          title: "Guaranteed Quality",
-          description: "If an engineer isn't a perfect fit for your team culture or tech stack, we replace them immediately at no cost to you.",
-        },
-      ],
-    },
-    process: {
-      heading: "How to Hire Your Team",
-      description: "We move fast. You can have an engineer writing code for you in less than 7 days.",
-      steps: [
-        {
-          number: "01",
-          title: "Needs Assessment",
-          description: "Tell us what you're building, the tech stack you use, and whether you need backend, frontend, AI, or full-stack expertise.",
-          duration: "Day 1",
-        },
-        {
-          number: "02",
-          title: "Profile Selection",
-          description: "We present 1-2 profiles of our engineers who perfectly match your technical requirements and time zone preferences.",
-          duration: "Day 2",
-        },
-        {
-          number: "03",
-          title: "Introductory Interview",
-          description: "You have a 30-minute chat with the engineer to ensure cultural fit and technical alignment. No hard commitments yet.",
-          duration: "Day 3-4",
-        },
-        {
-          number: "04",
-          title: "Contract & Setup",
-          description: "We sign a simple month-to-month agreement, sign NDAs, and get the engineer access to your Slack and code repositories.",
-          duration: "Day 5",
-        },
-        {
-          number: "05",
-          title: "First Commit",
-          description: "The engineer begins work, attends your standups, and pushes their first PR to your codebase.",
-          duration: "Day 7",
-        },
-      ],
-    },
-    pricing: {
-      heading: "Transparent Monthly Retainers",
-      subheading: "Flat monthly fees. Cancel with 30 days notice.",
-      tiers: [
-        {
-          name: "Part-Time Dev",
-          price: "PKR 120,000 / mo",
-          description: "20 hours per week. Perfect for maintenance or slow-burn features.",
-          features: [
-            "20 hours per week dedicated",
-            "Direct Slack communication",
-            "Weekly progress reports",
-            "Frontend or Backend specialist",
-            "1-month rolling contract",
-          ],
-        },
-        {
-          name: "Full-Time Dev",
-          price: "PKR 220,000 / mo",
-          badge: "Most Popular",
-          description: "40 hours per week. A dedicated extension of your team.",
-          features: [
-            "40 hours per week dedicated",
-            "Attends your daily standups",
-            "Full-stack Next.js / Node.js",
-            "Direct Jira/Linear integration",
-            "Immediate replacement guarantee",
-          ],
-        },
-        {
-          name: "Dedicated Squad",
-          price: "Custom",
-          description: "An entire pre-assembled team to build your product.",
-          features: [
-            "1 Tech Lead / Architect",
-            "2-3 Full-Stack Developers",
-            "1 UI/UX Designer",
-            "1 QA Tester",
-            "Fully managed agile process",
-          ],
-        },
-      ],
-    },
-    faqs: [
-      {
-        q: "Where are your developers located?",
-        a: "Our core engineering team operates out of Karachi, Pakistan. We are highly proficient in English and overlap with UK, EU, and Middle East time zones, with partial overlap for US time zones.",
-      },
-      {
-        q: "What if I'm not happy with the developer?",
-        a: "We offer a 2-week risk-free trial. If you feel the developer isn't up to your standards, you pay nothing, and we can either replace them or part ways.",
-      },
-      {
-        q: "Who manages the developer?",
-        a: "In a staff augmentation model, the developer reports directly to your CTO, Tech Lead, or Project Manager. They function exactly like your in-house employees.",
-      },
-      {
-        q: "Are there any long-term contracts?",
-        a: "No. All of our retainers are month-to-month. We only require a 30-day notice period if you wish to scale down or cancel the engagement.",
-      },
-      {
-        q: "Do you sign NDAs?",
-        a: "Yes. We sign strict Non-Disclosure Agreements (NDAs) and IP assignment contracts. All code written belongs 100% to your company.",
-      },
-    ],
-    cta: {
-      heading: "Need to Ship Features Faster?",
-      subheading: "Stop waiting months to hire. Get top-tier developers on your team next week.",
-      primaryCTA: "Hire Developers",
-      primaryLink: "/contact",
-      secondaryCTA: "View Tech Stack",
-      secondaryLink: "/about",
-      note: "Pre-vetted talent • 2-week risk-free trial • Cancel anytime",
-    },
-  },
-  {
-    slug: "managed-it-services",
-    icon: "ShieldCheck",
-    title: "Managed IT & Software",
-    shortDescription: "Your virtual Tech Department. We maintain, secure, and scale your existing software so you can focus on business.",
-    hero: {
-      badge: "CTO As A Service",
-      tagline: "We Manage the Tech. You Manage the Business.",
-      title: "Managed IT & Software Maintenance",
-      subtitle: "Software requires constant care. We act as your dedicated tech team, handling bugs, server crashes, security updates, and new feature rollouts.",
-      heroDescription: "The worst thing for a business is when the system goes down and nobody knows how to fix it. If you have an existing web application but no dedicated IT team to manage it, you are at risk. Cortex Agents takes full ownership of your software infrastructure—ensuring 99.9% uptime, patching security holes, and building new features when you need them.",
-    },
-    problems: {
-      heading: "The Danger of Unmanaged Software",
-      problems: [
-        "Your website or app randomly crashes and you don't know who to call",
-        "Your original developers disappeared, leaving you with code you don't understand",
-        "Your software is incredibly slow but you don't know how to optimize the servers",
-        "You are worried about being hacked because no one has updated your dependencies in years",
-        "You need a small feature added, but agencies refuse to take 'small' jobs",
-        "You are paying for expensive cloud servers (AWS/GCP) without knowing if it's optimized",
-      ],
-    },
-    features: {
-      heading: "How We Protect Your Tech",
-      description: "We don't just fix things when they break. We proactively monitor and improve your software so it never breaks in the first place.",
-      features: [
-        {
-          icon: "Activity",
-          title: "24/7 Server Monitoring",
-          description: "We set up automated alerts. If your server CPU spikes or your site goes offline at 3 AM, our team gets pinged and fixes it immediately.",
-        },
-        {
-          icon: "Bug",
-          title: "Bug Fixing & Maintenance",
-          description: "Users reporting weird glitches? Forward them to us. We debug the code, test the solution, and deploy the fix without you lifting a finger.",
-        },
-        {
-          icon: "Shield",
-          title: "Security & Dependency Updates",
-          description: "Outdated NPM packages are the #1 cause of hacks. We run monthly security audits and keep all your frameworks and libraries up to date.",
-        },
-        {
-          icon: "Database",
-          title: "Database Backups & Disaster Recovery",
-          description: "We ensure your PostgreSQL or MongoDB databases are backed up daily, with a clear disaster recovery plan in case of catastrophic failure.",
-        },
-        {
-          icon: "TrendingDown",
-          title: "Cloud Cost Optimization",
-          description: "Most businesses overpay for AWS. We audit your cloud infrastructure and optimize your architecture, often saving clients thousands of dollars.",
-        },
-        {
-          icon: "Code",
-          title: "Legacy Code Modernization",
-          description: "Stuck on an old version of React or PHP? We slowly refactor your codebase into modern Next.js without disrupting your live users.",
-        },
-      ],
-    },
-    process: {
-      heading: "The Onboarding Process",
-      description: "Taking over a codebase is complex. We do it safely and methodically.",
-      steps: [
-        {
-          number: "01",
-          title: "Codebase Audit",
-          description: "We sign NDAs, get access to your GitHub and servers, and run a deep technical audit to see exactly what state the software is in.",
-          duration: "Day 1-3",
-        },
-        {
-          number: "02",
-          title: "Security & Backup Lock-down",
-          description: "Before making any changes, we secure the perimeter. We ensure automated backups are working and patch any critical zero-day vulnerabilities.",
-          duration: "Day 4-5",
-        },
-        {
-          number: "03",
-          title: "Monitoring Setup",
-          description: "We install tracking tools (Sentry, Datadog, Vercel Analytics) to monitor real-time errors, server loads, and uptime.",
-          duration: "Day 6-7",
-        },
-        {
-          number: "04",
-          title: "Bug Triage",
-          description: "We look at your backlog of user complaints and bugs, prioritize them by impact, and start knocking them out one by one.",
-          duration: "Month 1",
-        },
-        {
-          number: "05",
-          title: "Ongoing Partner",
-          description: "We shift into maintenance mode. You have a direct Slack channel with us to request new features, report issues, or ask for technical advice.",
-          duration: "Ongoing",
-        },
-      ],
-    },
-    pricing: {
-      heading: "Managed Retainer Plans",
-      subheading: "Peace of mind for a flat monthly fee.",
-      tiers: [
-        {
-          name: "Basic Maintenance",
-          price: "PKR 50,000 / mo",
-          description: "For simple apps that just need to stay online securely.",
-          features: [
-            "24/7 Uptime Monitoring",
-            "Weekly database backups",
-            "Monthly dependency updates",
-            "10 hours of bug fixing / mo",
-            "Email support (24hr SLA)",
-          ],
-        },
-        {
-          name: "Pro Managed IT",
-          price: "PKR 100,000 / mo",
-          badge: "Most Popular",
-          description: "Active development and tech management for growing businesses.",
-          features: [
-            "Advanced Error Tracking (Sentry)",
-            "AWS/Cloud Cost Optimization",
-            "Bi-weekly security patches",
-            "25 hours of dev/fixes / mo",
-            "Direct Slack Support (8hr SLA)",
-          ],
-        },
-        {
-          name: "CTO As A Service",
-          price: "Custom",
-          description: "We act as your entire technical department and strategy team.",
-          features: [
-            "Full infrastructure ownership",
-            "Unlimited bug fixes",
-            "Strategic roadmap planning",
-            "Tech interviews for your hires",
-            "1-hour Emergency SLA",
-            "Weekly strategy calls",
-          ],
-        },
-      ],
-    },
-    faqs: [
-      {
-        q: "What if my current code is a mess?",
-        a: "We are used to inheriting messy code. Our first step is a 'Code Audit'. If the code is too broken to maintain securely, we will advise you on a rewrite strategy.",
-      },
-      {
-        q: "How do I request a new feature or fix?",
-        a: "Depending on your plan, you simply drop a message in our shared Slack channel or send an email. We log it in Jira, give you an ETA, and handle it.",
-      },
-      {
-        q: "What happens if hours roll over?",
-        a: "Maintenance hours are 'use it or lose it' per month, as they reserve our engineers' capacity. However, if you consistently don't use them, we will suggest downgrading your plan to save you money.",
-      },
-      {
-        q: "What does 'SLA' mean?",
-        a: "Service Level Agreement. It means we legally guarantee how fast we will respond to and fix critical issues (e.g., if your site goes completely offline).",
-      },
-      {
-        q: "Can you manage AWS and Google Cloud?",
-        a: "Yes. Our team is highly experienced in DevOps and managing complex cloud architectures, ensuring they are both secure and cost-efficient.",
-      },
-    ],
-    cta: {
-      heading: "Don't Wait Until the Server Crashes",
-      subheading: "Secure your software today with a dedicated tech partner.",
-      primaryCTA: "Get an IT Audit",
-      primaryLink: "/consultancy",
-      secondaryCTA: "WhatsApp Us",
-      secondaryLink: "https://wa.me/923212322687",
-      note: "Free initial code audit • Fast onboarding • Complete peace of mind",
-    },
-  }
-];
+  }`;
+
+code = replaceService(code, 'web-development', webDev);
+code = replaceService(code, 'ui-ux-design', uiUx);
+code = replaceService(code, 'ai-chatbots', chatbots);
+code = replaceService(code, 'ai-agents', agents);
+code = replaceService(code, 'seo-optimization', seo);
+
+fs.writeFileSync('src/lib/services-data.ts', code);
+console.log('Successfully rewrote all 5 services in FlyRank style.');

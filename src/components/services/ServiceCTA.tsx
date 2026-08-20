@@ -1,6 +1,7 @@
-import React from 'react';
+﻿import React from 'react';
 import { Section } from '../ui/Section';
 import { Button } from '../ui/Button';
+import { FadeInUp } from '../ui/Animations';
 
 export default function ServiceCTA({ ctaData }: { ctaData: unknown }) {
   if (!ctaData || typeof ctaData !== 'object') return null;
@@ -8,7 +9,7 @@ export default function ServiceCTA({ ctaData }: { ctaData: unknown }) {
 
   return (
     <Section spacing="loose" hasTopBorder hasBottomBorder className="text-center">
-      <div className="max-w-4xl mx-auto flex flex-col items-center">
+      <FadeInUp className="max-w-4xl mx-auto flex flex-col items-center">
         <h2 className="font-display text-4xl md:text-6xl font-bold tracking-tighter uppercase mb-6 leading-tight">
           {cta.heading}
         </h2>
@@ -21,7 +22,7 @@ export default function ServiceCTA({ ctaData }: { ctaData: unknown }) {
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
           </svg>
         </Button>
-      </div>
+      </FadeInUp>
     </Section>
   );
 }

@@ -3,6 +3,8 @@ import './globals.css';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { Inter_Tight, Inter, Playfair_Display, JetBrains_Mono } from 'next/font/google';
+import { ThemeProvider } from '@/components/ThemeProvider';
+import { ScrollController } from '@/components/ui/ScrollController';
 
 const interTight = Inter_Tight({
   subsets: ['latin'],
@@ -46,7 +48,7 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://cortexagents.com'), // Assuming domain
+  metadataBase: new URL('https://cortexagents.com'),
   title: {
     default: "Cortex Agents | AI Automation & High-End Web Development",
     template: "%s | Cortex Agents",
@@ -99,14 +101,12 @@ export const metadata: Metadata = {
   },
 };
 
-import { ThemeProvider } from '@/components/ThemeProvider';
-
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className={`${interTight.variable} ${inter.variable} ${playfair.variable} ${jetbrainsMono.variable}`} suppressHydrationWarning>
-      <body className={`${inter.className} bg-background text-foreground antialiased min-h-screen`} suppressHydrationWarning>
+      <body className={`${inter.className} bg-background text-foreground antialiased min-h-screen relative overflow-x-hidden`} suppressHydrationWarning>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -136,20 +136,13 @@ export default function RootLayout({
           }}
         />
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
-          {/* Subtle noise grain texture overlay */}
-          <div 
-            className="fixed inset-0 z-0 pointer-events-none opacity-[0.015]"
-            style={{
-              backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
-            }}
-          />
-
           <div className="relative z-10">
             <Header />
             <main id="main-content" role="main">
               {children}
             </main>
             <Footer />
+            <ScrollController />
           </div>
         </ThemeProvider>
       </body>

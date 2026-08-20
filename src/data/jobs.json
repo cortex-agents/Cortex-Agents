@@ -1,9 +1,16 @@
 [
   {
     "id": "b2b-sales-manager",
-    "title": "B2B Sales Manager",
-    "description": "We are looking for a commission-based sales closer who can bring in high-value projects. You will receive a generous commission for every project you successfully close.",
-    "type": "Remote",
-    "location": "Anywhere"
+    "title": "B2B Sales Closer",
+    "description": "We are looking for a ruthless B2B closer who understands the value of high-ticket engineering. No base salary ceiling. You hunt enterprise deals, you close them, and you take home an aggressive percentage of the revenue.",
+    "type": "Remote / Commission",
+    "location": "Global"
+  },
+  {
+    "id": "agentic-ai-developer-intern",
+    "title": "Agentic AI Developer (Intern)",
+    "description": "We are looking for a highly driven intern to help build autonomous AI systems. You will not be fetching coffee or doing manual data entry. You will be writing Python, configuring LLMs, and deploying multi-agent architectures that automate complex business workflows. Only apply if you live and breathe AI.",
+    "type": "Internship",
+    "location": "Remote"
   }
 ]

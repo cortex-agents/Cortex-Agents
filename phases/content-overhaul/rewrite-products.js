@@ -1,4 +1,6 @@
-const products = [
+const fs = require('fs');
+
+const productsCode = `const products = [
     {
         id: 1,
         title: 'Restaurant & Fine Dining Platform',
@@ -83,3 +85,7 @@ const products = [
 ];
 
 export default products;
+`;
+
+fs.writeFileSync('src/components/data/products.ts', productsCode);
+console.log('Successfully updated products.ts');

@@ -25,7 +25,7 @@ export function Section({
   return (
     <section
       className={cn(
-        "w-full px-6 md:px-12 lg:px-16 mx-auto max-w-5xl",
+        "w-full px-6 md:px-12 lg:px-16 mx-auto max-w-7xl",
         spacingClasses[spacing],
         hasTopBorder && "border-t border-border",
         hasBottomBorder && "border-b border-border",

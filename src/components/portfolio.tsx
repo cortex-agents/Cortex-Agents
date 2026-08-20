@@ -5,29 +5,27 @@ import { Section } from './ui/Section';
 import { Button } from './ui/Button';
 import products from './data/products';
 import { Product } from './data/products_types';
+import { FadeInUp, AccentBar, StaggerGroup, StaggerItem } from './ui/Animations';
 
-const displayedProjects = products.slice(0, 4); // Show an even number for grid
+const displayedProjects = products.slice(0, 4);
 
 export default function Portfolio() {
   return (
     <Section spacing="standard" id="portfolio" hasTopBorder>
-      <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-8">
+      <FadeInUp className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-8">
         <div>
-          <h2 className="font-display text-4xl md:text-5xl font-bold tracking-tight mb-4 uppercase">Selected Work</h2>
-          <div className="w-16 h-1 bg-accent" />
+          <h2 className="font-display text-4xl md:text-5xl font-bold tracking-tight mb-4 uppercase">Engineered Outcomes</h2>
+          <AccentBar />
         </div>
         <Button variant="ghost" href="/portfolio">
-          View full archive
+          Explore All Systems
         </Button>
-      </div>
+      </FadeInUp>
 
-      {/* Perfect grid for portfolio items */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-y-16 gap-x-8 lg:gap-x-12">
+      <StaggerGroup className="grid grid-cols-1 md:grid-cols-2 gap-y-16 gap-x-8 lg:gap-x-12">
         {displayedProjects.map((project: Product) => (
-            <div 
-              key={project.id}
-              className="group flex flex-col"
-            >
+          <StaggerItem key={project.id}>
+            <div className="group flex flex-col">
               <div className="relative aspect-[4/3] w-full overflow-hidden bg-muted border border-border mb-6">
                 <Image 
                   src={project.image} 
@@ -61,8 +59,9 @@ export default function Portfolio() {
                 </Link>
               </div>
             </div>
-          ))}
-      </div>
+          </StaggerItem>
+        ))}
+      </StaggerGroup>
     </Section>
   );
 }

@@ -1,5 +1,6 @@
-﻿import React from 'react';
+import React from 'react';
 import { Section } from '../ui/Section';
+import { FadeInUp, AccentBar } from '../ui/Animations';
 
 const row1 = ["Next.js", "React", "TypeScript", "Tailwind CSS", "Node.js", "GraphQL", "PostgreSQL", "Prisma", "Supabase", "Vercel", "AWS", "Docker", "Figma", "Three.js", "WebGL"];
 const row2 = ["OpenAI", "Anthropic Claude", "LangChain", "LlamaIndex", "Pinecone", "Weaviate", "Hugging Face", "AgentKit", "Python", "FastAPI", "PyTorch", "LangGraph", "RAG Systems"];
@@ -11,15 +12,16 @@ const marqueeRow2 = [...row2, ...row2, ...row2, ...row2];
 export default function TechStack() {
   return (
     <Section spacing="standard" hasTopBorder hasBottomBorder className="overflow-hidden">
-      <div className="mb-16 md:mb-24">
+      <FadeInUp className="mb-16 md:mb-24">
         <h2 className="font-display text-4xl md:text-5xl font-bold tracking-tight mb-4 uppercase">
           Tech Stack
         </h2>
-        <div className="w-16 h-1 bg-accent mb-6" />
+        <AccentBar className="w-16 h-1 bg-accent mb-6" />
         <p className="text-xl text-muted-foreground max-w-2xl">
           We build with modern, industry-proven technologies—the same tools trusted by the world&apos;s top companies.
         </p>
-      </div>
+      </FadeInUp>
+
 
       <div 
         className="relative flex flex-col gap-6 md:gap-8 w-full opacity-85 hover:opacity-100 transition-opacity duration-500"

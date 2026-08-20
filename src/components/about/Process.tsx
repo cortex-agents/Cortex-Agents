@@ -1,5 +1,6 @@
-import React from 'react';
+﻿import React from 'react';
 import { Section } from '../ui/Section';
+import { FadeInUp, AccentBar, StaggerGroup, StaggerItem } from '../ui/Animations';
 
 const processSteps = [
   { num: "01", title: "Free Consultation", desc: "We start with a no-pressure call to understand your business, your goals, and what you actually need. We ask the right questions — and we listen." },
@@ -13,33 +14,35 @@ const processSteps = [
 export default function Process() {
   return (
     <Section spacing="standard" hasTopBorder>
-      <div className="mb-16 md:mb-24">
+      <FadeInUp className="mb-16 md:mb-24">
         <h2 className="font-display text-4xl md:text-5xl font-bold tracking-tight mb-4 uppercase">
           How We Work
         </h2>
-        <div className="w-16 h-1 bg-accent mb-6" />
+        <AccentBar className="w-16 h-1 bg-accent mb-6" />
         <p className="text-xl text-muted-foreground max-w-2xl">
           A simple, transparent process — so you always know what is happening and what comes next.
         </p>
-      </div>
+      </FadeInUp>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-12 gap-y-16">
+      <StaggerGroup className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-12 gap-y-12 md:gap-y-16">
         {processSteps.map((step, i) => (
-          <div key={i} className="flex flex-col group">
-            <div className="mb-6 pb-6 border-b border-border">
-              <span className="text-4xl font-mono tracking-tighter text-muted-foreground group-hover:text-accent transition-colors duration-150 ease-fast">
-                {step.num}
-              </span>
+          <StaggerItem key={i}>
+            <div className="flex flex-col group">
+              <div className="mb-6 pb-6 border-b border-border">
+                <span className="text-4xl font-mono tracking-tighter text-muted-foreground group-hover:text-accent transition-colors duration-150 ease-fast">
+                  {step.num}
+                </span>
+              </div>
+              <h3 className="font-display text-xl font-bold uppercase tracking-wide mb-4">
+                {step.title}
+              </h3>
+              <p className="text-muted-foreground leading-relaxed">
+                {step.desc}
+              </p>
             </div>
-            <h3 className="font-display text-xl font-bold uppercase tracking-wide mb-4">
-              {step.title}
-            </h3>
-            <p className="text-muted-foreground leading-relaxed">
-              {step.desc}
-            </p>
-          </div>
+          </StaggerItem>
         ))}
-      </div>
+      </StaggerGroup>
     </Section>
   );
 }
