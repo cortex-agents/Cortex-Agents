@@ -1618,5 +1618,180 @@ export const servicesData: ServiceData[] = [
       secondaryLink: "https://wa.me/923212322687",
       note: "Free initial code audit • Fast onboarding • Complete peace of mind",
     },
+  },
+  {
+    slug: "graphic-designing",
+    icon: "Image",
+    title: "Graphic Designing",
+    shortDescription: "Visual communication that builds brand identity and creates memorable experiences.",
+    hero: {
+      badge: "Brand Identity",
+      tagline: "Design That Speaks Louder Than Words.",
+      title: "Professional Graphic Designing",
+      subtitle: "We craft visual identities that resonate with your audience and elevate your brand presence across all mediums.",
+      heroDescription: "In a world saturated with content, great design is your competitive advantage. From logos and brand systems to marketing materials and social media assets, we create cohesive visual systems that communicate your values, attract your ideal customers, and leave lasting impressions.",
+    },
+    problems: {
+      heading: "Is Your Brand Visually Invisible?",
+      subheading: "If these sound familiar, your design is holding you back:",
+      problems: [
+        "Your logo looks generic and doesn't represent your unique value proposition",
+        "Your marketing materials lack consistency and professional polish",
+        "You struggle to stand out in a crowded marketplace",
+        "Your social media graphics look amateurish and fail to engage",
+        "Your print materials don't align with your digital presence",
+        "You don't have a cohesive brand system to guide all visual communications",
+      ],
+    },
+    features: {
+      heading: "The Design Excellence Standard",
+      description: "We don't just make things look good - we create strategic visual systems that drive brand recognition and business growth.",
+      features: [
+        {
+          icon: "Target",
+          title: "Strategic Brand Identity",
+          description: "We develop comprehensive brand systems including logos, color palettes, typography, and usage guidelines that ensure consistency across all touchpoints.",
+        },
+        {
+          icon: "Layers",
+          title: "Multi-Channel Design Systems",
+          description: "We create adaptable designs that work seamlessly across print, digital, social media, and environmental applications.",
+        },
+        {
+          icon: "CheckCircle",
+          title: "Print & Digital Production Ready",
+          description: "All designs are delivered in appropriate formats for both print (CMYK, Pantone) and digital (RGB, web-optimized) applications.",
+        },
+        {
+          icon: "TrendingUp",
+          title: "Conversion-Focused Visuals",
+          description: "We design marketing materials that don't just look beautiful - they drive action and measurable business results.",
+        },
+        {
+          icon: "Shield",
+          title: "Copyright & Ownership Assurance",
+          description: "You own 100% of the intellectual property rights to all designs created for your business.",
+        },
+        {
+          icon: "Zap",
+          title: "Rapid Turnaround Without Compromise",
+          description: "We deliver high-quality designs on schedule without sacrificing creativity or attention to detail.",
+        },
+      ],
+    },
+    process: {
+      heading: "How We Craft Your Visual Identity",
+      description: "Our collaborative design process ensures your vision is translated into exceptional visual communications.",
+      steps: [
+        {
+          number: "01",
+          title: "Discovery & Strategy",
+          description: "We dive deep into your brand, audience, competitors, and goals to establish a clear design direction.",
+          duration: "Day 1-2",
+        },
+        {
+          number: "02",
+          title: "Concept Development",
+          description: "We explore multiple creative directions and present you with strategic design concepts that align with your brand objectives.",
+          duration: "Day 3-4",
+        },
+        {
+          number: "03",
+          title: "Design Refinement",
+          description: "Based on your feedback, we refine the chosen concept into polished designs ready for presentation.",
+          duration: "Day 5-7",
+        },
+        {
+          number: "04",
+          title: "Client Review & Feedback",
+          description: "We present the refined designs, gather your input, and make revisions to ensure the final product exceeds your expectations.",
+          duration: "Day 8-9",
+        },
+        {
+          number: "05",
+          title: "Final Delivery & Guidelines",
+          description: "We deliver all final assets in appropriate formats along with brand guidelines for consistent future use.",
+          duration: "Day 10",
+        },
+      ],
+    },
+    pricing: {
+      heading: "Investment Tiers",
+      subheading: "Professional design that delivers value. Pricing based on scope and complexity.",
+      tiers: [
+        {
+          name: "Brand Identity Essentials",
+          price: "PKR 30,000",
+          description: "Perfect for startups and small businesses needing a professional visual foundation.",
+          features: [
+            "Custom Logo Design",
+            "Brand Color Palette",
+            "Typography Selection",
+            "Basic Brand Guidelines",
+            "Business Card Design",
+            "Delivered in 7 days",
+          ],
+        },
+        {
+          name: "Complete Brand System",
+          price: "PKR 65,000",
+          badge: "Most Popular",
+          description: "Comprehensive visual identity system for established businesses ready to scale.",
+          features: [
+            "Custom Logo Design (Primary & Secondary)",
+            "Complete Brand Color System",
+            "Typography Hierarchy",
+            "Comprehensive Brand Guidelines",
+            "Stationery Suite (Letterhead, Envelope, Invoice)",
+            "Social Media Templates",
+            "Delivered in 14 days",
+          ],
+        },
+        {
+          name: "Enterprise Brand Suite",
+          price: "Custom",
+          description: "Complete brand system for large organizations with complex multi-brand architectures.",
+          features: [
+            "Complete Brand System",
+            "Sub-brand Development",
+            "Environmental & Wayfinding Design",
+            "Packaging Design Templates",
+            "Animated Logo Variants",
+            "Dedicated Brand Manager",
+          ],
+        },
+      ],
+    },
+    faqs: [
+      {
+        q: "What file formats will I receive?",
+        a: "You'll receive vector files (AI, EPS, SVG) for scalability, plus raster files (PNG, JPG) for immediate use, all in both print-ready and web-optimized formats.",
+      },
+      {
+        q: "How many design concepts do you present?",
+        a: "We typically present 3-4 distinct design concepts for logos and brand identities, giving you meaningful choices while maintaining strategic focus.",
+      },
+      {
+        q: "Can you redesign our existing logo?",
+        a: "Absolutely. We specialize in both creating new brand identities and evolving existing ones to better represent your current business direction.",
+      },
+      {
+        q: "Do you offer packaging design services?",
+        a: "Yes, we can design packaging solutions that align with your brand identity and meet industry requirements for your specific products.",
+      },
+      {
+        q: "What if I need ongoing design support?",
+        a: "We offer retainer-based design support for businesses that need regular marketing materials, social media graphics, or ongoing brand management.",
+      },
+    ],
+    cta: {
+      heading: "Make Your Brand Unforgettable",
+      subheading: "Let's create a visual identity that commands attention and builds recognition.",
+      primaryCTA: "Start Design Project",
+      primaryLink: "/contact",
+      secondaryCTA: "View Portfolio",
+      secondaryLink: "/portfolio",
+      note: "Free design consultation • 100% ownership • Print & digital ready",
+    },
   }
 ];
