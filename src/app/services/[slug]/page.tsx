@@ -94,6 +94,13 @@ export default async function ServicePage({ params }: ServicePageProps) {
       </Section>
 
       <ServiceCTA ctaData={service.cta} />
+
+      {/* Back to Home button */}
+      <div className="flex items-center justify-center mt-16 mb-20">
+        <Link href="/" className="inline-flex items-center space-x-2 text-sm font-mono text-muted-foreground hover:text-accent transition-colors duration-150">
+          ← Back to Home
+        </Link>
+      </div>
     </main>
   );
 }
