@@ -8,10 +8,11 @@ import { FadeInUp, AccentBar } from '@/components/ui/Animations';
 export const metadata = {
   title: 'Careers',
   description: 'Join Cortex Agents. We are always looking for elite engineers, designers, and AI specialists to build the future.',
+  alternates: { canonical: '/careers' },
   openGraph: {
     title: 'Careers | Cortex Agents',
     description: 'Join Cortex Agents. We are always looking for elite engineers, designers, and AI specialists to build the future.',
-    url: 'https://cortexagents.com/careers',
+    url: '/careers',
   }
 };
 

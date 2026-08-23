@@ -10,10 +10,11 @@ import { FadeInUp, AccentBar, StaggerGroup, StaggerItem } from '@/components/ui/
 export const metadata = {
   title: 'Portfolio',
   description: 'Explore our complete portfolio featuring cutting-edge AI integrations, brutalist web designs, and high-performance applications.',
+  alternates: { canonical: '/portfolio' },
   openGraph: {
     title: 'Portfolio | Cortex Agents',
     description: 'Explore our complete portfolio featuring cutting-edge AI integrations, brutalist web designs, and high-performance applications.',
-    url: 'https://cortexagents.com/portfolio',
+    url: '/portfolio',
   }
 };
 

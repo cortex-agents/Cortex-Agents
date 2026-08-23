@@ -9,10 +9,11 @@ import AuditForm from '@/components/AuditForm';
 export const metadata = {
   title: 'Services',
   description: 'Explore our high-end services: Autonomous AI Agents, Intelligent Chatbots, Next.js Web Development, and scalable Cloud Infrastructure.',
+  alternates: { canonical: '/services' },
   openGraph: {
     title: 'Services | Cortex Agents',
     description: 'Explore our high-end services: Autonomous AI Agents, Intelligent Chatbots, Next.js Web Development, and scalable Cloud Infrastructure.',
-    url: 'https://cortexagents.com/services',
+    url: '/services',
   }
 };
 

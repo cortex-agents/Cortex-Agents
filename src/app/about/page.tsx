@@ -10,10 +10,11 @@ import Team from '@/components/ourTeam';
 export const metadata = {
   title: 'About',
   description: 'Learn about the specialized team of engineers behind Cortex Agents. We build high-performance software, AI agents, and brutalist web experiences.',
+  alternates: { canonical: '/about' },
   openGraph: {
     title: 'About | Cortex Agents',
     description: 'Learn about the specialized team of engineers behind Cortex Agents. We build high-performance software, AI agents, and brutalist web experiences.',
-    url: 'https://cortexagents.com/about',
+    url: '/about',
   }
 };
 
