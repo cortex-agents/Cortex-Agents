@@ -86,7 +86,11 @@ interface StaggerGroupProps {
 
 export function StaggerGroup({ children, className }: StaggerGroupProps) {
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-50px", amount: 0.1 });
+  // `amount: "some"` fires as soon as any part of the container scrolls into
+  // view. A fixed fraction (e.g. 0.1) never triggers on mobile where a
+  // single-column grid can be far taller than the viewport, leaving children
+  // stuck at opacity:0.
+  const isInView = useInView(ref, { once: true, margin: "-50px", amount: "some" });
 
   return (
     <motion.div
