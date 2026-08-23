@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { Section } from '@/components/ui/Section';
 import { Button } from '@/components/ui/Button';
 import { servicesData } from '@/lib/services-data';
+import { OG_BASE } from '@/lib/site';
 import { FadeInUp, AccentBar, StaggerGroup, StaggerItem } from '@/components/ui/Animations';
 import AuditForm from '@/components/AuditForm';
 
@@ -11,6 +12,7 @@ export const metadata = {
   description: 'Explore our high-end services: Autonomous AI Agents, Intelligent Chatbots, Next.js Web Development, and scalable Cloud Infrastructure.',
   alternates: { canonical: '/services' },
   openGraph: {
+    ...OG_BASE,
     title: 'Services | Cortex Agents',
     description: 'Explore our high-end services: Autonomous AI Agents, Intelligent Chatbots, Next.js Web Development, and scalable Cloud Infrastructure.',
     url: '/services',

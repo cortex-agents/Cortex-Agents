@@ -8,6 +8,7 @@ import {
   DEFAULT_OG_IMAGE,
   CONTACT,
   SOCIAL_LINKS,
+  absoluteUrl,
 } from "./site";
 import type { ServiceData, FAQ } from "./services-data";
 
@@ -52,7 +53,7 @@ export function serviceSchema(service: ServiceData) {
     name: service.title,
     description: service.shortDescription,
     serviceType: service.title,
-    url: `${SITE_URL}/services/${service.slug}`,
+    url: absoluteUrl(`/services/${service.slug}`),
     areaServed: "Worldwide",
     provider: {
       "@type": "Organization",
@@ -87,13 +88,13 @@ export function breadcrumbSchema(service: ServiceData) {
         "@type": "ListItem",
         position: 2,
         name: "Services",
-        item: `${SITE_URL}/services`,
+        item: absoluteUrl("/services"),
       },
       {
         "@type": "ListItem",
         position: 3,
         name: service.title,
-        item: `${SITE_URL}/services/${service.slug}`,
+        item: absoluteUrl(`/services/${service.slug}`),
       },
     ],
   };

@@ -44,3 +44,12 @@ export const SITE_KEYWORDS = [
 export function absoluteUrl(path = ""): string {
   return `${SITE_URL}${path}`;
 }
+
+// Shared OpenGraph base spread into per-page `openGraph` objects. The page's
+// own title/description/url are spread AFTER this so they win. Relative image
+// URL resolves against the root `metadataBase` (https://cortexagents.org).
+export const OG_BASE = {
+  type: "website" as const,
+  siteName: SITE_NAME,
+  images: [{ url: DEFAULT_OG_IMAGE, width: 1200, height: 630, alt: SITE_NAME }],
+};
