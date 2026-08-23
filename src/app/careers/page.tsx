@@ -4,14 +4,17 @@ import path from 'path';
 import { Section } from '@/components/ui/Section';
 import CareersClient from '@/components/careers/CareersClient';
 import { FadeInUp, AccentBar } from '@/components/ui/Animations';
+import { OG_BASE } from '@/lib/site';
 
 export const metadata = {
   title: 'Careers',
   description: 'Join Cortex Agents. We are always looking for elite engineers, designers, and AI specialists to build the future.',
+  alternates: { canonical: '/careers' },
   openGraph: {
+    ...OG_BASE,
     title: 'Careers | Cortex Agents',
     description: 'Join Cortex Agents. We are always looking for elite engineers, designers, and AI specialists to build the future.',
-    url: 'https://cortexagents.com/careers',
+    url: '/careers',
   }
 };
 

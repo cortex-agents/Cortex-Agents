@@ -1,5 +1,9 @@
 import { notFound } from "next/navigation";
+import type { Metadata } from "next";
 import { servicesData } from "@/lib/services-data";
+import { SITE_NAME, DEFAULT_OG_IMAGE } from "@/lib/site";
+import { serviceSchema, faqPageSchema, breadcrumbSchema } from "@/lib/schema";
+import { JsonLd } from "@/components/ui/JsonLd";
 import { Button } from "@/components/ui/Button";
 import ServiceHero from "@/components/services/ServiceHero";
 import ServiceProblems from "@/components/services/ServiceProblems";
@@ -17,23 +21,34 @@ interface ServicePageProps {
   }>;
 }
 
-export async function generateMetadata({ params }: ServicePageProps) {
+export async function generateMetadata({ params }: ServicePageProps): Promise<Metadata> {
   const resolvedParams = await params;
   const service = servicesData.find((s) => s.slug === resolvedParams.slug);
-  if (!service) return { title: 'Service Not Found' };
-  
+  if (!service) return { title: "Service Not Found" };
+
+  const title = service.seoTitle ?? `${service.title} Services`;
+  const description = service.metaDescription ?? service.shortDescription;
+  const path = `/services/${service.slug}`;
+
   return {
-    title: service.hero.title,
-    description: service.hero.heroDescription?.slice(0, 160),
+    title,
+    description,
     openGraph: {
-      title: `${service.hero.title} | Cortex Agents`,
-      description: service.hero.heroDescription?.slice(0, 160),
-      url: `https://cortexagents.com/services/${service.slug}`,
+      title: `${title} | ${SITE_NAME}`,
+      description,
+      url: path,
+      type: "website",
+      siteName: SITE_NAME,
+      images: [{ url: DEFAULT_OG_IMAGE, width: 1200, height: 630, alt: SITE_NAME }],
     },
     alternates: {
-      canonical: `https://cortexagents.com/services/${service.slug}`,
+      canonical: path,
     },
   };
+}
+
+export function generateStaticParams() {
+  return servicesData.map((service) => ({ slug: service.slug }));
 }
 
 export default async function ServicePage({ params }: ServicePageProps) {
@@ -46,6 +61,9 @@ export default async function ServicePage({ params }: ServicePageProps) {
 
   return (
     <main className="bg-background text-foreground pb-20">
+      <JsonLd data={serviceSchema(service)} />
+      <JsonLd data={faqPageSchema(service.faqs)} />
+      <JsonLd data={breadcrumbSchema(service)} />
       <ServiceHero service={service} />
       <ServiceProblems problemsData={service.problems} />
       <ServiceFeatures featuresData={service.features} />

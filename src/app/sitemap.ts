@@ -1,27 +1,21 @@
-﻿import { MetadataRoute } from "next";
+import { MetadataRoute } from "next";
+import { SITE_URL } from "@/lib/site";
+import { servicesData } from "@/lib/services-data";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = "https://cortexagents.com";
   const now = new Date();
 
   const staticRoutes = [
-    { url: baseUrl, priority: 1.0, changeFrequency: "weekly" as const },
-    { url: `${baseUrl}/about`, priority: 0.8, changeFrequency: "monthly" as const },
-    { url: `${baseUrl}/services`, priority: 0.9, changeFrequency: "weekly" as const },
-    { url: `${baseUrl}/portfolio`, priority: 0.8, changeFrequency: "weekly" as const },
-    { url: `${baseUrl}/careers`, priority: 0.7, changeFrequency: "weekly" as const },
-    { url: `${baseUrl}/contact`, priority: 0.8, changeFrequency: "monthly" as const },
+    { url: SITE_URL, priority: 1.0, changeFrequency: "weekly" as const },
+    { url: `${SITE_URL}/about`, priority: 0.8, changeFrequency: "monthly" as const },
+    { url: `${SITE_URL}/services`, priority: 0.9, changeFrequency: "weekly" as const },
+    { url: `${SITE_URL}/portfolio`, priority: 0.8, changeFrequency: "weekly" as const },
+    { url: `${SITE_URL}/careers`, priority: 0.7, changeFrequency: "weekly" as const },
+    { url: `${SITE_URL}/contact`, priority: 0.8, changeFrequency: "monthly" as const },
   ];
 
-  const serviceRoutes = [
-    "web-development",
-    "ui-ux-design",
-    "ai-chatbots",
-    "ai-agents",
-    "seo-optimization",
-    "cloud-solutions",
-  ].map((slug) => ({
-    url: `${baseUrl}/services/${slug}`,
+  const serviceRoutes = servicesData.map((service) => ({
+    url: `${SITE_URL}/services/${service.slug}`,
     priority: 0.85,
     changeFrequency: "monthly" as const,
   }));

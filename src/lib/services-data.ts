@@ -30,6 +30,8 @@ export interface ServiceData {
   label?: string;
   title: string;
   shortDescription: string;
+  seoTitle?: string;
+  metaDescription?: string;
   hero: {
     badge: string;
     tagline: string;
@@ -76,6 +78,7 @@ export const servicesData: ServiceData[] = [
     label: "Most Popular",
     title: "Web Development",
     shortDescription: "Next.js architecture engineered for sub-second load times, infinite scale, and ruthless conversion.",
+    seoTitle: "Web Development Services",
     hero: {
       badge: "Enterprise Engineering",
       tagline: "Systems That Think. Pages That Convert.",
@@ -250,6 +253,7 @@ export const servicesData: ServiceData[] = [
     icon: "Palette",
     title: "UI/UX Design",
     shortDescription: "Strategic interface design that dictates user behavior and drives conversion.",
+    seoTitle: "UI/UX Design Services",
     hero: {
       badge: "Conversion Strategy",
       tagline: "Design That Drives Revenue.",
@@ -424,6 +428,7 @@ export const servicesData: ServiceData[] = [
     label: "High ROI",
     title: "AI Chatbots",
     shortDescription: "Automated support layers that capture leads, qualify intent, and close deals at 3 AM.",
+    seoTitle: "AI Chatbot Development Services",
     hero: {
       badge: "Automated Conversion",
       tagline: "Never Miss A Lead Again.",
@@ -594,6 +599,7 @@ export const servicesData: ServiceData[] = [
     icon: "Cpu",
     title: "AI Agents & Automation",
     shortDescription: "Autonomous systems that handle data, routing, and logic without human intervention.",
+    seoTitle: "AI Agents & Automation Services",
     hero: {
       badge: "Hyper-Automation",
       tagline: "Software That Does The Work For You.",
@@ -764,6 +770,7 @@ export const servicesData: ServiceData[] = [
     icon: "TrendingUp",
     title: "SEO & AI Visibility",
     shortDescription: "Dominate Google and become the default answer across ChatGPT, Claude, and Perplexity.",
+    seoTitle: "SEO & AI Visibility Services",
     hero: {
       badge: "Organic Growth",
       tagline: "Win The Search, Win The Market.",
@@ -934,6 +941,7 @@ export const servicesData: ServiceData[] = [
     icon: "Cloud",
     title: "Cloud Solutions",
     shortDescription: "Scalable, secure cloud infrastructure that grows with your business — deployed and managed by experts.",
+    seoTitle: "Cloud Solutions & DevOps Services",
     hero: {
       badge: "Scale Without Limits",
       tagline: "Your Infrastructure Should Never Hold You Back.",
@@ -1110,6 +1118,7 @@ export const servicesData: ServiceData[] = [
     label: "High Scale",
     title: "Custom SaaS & Enterprise",
     shortDescription: "Scalable, secure, and complex web applications—from multi-tenant SaaS products to custom ERPs and internal portals.",
+    seoTitle: "Custom SaaS & Enterprise Software Development",
     hero: {
       badge: "Enterprise Grade",
       tagline: "Build Systems, Not Just Websites.",
@@ -1283,6 +1292,7 @@ export const servicesData: ServiceData[] = [
     icon: "Users",
     title: "Dedicated Teams",
     shortDescription: "Scale your engineering capacity instantly. Hire our pre-vetted Next.js and AI developers on a monthly retainer.",
+    seoTitle: "Hire Dedicated Development Teams",
     hero: {
       badge: "Staff Augmentation",
       tagline: "Your Tech Team, Ready on Day One.",
@@ -1453,6 +1463,7 @@ export const servicesData: ServiceData[] = [
     icon: "ShieldCheck",
     title: "Managed IT & Software",
     shortDescription: "Your virtual Tech Department. We maintain, secure, and scale your existing software so you can focus on business.",
+    seoTitle: "Managed IT & Software Services",
     hero: {
       badge: "CTO As A Service",
       tagline: "We Manage the Tech. You Manage the Business.",
@@ -1624,6 +1635,7 @@ export const servicesData: ServiceData[] = [
     icon: "Image",
     title: "Graphic Designing",
     shortDescription: "Visual communication that builds brand identity and creates memorable experiences.",
+    seoTitle: "Graphic Design Services",
     hero: {
       badge: "Brand Identity",
       tagline: "Design That Speaks Louder Than Words.",

@@ -6,14 +6,17 @@ import { Button } from '@/components/ui/Button';
 import products from '@/components/data/products';
 import { Product } from '@/components/data/products_types';
 import { FadeInUp, AccentBar, StaggerGroup, StaggerItem } from '@/components/ui/Animations';
+import { OG_BASE } from '@/lib/site';
 
 export const metadata = {
   title: 'Portfolio',
   description: 'Explore our complete portfolio featuring cutting-edge AI integrations, brutalist web designs, and high-performance applications.',
+  alternates: { canonical: '/portfolio' },
   openGraph: {
+    ...OG_BASE,
     title: 'Portfolio | Cortex Agents',
     description: 'Explore our complete portfolio featuring cutting-edge AI integrations, brutalist web designs, and high-performance applications.',
-    url: 'https://cortexagents.com/portfolio',
+    url: '/portfolio',
   }
 };
 

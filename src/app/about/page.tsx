@@ -6,14 +6,17 @@ import Stats from '@/components/about/Stats';
 import Process from '@/components/about/Process';
 import TechStack from '@/components/about/TechStack';
 import Team from '@/components/ourTeam';
+import { OG_BASE } from '@/lib/site';
 
 export const metadata = {
   title: 'About',
   description: 'Learn about the specialized team of engineers behind Cortex Agents. We build high-performance software, AI agents, and brutalist web experiences.',
+  alternates: { canonical: '/about' },
   openGraph: {
+    ...OG_BASE,
     title: 'About | Cortex Agents',
     description: 'Learn about the specialized team of engineers behind Cortex Agents. We build high-performance software, AI agents, and brutalist web experiences.',
-    url: 'https://cortexagents.com/about',
+    url: '/about',
   }
 };
 
