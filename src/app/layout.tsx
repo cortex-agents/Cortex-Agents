@@ -5,6 +5,9 @@ import Footer from '@/components/Footer';
 import { Inter_Tight, Inter, Playfair_Display, JetBrains_Mono } from 'next/font/google';
 import { ThemeProvider } from '@/components/ThemeProvider';
 import { ScrollController } from '@/components/ui/ScrollController';
+import { SITE_URL, SITE_NAME, SITE_DESCRIPTION, SITE_KEYWORDS } from '@/lib/site';
+import { organizationSchema, websiteSchema } from '@/lib/schema';
+import { JsonLd } from '@/components/ui/JsonLd';
 
 const interTight = Inter_Tight({
   subsets: ['latin'],
@@ -48,20 +51,23 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://cortexagents.com'),
+  metadataBase: new URL(SITE_URL),
   title: {
     default: "Cortex Agents | AI Automation & High-End Web Development",
     template: "%s | Cortex Agents",
   },
-  description: "Cortex Agents engineers intelligent software systems. From autonomous AI agents to high-performance Next.js web applications, we automate workflows and drive business growth.",
-  keywords: ["AI Agents", "Next.js Development", "Web Development", "AI Chatbots", "Business Automation", "Software Engineering", "Karachi Web Agency"],
-  authors: [{ name: "Cortex Agents" }],
-  creator: "Cortex Agents",
+  description: SITE_DESCRIPTION,
+  keywords: SITE_KEYWORDS,
+  authors: [{ name: SITE_NAME }],
+  creator: SITE_NAME,
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://cortexagents.com",
-    siteName: "Cortex Agents",
+    url: SITE_URL,
+    siteName: SITE_NAME,
     title: "Cortex Agents | AI Automation & High-End Web Development",
     description: "Cortex Agents engineers intelligent software systems. From autonomous AI agents to high-performance Next.js web applications.",
     images: [
@@ -107,34 +113,8 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${interTight.variable} ${inter.variable} ${playfair.variable} ${jetbrainsMono.variable}`} suppressHydrationWarning>
       <body className={`${inter.className} bg-background text-foreground antialiased min-h-screen relative overflow-x-hidden`} suppressHydrationWarning>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "Organization",
-              "name": "Cortex Agents",
-              "url": "https://cortexagents.com",
-              "logo": "https://cortexagents.com/logo_dark.png",
-              "description": "Cortex Agents engineers intelligent software systems. From autonomous AI agents to high-performance Next.js web applications.",
-              "address": {
-                "@type": "PostalAddress",
-                "addressLocality": "Karachi",
-                "addressCountry": "PK"
-              },
-              "contactPoint": {
-                "@type": "ContactPoint",
-                "telephone": "+92-321-232-2687",
-                "contactType": "customer service",
-                "availableLanguage": ["English", "Urdu"]
-              },
-              "sameAs": [
-                "https://www.facebook.com/profile.php?id=61582835397946",
-                "https://www.instagram.com/cortex_agents"
-              ]
-            })
-          }}
-        />
+        <JsonLd data={organizationSchema()} />
+        <JsonLd data={websiteSchema()} />
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
           <div className="relative z-10">
             <Header />
