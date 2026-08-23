@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
-import Link from "next/link";
 import { servicesData } from "@/lib/services-data";
+import { Button } from "@/components/ui/Button";
 import ServiceHero from "@/components/services/ServiceHero";
 import ServiceProblems from "@/components/services/ServiceProblems";
 import ServiceFeatures from "@/components/services/ServiceFeatures";
@@ -96,12 +96,12 @@ export default async function ServicePage({ params }: ServicePageProps) {
 
       <ServiceCTA ctaData={service.cta} />
 
-      {/* Back to Home button */}
-      <div className="flex items-center justify-center mt-16 mb-20">
-        <Link href="/" className="inline-flex items-center space-x-2 text-sm font-mono text-muted-foreground hover:text-accent transition-colors duration-150">
+      {/* Back to Home CTA */}
+      <Section spacing="standard" className="border-t border-border flex justify-center pb-20">
+        <Button variant="ghost" href="/">
           ← Back to Home
-        </Link>
-      </div>
+        </Button>
+      </Section>
     </main>
   );
 }
