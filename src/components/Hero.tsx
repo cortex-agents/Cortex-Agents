@@ -21,7 +21,7 @@ export default function Hero() {
         <FadeInUp delay={0.1} className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 mt-12 md:mt-24 items-start">
           <div>
             <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-md">
-              Cortex provides the intelligence. Agents provide the execution. We engineer autonomous AI workflows, multi-tenant SaaS, and Next.js platforms that run your entire business on autopilot.
+              <strong className="text-foreground font-medium">Cortex Agents</strong> is a specialized software engineering firm building autonomous AI workflows, multi-tenant SaaS, and high-performance Next.js platforms. We engineer intelligent systems that run your entire business on autopilot.
             </p>
           </div>
           <div className="flex flex-col items-start md:items-end space-y-4 md:space-y-6">

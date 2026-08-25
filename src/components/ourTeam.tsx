@@ -1,16 +1,18 @@
-﻿import React from 'react';
+import React from 'react';
 import Image from 'next/image';
 import { Section } from './ui/Section';
 import CollaborateForm from './CollaborateForm';
 import { FadeInUp, AccentBar, StaggerGroup, StaggerItem } from './ui/Animations';
+import { LinkedInIcon } from './ui/BrandIcons';
+import Link from 'next/link';
 
 const teamMembers = [
-  { id: 1, name: "Okasha Nadeem", role: "Tech Lead / Full-Stack & AI Architect", ownership: "Architecture, technical decisions, backend + AI integration", image: "/okasha.webp" },
-  { id: 2, name: "Syed Hamza Ali", role: "Agentic AI Lead", ownership: "Claude-based agents, agent workflows, tool use, orchestration", image: "/hamza_ali.webp" },
-  { id: 3, name: "Muhammad Ubaid Raza", role: "Backend & Agentic AI Engineer", ownership: "APIs, databases, backend services, AI agents", image: "/ubaid.webp" },
-  { id: 4, name: "Syed Muhammad Huzaifa", role: "Full-Stack & AI Engineer", ownership: "Product features end-to-end, integrations, AI-powered functionality", image: "/huzaifa.webp" },
-  { id: 5, name: "Syed Ahsan Raza Bukhari", role: "Frontend Lead", ownership: "UI architecture, frontend quality, design implementation", image: "/ahsan.webp" }, 
-  { id: 6, name: "Taha Qureshi", role: "AI & Frontend Engineer", ownership: "AI features + frontend integration, AI UX", image: "/taha.webp" },
+  { id: 1, name: "Okasha Nadeem", role: "Tech Lead / Full-Stack & AI Architect", ownership: "Architecture, technical decisions, backend + AI integration", image: "/okasha.webp", linkedin: "https://www.linkedin.com/in/okasha-nadeem/" },
+  { id: 2, name: "Syed Hamza Ali", role: "Agentic AI Lead", ownership: "Claude-based agents, agent workflows, tool use, orchestration", image: "/hamza_ali.webp", linkedin: "https://www.linkedin.com/in/hamza-ali-b72b582ab" },
+  { id: 3, name: "Muhammad Ubaid Raza", role: "Backend & Agentic AI Engineer", ownership: "APIs, databases, backend services, AI agents", image: "/ubaid.webp", linkedin: "https://www.linkedin.com/in/muhammad-ubaid-raza-8207332ba/" },
+  { id: 4, name: "Syed Muhammad Huzaifa", role: "Full-Stack & AI Engineer", ownership: "Product features end-to-end, integrations, AI-powered functionality", image: "/huzaifa.webp", linkedin: "https://www.linkedin.com/in/syed-muhammad-huzaifa-0ba721351" },
+  { id: 5, name: "Syed Ahsan Raza Bukhari", role: "Frontend Lead", ownership: "UI architecture, frontend quality, design implementation", image: "/ahsan.webp", linkedin: "https://www.linkedin.com/in/syedahsanrazabukhari/" }, 
+  { id: 6, name: "Taha Qureshi", role: "AI & Frontend Engineer", ownership: "AI features + frontend integration, AI UX", image: "/taha.webp", linkedin: "https://www.linkedin.com/in/taha-qureshi-37a5792a6" },
 ];
 
 export default function Team() {
@@ -33,6 +35,15 @@ export default function Team() {
                   className="object-cover object-[center_20%] grayscale group-hover:grayscale-0 transition-all duration-500 ease-fast"
                   sizes="(max-width: 768px) 100vw, 33vw" 
                 />
+                <Link
+                  href={member.linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="absolute bottom-0 right-0 bg-black text-white p-3 transition-all duration-300 md:opacity-0 md:group-hover:opacity-100 opacity-100 flex items-center justify-center"
+                  aria-label={`${member.name}'s LinkedIn profile`}
+                >
+                  <LinkedInIcon size={24} />
+                </Link>
               </div>
               <h3 className="font-display text-2xl font-bold tracking-tight mb-1 group-hover:text-accent transition-colors duration-150 ease-fast">
                 {member.name}
