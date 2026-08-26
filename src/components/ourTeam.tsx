@@ -11,7 +11,7 @@ const teamMembers = [
   { id: 2, name: "Syed Hamza Ali", role: "Agentic AI Lead", ownership: "Claude-based agents, agent workflows, tool use, orchestration", image: "/hamza_ali.webp", linkedin: "https://www.linkedin.com/in/hamza-ali-b72b582ab" },
   { id: 3, name: "Muhammad Ubaid Raza", role: "Backend & Agentic AI Engineer", ownership: "APIs, databases, backend services, AI agents", image: "/ubaid.webp", linkedin: "https://www.linkedin.com/in/muhammad-ubaid-raza-8207332ba/" },
   { id: 4, name: "Syed Muhammad Huzaifa", role: "Full-Stack & AI Engineer", ownership: "Product features end-to-end, integrations, AI-powered functionality", image: "/huzaifa.webp", linkedin: "https://www.linkedin.com/in/syed-muhammad-huzaifa-0ba721351" },
-  { id: 5, name: "Syed Ahsan Raza Bukhari", role: "Frontend Lead", ownership: "UI architecture, frontend quality, design implementation", image: "/ahsan.webp", linkedin: "https://www.linkedin.com/in/syedahsanrazabukhari/" }, 
+  { id: 5, name: "Syed Ahsan Raza Bukhari", role: "UI/Visual Design Lead", ownership: "Web & UI design, design systems, visual quality, brand-consistent digital experiences", image: "/ahsan.webp", linkedin: "https://www.linkedin.com/in/syedahsanrazabukhari/" }, 
   { id: 6, name: "Taha Qureshi", role: "AI & Frontend Engineer", ownership: "AI features + frontend integration, AI UX", image: "/taha.webp", linkedin: "https://www.linkedin.com/in/taha-qureshi-37a5792a6" },
 ];
 
