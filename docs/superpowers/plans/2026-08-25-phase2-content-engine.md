@@ -27,15 +27,15 @@
 
 **Files:** `src/lib/services-data.ts`
 
-- [ ] For each of the 10 services, add a `metaDescription` (the field already exists at line ~34 and is already consumed at `services/[slug]/page.tsx:30`).
-- [ ] Each must be **150–160 characters**, unique, and contain: the primary service keyword, a concrete benefit, and a soft CTA. Written for a **worldwide** audience (Locked decision #3 — Hybrid positioning).
-- [ ] Do **not** change `seoTitle`, `shortDescription`, or any visible copy — `metaDescription` is `<head>`-only.
+- [x] For each of the 10 services, add a `metaDescription` (the field already exists at line ~34 and is already consumed at `services/[slug]/page.tsx:30`).
+- [x] Each must be **150–160 characters**, unique, and contain: the primary service keyword, a concrete benefit, and a soft CTA. Written for a **worldwide** audience (Locked decision #3 — Hybrid positioning).
+- [x] Do **not** change `seoTitle`, `shortDescription`, or any visible copy — `metaDescription` is `<head>`-only.
 
 **Verify:**
-- [ ] `npm run build` green.
-- [ ] `grep -c "metaDescription:" src/lib/services-data.ts` → **11** (10 values + 1 interface line).
-- [ ] Character count of each new string is 150–160.
-- [ ] `npm start` + curl one service page → `<meta name="description">` shows the new text, not the slogan.
+- [x] `npm run build` green.
+- [x] `grep -c "metaDescription:" src/lib/services-data.ts` → **11** (10 values + 1 interface line).
+- [x] Character count of each new string is 150–160.
+- [x] `npm start` + curl one service page → `<meta name="description">` shows the new text, not the slogan.
 
 > 📚 **Why:** the meta description does not rank you — it is the **ad copy** in the search result. A 90-char slogan wastes half the available width and gives no reason to click. Better click-through from the same position = more traffic, and Google treats engagement as a quality signal.
 
@@ -43,21 +43,24 @@
 
 ## Task 2 — Entity layer: `Person` schema for the team (D2)
 
-**Files:** `src/lib/schema.ts`, `src/lib/team-data.ts` (new), `src/components/ourTeam.tsx`, `src/app/about/page.tsx`
+**Files:** `src/lib/schema.ts`, `src/lib/team-data.ts` (new), `src/components/TeamMemberCard.tsx` (new), `src/components/ourTeam.tsx`, `src/components/ui/BrandIcons.tsx`, `src/app/about/page.tsx`
 
-- [ ] Extract the 6-member array currently inline in `ourTeam.tsx:10-15` into `src/lib/team-data.ts` with an exported `TeamMember` interface (`id`, `name`, `role`, `ownership`, `image`, `linkedin`) and `teamData` array. Import it back into `ourTeam.tsx` — **rendering and visuals unchanged**.
-- [ ] Add `personSchema(member: TeamMember)` to `src/lib/schema.ts`: `@type: "Person"`, `name`, `jobTitle` (= `role`), `image` (via `absoluteUrl`), `url` (= `absoluteUrl('/about#<slug-of-name>')`), `sameAs: [member.linkedin]`, `worksFor: { "@type": "Organization", name: SITE_NAME, url: SITE_URL }`.
-- [ ] Add `aboutPageSchema()`: `@type: "AboutPage"`, `name`, `url`, `mainEntity` → Organization reference.
-- [ ] Extend `organizationSchema()` with `employee: teamData.map(...)` (name + jobTitle + sameAs per person) so the relationship is declared **both** directions.
-- [ ] Render on `/about`: `<JsonLd data={aboutPageSchema()} />` plus one `<JsonLd data={personSchema(m)} />` per member.
-- [ ] Add a stable `id` anchor per member card in `ourTeam.tsx` (e.g. `id="okasha-nadeem"`, derived from the name) so each `Person.url` resolves to a real anchor. No visual change.
+- [x] Extract the 6-member array currently inline in `ourTeam.tsx:10-15` into `src/lib/team-data.ts` with an exported `TeamMember` interface (`id`, `name`, `slug`, `role`, `ownership`, `image`, `bio`, `expertise`, `linkedin`, `socials`) and `teamData` array. Import it back into `ourTeam.tsx`.
+- [x] **Scope addition (owner request, 2026-08-27):** each portrait is now a **3D flip card** — front = portrait (unchanged), back = bio + focus areas + profile links. Built as a new client component `TeamMemberCard.tsx` so `ourTeam.tsx` stays a server component. `bio` + `expertise` exist so `Person.description` / `knowsAbout` mirror **visible** page content (Google's structured-data requirement), and `socials: TeamSocial[]` is the extension point for each member's additional verified profiles beyond LinkedIn — every entry renders in the card's "Connect" row **and** in that person's `sameAs`.
+- [x] Add `personSchema(member: TeamMember)` to `src/lib/schema.ts`: `@type: "Person"`, `name`, `jobTitle` (= `role`), `image` (via `absoluteUrl`), `url` (= `absoluteUrl('/about#<slug>')`), `description` (= `bio`), `knowsAbout` (= `expertise`), `sameAs` (= all profiles via `memberProfiles()`), `worksFor` → `@id` reference to the Organization.
+- [x] Add `aboutPageSchema()`: `@type: "AboutPage"`, `name`, `url`, `isPartOf` → WebSite, `mainEntity` → Organization reference.
+- [x] Extend `organizationSchema()` with `employee: teamData.map(...)` (name + jobTitle + sameAs per person) so the relationship is declared **both** directions.
+- [x] Render on `/about`: `<JsonLd data={aboutPageSchema()} />` plus one `<JsonLd data={personSchema(m)} />` per member.
+- [x] Add a stable `id` anchor per member card in the card component (e.g. `id="okasha-nadeem"`) so each `Person.url` resolves to a real anchor, with `scroll-mt-28` so the sticky header does not cover it.
 
 **Verify:**
-- [ ] `npm run build` green.
-- [ ] `npm start` + curl `/about` → 6 `"@type":"Person"` blocks, each with `worksFor` and `sameAs`.
-- [ ] curl `/` → Organization block now contains `employee` with 6 entries.
-- [ ] Anchor ids present in `/about` HTML and match every `Person.url`.
-- [ ] Visual spot-check: team section renders identically (same grid, same animations).
+- [x] `npm run build` green — 27/27 static pages.
+- [x] `npm start` + curl `/about` → **9** `application/ld+json` blocks: Organization, WebSite, AboutPage, and 6 `Person`, each with `worksFor`, `knowsAbout`, and `sameAs`.
+- [x] curl `/` → Organization block contains `employee` with 6 entries.
+- [x] All 6 anchor ids present in `/about` HTML and match every `Person.url`.
+- [x] Card back is **server-rendered** (bio text, 30 skill chips, 6 Connect rows in the static HTML — not JS-only), and the hidden face carries `inert` so it stays out of the tab order.
+- [x] Tailwind emitted the 3D CSS (`perspective:1400px`, `transform-style:preserve-3d`, `backface-visibility:hidden`, `rotateY(180deg)`) plus a `prefers-reduced-motion` fallback.
+- [x] Theme untouched: same brutalist tokens (`bg-muted`, `border-border`, `text-accent`, `font-mono` uppercase labels, `ease-fast`, zero radius); grid, stagger animations, portrait grayscale→colour hover and the LinkedIn shortcut all unchanged.
 
 > 📚 **Why:** the owner reported that some team members do not surface for "Who is {name} at Cortex Agents". Right now their names are only *text*. `Person` + `worksFor` + `sameAs` (LinkedIn) states as **data** that this named human works at this named company — which is exactly what a knowledge graph and an AI answer engine need in order to answer that question confidently.
 
