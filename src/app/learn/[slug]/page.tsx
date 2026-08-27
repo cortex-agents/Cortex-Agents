@@ -23,6 +23,37 @@ interface ArticlePageProps {
   params: Promise<{ slug: string }>;
 }
 
+// Body copy may carry inline internal links written as `[anchor](/path)`. Only
+// root-relative paths match, so article data can never smuggle an external or
+// javascript: link into the page. This exists because a contextual link inside a
+// sentence is worth far more — to a reader and to a crawler — than a "related
+// links" list bolted onto the end of a section.
+const INLINE_LINK = /\[([^\]]+)\]\((\/[^)\s]*)\)/g;
+
+function InlineText({ text }: { text: string }) {
+  const pattern = new RegExp(INLINE_LINK.source, 'g');
+  const parts: React.ReactNode[] = [];
+  let cursor = 0;
+  let match: RegExpExecArray | null;
+
+  while ((match = pattern.exec(text)) !== null) {
+    if (match.index > cursor) parts.push(text.slice(cursor, match.index));
+    parts.push(
+      <Link
+        key={`${match.index}-${match[2]}`}
+        href={match[2]}
+        className="text-foreground underline decoration-accent decoration-2 underline-offset-4 hover:text-accent transition-colors duration-150 ease-fast"
+      >
+        {match[1]}
+      </Link>
+    );
+    cursor = match.index + match[0].length;
+  }
+
+  if (cursor < text.length) parts.push(text.slice(cursor));
+  return <>{parts}</>;
+}
+
 export function generateStaticParams() {
   return articles.map((article) => ({ slug: article.slug }));
 }
@@ -143,7 +174,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                   key={paragraphIndex}
                   className="text-lg text-muted-foreground leading-relaxed mb-5"
                 >
-                  {paragraph}
+                  <InlineText text={paragraph} />
                 </p>
               ))}
 
@@ -155,7 +186,9 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                       className="flex gap-4 border-b border-border py-4 text-lg text-muted-foreground leading-relaxed"
                     >
                       <span className="text-accent font-mono shrink-0">—</span>
-                      <span>{bullet}</span>
+                      <span>
+                        <InlineText text={bullet} />
+                      </span>
                     </li>
                   ))}
                 </ul>

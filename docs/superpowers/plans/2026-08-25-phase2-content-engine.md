@@ -110,19 +110,37 @@
 
 **Files:** `src/lib/learn-data.ts`
 
-- [ ] Write the 6 articles from spec §7 (A1–A6) into `articles`. Each: 1,200–2,000 words, **answer-first** opening (≤60 words that directly answer the title), then definition/comparison table, detail sections, an honest "when this is *not* the right choice" section, 3–5 FAQs, CTA to its `feedsService`, `author` = a real team member, `datePublished`/`dateModified` set.
-- [ ] Each article links to **exactly one** money page as its primary target plus 1–2 sibling articles via `relatedSlugs`. Anchors must be natural and varied — **no repeated exact-match anchor text**.
-- [ ] A3 (AEO/GEO) must be genuinely useful and non-promotional — it is the differentiator article and the most likely to be cited.
-- [ ] `metaDescription` per article: 150–160 chars.
-- [ ] Zero invented statistics. Where an industry figure would normally appear, either cite a named public source inline or omit the claim.
+- [x] Write the 6 articles from spec §7 (A1–A6) into `articles`. Each: 1,200–2,000 words, **answer-first** opening (≤60 words that directly answer the title), then definition/comparison table, detail sections, an honest "when this is *not* the right choice" section, 3–5 FAQs, CTA to its `feedsService`, `author` = a real team member, `datePublished`/`dateModified` set.
+- [x] Each article links to **exactly one** money page as its primary target plus 1–2 sibling articles via `relatedSlugs`. Anchors must be natural and varied — **no repeated exact-match anchor text**.
+- [x] A3 (AEO/GEO) must be genuinely useful and non-promotional — it is the differentiator article and the most likely to be cited.
+- [x] `metaDescription` per article: 150–160 chars.
+- [x] Zero invented statistics. Where an industry figure would normally appear, either cite a named public source inline or omit the claim.
+
+**Shipped set** — 6 different money pages get one spoke each, so no service competes with itself:
+
+| # | Slug | Intent | Feeds | Author | Words |
+|---|------|--------|-------|--------|-------|
+| A1 | `what-is-an-ai-agent` | Definition | `ai-agents` | Syed Hamza Ali | 1,336 |
+| A2 | `ai-agent-vs-ai-chatbot-vs-automation` | Comparison | `ai-chatbots` | Muhammad Ubaid Raza | 1,259 |
+| A3 | `what-are-aeo-and-geo` | Definition | `seo-optimization` | Okasha Nadeem | 1,577 |
+| A4 | `custom-web-application-cost` | Cost | `custom-saas-enterprise` | Syed Muhammad Huzaifa | 1,537 |
+| A5 | `dedicated-developers-vs-freelancers-vs-in-house` | Comparison | `dedicated-teams` | Okasha Nadeem | 1,294 |
+| A6 | `nextjs-vs-wordpress-for-business-websites` | Comparison | `web-development` | Taha Qureshi | 1,465 |
+
+**Supporting change:** `ArticleSection.body` is `string[]`, which could not hold contextual links. Rather than add a markdown dependency, `learn/[slug]/page.tsx` gained a ~20-line `InlineText` parser that accepts **only** `[anchor](/root-relative)` — so anchors are natural and varied inside sentences, and article data structurally cannot smuggle an external or `javascript:` link into the page.
 
 **Verify:**
-- [ ] `npm run build` green; `/learn/[slug]` shows **6** SSG paths.
-- [ ] `/sitemap.xml` contains all 6 article URLs.
-- [ ] curl one article → valid `Article` + `BreadcrumbList` + `FAQPage` JSON-LD; canonical + OG are `.org`.
-- [ ] Each article's HTML contains a link to its `feedsService` page.
-- [ ] Word count per article ≥ 1,200.
-- [ ] Manual read-through: no invented metric, no keyword stuffing, answer-first paragraph actually answers the question.
+- [x] `npm run build` green; `/learn/[slug]` shows **6** SSG paths; 34/34 static pages.
+- [x] `/sitemap.xml` → 23 URLs, contains all 6 article URLs, all `.org`.
+- [x] curl all 6 → each emits valid `Article` + `BreadcrumbList` + `FAQPage` JSON-LD (plus site-wide Organization + WebSite); canonical + OG `.org`; `Article.author.@id` = the SAME `/about#<slug>` Person `@id` that `/about` declares.
+- [x] Each article's HTML links to its `feedsService` page **twice** (once inline mid-sentence, once as the closing CTA), plus its 1–2 siblings and its author's `/about` anchor. Zero orphans.
+- [x] Rendered word count per article **1,259–1,577** (all inside 1,200–2,000).
+- [x] `metaDescription` 150–160 chars × 6; `answerFirst` ≤60 words × 6 (48–57).
+- [x] Zero unparsed `[text](/path)` left in any rendered body; unknown slug still hard-404s.
+- [x] Manual read-through: no invented metric. The only external figures used are Google's published Core Web Vitals thresholds (LCP ≤2.5s, INP ≤200ms, CLS ≤0.1, attributed to web.dev in A6) and Google's structured-data visibility requirement (A3) — both named public sources, no numbers of our own.
+
+> ⚠️ **Windows build gotcha (cost ~20 min here):** running `npm run build` while an old `next start` still holds `.next` open produces a **corrupt** build — the 6 article HTML files land on disk but their `.meta` says `"status": 404`, so every article 404s while the build log looks perfectly green. Always stop the server (kill whatever listens on :3000), `rm -rf .next`, then build.
+
 
 ---
 
