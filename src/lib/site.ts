@@ -24,6 +24,7 @@ export const CONTACT = {
 export const SOCIAL_LINKS = [
   "https://www.facebook.com/profile.php?id=61582835397946",
   "https://www.instagram.com/cortex_agents",
+  "https://www.linkedin.com/company/cortex-agents/",
 ];
 
 // Global keyword set (Hybrid: keep local identity + add worldwide intent).

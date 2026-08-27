@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { FacebookIcon, InstagramIcon, WhatsAppIcon } from './ui/BrandIcons';
+import { FacebookIcon, InstagramIcon, LinkedInIcon, WhatsAppIcon } from './ui/BrandIcons';
 import { Section } from './ui/Section';
 import { FadeInUp } from './ui/Animations';
 
@@ -20,6 +20,7 @@ export default function Footer() {
     { icon: FacebookIcon, link: 'https://www.facebook.com/profile.php?id=61582835397946', label: 'Facebook' },
     { icon: WhatsAppIcon, link: 'https://wa.me/923212322687', label: 'WhatsApp' },
     { icon: InstagramIcon, link: 'https://www.instagram.com/cortex_agents?igsh=dWI0bHhkZTZ4OGY2', label: 'Instagram' },
+    { icon: LinkedInIcon, link: 'https://www.linkedin.com/company/cortex-agents/', label: 'LinkedIn' },
   ];
 
   return (
