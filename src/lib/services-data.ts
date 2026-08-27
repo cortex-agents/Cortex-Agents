@@ -79,6 +79,8 @@ export const servicesData: ServiceData[] = [
     title: "Web Development",
     shortDescription: "Next.js architecture engineered for sub-second load times, infinite scale, and ruthless conversion.",
     seoTitle: "Web Development Services",
+    metaDescription:
+      "Custom web development with Next.js — sub-second load times, built to scale and convert. We build production-grade sites for clients worldwide. Get a quote.",
     hero: {
       badge: "Enterprise Engineering",
       tagline: "Systems That Think. Pages That Convert.",
@@ -254,6 +256,8 @@ export const servicesData: ServiceData[] = [
     title: "UI/UX Design",
     shortDescription: "Strategic interface design that dictates user behavior and drives conversion.",
     seoTitle: "UI/UX Design Services",
+    metaDescription:
+      "UI/UX design that guides user behaviour and lifts conversion. Research, wireframes, design systems, and polished interfaces for products worldwide. Talk to us.",
     hero: {
       badge: "Conversion Strategy",
       tagline: "Design That Drives Revenue.",
@@ -429,6 +433,8 @@ export const servicesData: ServiceData[] = [
     title: "AI Chatbots",
     shortDescription: "Automated support layers that capture leads, qualify intent, and close deals at 3 AM.",
     seoTitle: "AI Chatbot Development Services",
+    metaDescription:
+      "AI chatbot development that captures leads, qualifies intent, and answers customers 24/7. Trained on your business, deployed on your stack. Book a free demo.",
     hero: {
       badge: "Automated Conversion",
       tagline: "Never Miss A Lead Again.",
@@ -600,6 +606,8 @@ export const servicesData: ServiceData[] = [
     title: "AI Agents & Automation",
     shortDescription: "Autonomous systems that handle data, routing, and logic without human intervention.",
     seoTitle: "AI Agents & Automation Services",
+    metaDescription:
+      "AI agents that run real workflows — data, routing, and decisions handled without humans in the loop. Custom-built and production-ready. See what we automate.",
     hero: {
       badge: "Hyper-Automation",
       tagline: "Software That Does The Work For You.",
@@ -771,6 +779,8 @@ export const servicesData: ServiceData[] = [
     title: "SEO & AI Visibility",
     shortDescription: "Dominate Google and become the default answer across ChatGPT, Claude, and Perplexity.",
     seoTitle: "SEO & AI Visibility Services",
+    metaDescription:
+      "SEO plus AI visibility: rank on Google and become the answer in ChatGPT, Claude, and Perplexity. Technical SEO, content, and schema done right. Get an audit.",
     hero: {
       badge: "Organic Growth",
       tagline: "Win The Search, Win The Market.",
@@ -942,6 +952,8 @@ export const servicesData: ServiceData[] = [
     title: "Cloud Solutions",
     shortDescription: "Scalable, secure cloud infrastructure that grows with your business — deployed and managed by experts.",
     seoTitle: "Cloud Solutions & DevOps Services",
+    metaDescription:
+      "Cloud infrastructure and DevOps that scale with you — deployment, CI/CD, monitoring, and cost control on AWS, Vercel, and more. Talk to our cloud engineers.",
     hero: {
       badge: "Scale Without Limits",
       tagline: "Your Infrastructure Should Never Hold You Back.",
@@ -1119,6 +1131,8 @@ export const servicesData: ServiceData[] = [
     title: "Custom SaaS & Enterprise",
     shortDescription: "Scalable, secure, and complex web applications—from multi-tenant SaaS products to custom ERPs and internal portals.",
     seoTitle: "Custom SaaS & Enterprise Software Development",
+    metaDescription:
+      "Custom SaaS and enterprise software development — multi-tenant platforms, ERPs, and internal portals built secure, scalable, and maintainable. Start scoping.",
     hero: {
       badge: "Enterprise Grade",
       tagline: "Build Systems, Not Just Websites.",
@@ -1293,6 +1307,8 @@ export const servicesData: ServiceData[] = [
     title: "Dedicated Teams",
     shortDescription: "Scale your engineering capacity instantly. Hire our pre-vetted Next.js and AI developers on a monthly retainer.",
     seoTitle: "Hire Dedicated Development Teams",
+    metaDescription:
+      "Hire dedicated developers on a monthly retainer — pre-vetted Next.js, backend, and AI engineers who join your team and ship from week one. Check availability.",
     hero: {
       badge: "Staff Augmentation",
       tagline: "Your Tech Team, Ready on Day One.",
@@ -1464,6 +1480,8 @@ export const servicesData: ServiceData[] = [
     title: "Managed IT & Software",
     shortDescription: "Your virtual Tech Department. We maintain, secure, and scale your existing software so you can focus on business.",
     seoTitle: "Managed IT & Software Services",
+    metaDescription:
+      "Managed IT and software services — we maintain, secure, monitor, and scale the systems you already run, so your team can focus on the business. See our plans.",
     hero: {
       badge: "CTO As A Service",
       tagline: "We Manage the Tech. You Manage the Business.",
@@ -1636,6 +1654,8 @@ export const servicesData: ServiceData[] = [
     title: "Graphic Designing",
     shortDescription: "Visual communication that builds brand identity and creates memorable experiences.",
     seoTitle: "Graphic Design Services",
+    metaDescription:
+      "Graphic design that builds brand recognition — logos, brand identity, marketing assets, and social creative with a consistent visual system. See our work.",
     hero: {
       badge: "Brand Identity",
       tagline: "Design That Speaks Louder Than Words.",
