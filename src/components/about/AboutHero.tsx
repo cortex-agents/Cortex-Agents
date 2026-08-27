@@ -20,7 +20,7 @@ export default function AboutHero() {
         
         <FadeInUp delay={0.1} className="mt-12 md:mt-16 max-w-2xl">
           <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed">
-            Cortex is the neural center. Agents are the execution. We are a Karachi-based engineering unit built by developers who got tired of slow, broken software. We don&apos;t bill you for endless meetings. We build systems that run your business on autopilot.
+            Cortex is the neural center; Agents are the execution. <strong className="text-foreground font-medium">Cortex Agents</strong> is a Karachi-based engineering unit built by developers tired of slow, broken software. Our mission is to eliminate endless meetings and engineer high-performance systems that execute flawlessly.
           </p>
         </FadeInUp>
       </div>
