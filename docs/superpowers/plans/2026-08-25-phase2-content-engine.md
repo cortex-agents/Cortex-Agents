@@ -70,18 +70,20 @@
 
 **Files:** `src/lib/learn-data.ts` (new), `src/lib/schema.ts`, `src/app/learn/page.tsx` (new), `src/app/learn/[slug]/page.tsx` (new), `src/app/sitemap.ts`
 
-- [ ] Create `src/lib/learn-data.ts` mirroring the `services-data.ts` conventions: exported `Article` interface — `slug`, `title`, `seoTitle`, `metaDescription`, `answerFirst` (≤60-word direct answer), `intent`, `feedsService` (service slug), `sections: { heading, body }[]`, `faqs?: FAQ[]`, `relatedSlugs`, `author` (team member name), `datePublished`, `dateModified`, `readingTime` — plus an empty-for-now `articles: Article[]` array (populated in Task 5).
-- [ ] Add `articleSchema(article)` to `schema.ts`: `@type: "Article"`, `headline`, `description`, `image` (default OG), `author` → Person (resolved from `team-data`), `publisher` → Organization, `datePublished`, `dateModified`, `mainEntityOfPage`, `url`.
-- [ ] Add `collectionPageSchema({ name, url, description })` and generalize breadcrumbs — refactor `breadcrumbSchema` into a reusable `breadcrumbSchema(trail: {name, url}[])` and update the existing service-page call site to pass its trail (behaviour-identical output).
-- [ ] Build `/learn` hub page: intro copy, grid of article cards (reuse existing card/`FadeInUp` patterns), `CollectionPage` + `BreadcrumbList` schema, full metadata (title/description/canonical/OG).
-- [ ] Build `/learn/[slug]` page: `generateStaticParams` from `articles`, `generateMetadata` (title/description/canonical/OG per article), renders answer-first block → sections → FAQ → CTA to `feedsService` → author + last-reviewed line; emits `Article` + `BreadcrumbList` + `FAQPage` (when `faqs` present).
-- [ ] Extend `src/app/sitemap.ts` to append `/learn` and every `articles` slug — derived from the array, **no hardcoded list**.
+- [x] Create `src/lib/learn-data.ts` mirroring the `services-data.ts` conventions: exported `Article` interface — `slug`, `title`, `seoTitle`, `metaDescription`, `answerFirst` (≤60-word direct answer), `intent`, `feedsService` (service slug), `sections: { heading, body }[]` (plus optional `bullets` / `table` so a comparison table stays data, not markup), `faqs?: FAQ[]`, `relatedSlugs`, `author` (team member name), `datePublished`, `dateModified`, `readingTime` — plus an empty-for-now `articles: Article[]` array (populated in Task 5). Helpers: `getArticle`, `articlesForService`, `relatedArticles`, `serviceForArticle`, `formatArticleDate`.
+- [x] Add `articleSchema(article)` to `schema.ts`: `@type: "Article"`, `headline`, `description`, `image` (default OG), `author` → Person (resolved from `team-data` via new `memberByName()`, referenced by `@id` so the byline points at the SAME entity `/about` declares), `publisher` → Organization, `datePublished`, `dateModified`, `mainEntityOfPage`, `isPartOf` → WebSite, `inLanguage`, `url`.
+- [x] Add `collectionPageSchema({ name, url, description, items? })` — emits an `ItemList` of children when `items` are passed, omits it when empty — and generalize breadcrumbs: `breadcrumbSchema(trail: {name, url}[])`, service-page call site updated to pass its trail.
+- [x] Build `/learn` hub page: intro copy, 2-col bordered card grid (reuses `Section`/`FadeInUp`/`StaggerGroup`), `CollectionPage` + `BreadcrumbList` schema, full metadata (title/description/canonical/OG), plus an honest empty state for the window before Task 5 lands.
+- [x] Build `/learn/[slug]` page: `generateStaticParams` from `articles`, `dynamicParams = false` (unknown slug = hard 404, not a soft 404), `generateMetadata` (title/description/canonical/OG `type: article` + published/modified times), renders answer-first block → sections (paragraphs / bullets / comparison table) → FAQ (reuses `ServiceFAQ`) → CTA to `feedsService` → related spokes → author + last-reviewed line; emits `Article` + `BreadcrumbList` + `FAQPage` (when `faqs` present).
+- [x] Extend `src/app/sitemap.ts` to append `/learn` and every `articles` slug — derived from the array, **no hardcoded list**.
 
 **Verify:**
-- [ ] `npm run build` green; `/learn` appears as a static route; `/learn/[slug]` shows as ● SSG (0 paths while the array is empty is acceptable at this stage).
-- [ ] `/sitemap.xml` includes `/learn`.
-- [ ] Existing service pages' breadcrumb JSON-LD output is **byte-identical** to before the refactor (diff the curl output).
-- [ ] No theme/color/animation changes; new pages use existing components.
+- [x] `npm run build` green — **28/28** static pages; `/learn` is `○ (Static)`; `/learn/[slug]` is `● SSG` (0 paths while the array is empty).
+- [x] `/sitemap.xml` → 17 URLs, includes `https://cortexagents.org/learn`.
+- [x] Existing service pages' breadcrumb JSON-LD is **byte-identical** to before the refactor — 379 bytes, verified char-by-char against a re-implementation of the old builder (same key order `@type,position,name,item`, same `&` escaping).
+- [x] `/learn` emits 4 JSON-LD blocks (Organization, WebSite, CollectionPage, BreadcrumbList); canonical + `og:url` = `.org`; `ItemList` correctly omitted while there are no articles.
+- [x] No theme/color/animation changes; new pages use existing components only.
+- [x] Zero `cortexagents.com` in rendered output.
 
 ---
 

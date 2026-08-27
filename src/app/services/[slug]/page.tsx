@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { servicesData } from "@/lib/services-data";
-import { SITE_NAME, DEFAULT_OG_IMAGE } from "@/lib/site";
+import { SITE_NAME, SITE_URL, DEFAULT_OG_IMAGE, absoluteUrl } from "@/lib/site";
 import { serviceSchema, faqPageSchema, breadcrumbSchema } from "@/lib/schema";
 import { JsonLd } from "@/components/ui/JsonLd";
 import { Button } from "@/components/ui/Button";
@@ -63,7 +63,11 @@ export default async function ServicePage({ params }: ServicePageProps) {
     <main className="bg-background text-foreground pb-20">
       <JsonLd data={serviceSchema(service)} />
       <JsonLd data={faqPageSchema(service.faqs)} />
-      <JsonLd data={breadcrumbSchema(service)} />
+      <JsonLd data={breadcrumbSchema([
+        { name: "Home", url: SITE_URL },
+        { name: "Services", url: absoluteUrl("/services") },
+        { name: service.title, url: absoluteUrl(`/services/${service.slug}`) },
+      ])} />
       <ServiceHero service={service} />
       <ServiceProblems problemsData={service.problems} />
       <ServiceFeatures featuresData={service.features} />

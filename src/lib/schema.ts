@@ -11,7 +11,13 @@ import {
   absoluteUrl,
 } from "./site";
 import type { ServiceData, FAQ } from "./services-data";
-import { teamData, memberProfiles, type TeamMember } from "./team-data";
+import type { Article } from "./learn-data";
+import {
+  teamData,
+  memberProfiles,
+  memberByName,
+  type TeamMember,
+} from "./team-data";
 
 // Stable entity ids. Giving the Organization a fixed `@id` lets every other
 // node (Person.worksFor, WebSite.publisher, Article.publisher) point at the
@@ -137,24 +143,88 @@ export function faqPageSchema(faqs: FAQ[]) {
   };
 }
 
-export function breadcrumbSchema(service: ServiceData) {
+export function breadcrumbSchema(trail: { name: string; url: string }[]) {
   return {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
-    itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
-      {
-        "@type": "ListItem",
-        position: 2,
-        name: "Services",
-        item: absoluteUrl("/services"),
+    itemListElement: trail.map((crumb, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: crumb.name,
+      item: crumb.url,
+    })),
+  };
+}
+
+// Declares a hub page (e.g. /learn) as a collection, and — when `items` are
+// passed — lists its children as an ordered ItemList. That gives a crawler the
+// full set of child URLs from the hub's own markup, instead of relying on it to
+// discover each card link.
+export function collectionPageSchema({
+  name,
+  url,
+  description,
+  items = [],
+}: {
+  name: string;
+  url: string;
+  description: string;
+  items?: { name: string; url: string }[];
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "@id": `${url}#collection`,
+    name,
+    url,
+    description,
+    isPartOf: { "@id": `${SITE_URL}#website` },
+    publisher: { "@id": ORG_ID },
+    ...(items.length > 0 && {
+      mainEntity: {
+        "@type": "ItemList",
+        numberOfItems: items.length,
+        itemListElement: items.map((item, index) => ({
+          "@type": "ListItem",
+          position: index + 1,
+          name: item.name,
+          url: item.url,
+        })),
       },
-      {
-        "@type": "ListItem",
-        position: 3,
-        name: service.title,
-        item: absoluteUrl(`/services/${service.slug}`),
-      },
-    ],
+    }),
+  };
+}
+
+// Article node for a /learn spoke. `author` resolves to the team member's
+// existing Person entity by `@id`, so the article inherits the credibility of a
+// named human who is already declared as an employee of the Organization —
+// that link IS the E-E-A-T signal, not the byline text on its own.
+export function articleSchema(article: Article) {
+  const url = absoluteUrl(`/learn/${article.slug}`);
+  const author = memberByName(article.author);
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "@id": `${url}#article`,
+    headline: article.title,
+    description: article.metaDescription,
+    image: absoluteUrl(DEFAULT_OG_IMAGE),
+    url,
+    datePublished: article.datePublished,
+    dateModified: article.dateModified,
+    author: author
+      ? {
+          "@type": "Person",
+          "@id": personId(author),
+          name: author.name,
+          url: personId(author),
+          jobTitle: author.role,
+        }
+      : { "@id": ORG_ID },
+    publisher: { "@id": ORG_ID },
+    isPartOf: { "@id": `${SITE_URL}#website` },
+    mainEntityOfPage: { "@type": "WebPage", "@id": url },
+    inLanguage: "en",
   };
 }
