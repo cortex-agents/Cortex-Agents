@@ -6,6 +6,9 @@ import Stats from '@/components/about/Stats';
 import Process from '@/components/about/Process';
 import TechStack from '@/components/about/TechStack';
 import Team from '@/components/ourTeam';
+import { JsonLd } from '@/components/ui/JsonLd';
+import { aboutPageSchema, personSchema } from '@/lib/schema';
+import { teamData } from '@/lib/team-data';
 import { OG_BASE } from '@/lib/site';
 
 export const metadata = {
@@ -23,6 +26,13 @@ export const metadata = {
 export default function AboutPage() {
   return (
     <main className="bg-background text-foreground">
+      {/* Declares this page as the company's About page, and each team member as
+          a Person entity employed by the Organization. The anchor each Person.url
+          points at (`/about#<slug>`) is rendered by the team card itself. */}
+      <JsonLd data={aboutPageSchema()} />
+      {teamData.map((member) => (
+        <JsonLd key={member.slug} data={personSchema(member)} />
+      ))}
       <AboutHero />
       <Story />
       <Values />
