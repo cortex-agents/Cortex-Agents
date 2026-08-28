@@ -70,18 +70,20 @@
 
 **Files:** `src/lib/learn-data.ts` (new), `src/lib/schema.ts`, `src/app/learn/page.tsx` (new), `src/app/learn/[slug]/page.tsx` (new), `src/app/sitemap.ts`
 
-- [ ] Create `src/lib/learn-data.ts` mirroring the `services-data.ts` conventions: exported `Article` interface — `slug`, `title`, `seoTitle`, `metaDescription`, `answerFirst` (≤60-word direct answer), `intent`, `feedsService` (service slug), `sections: { heading, body }[]`, `faqs?: FAQ[]`, `relatedSlugs`, `author` (team member name), `datePublished`, `dateModified`, `readingTime` — plus an empty-for-now `articles: Article[]` array (populated in Task 5).
-- [ ] Add `articleSchema(article)` to `schema.ts`: `@type: "Article"`, `headline`, `description`, `image` (default OG), `author` → Person (resolved from `team-data`), `publisher` → Organization, `datePublished`, `dateModified`, `mainEntityOfPage`, `url`.
-- [ ] Add `collectionPageSchema({ name, url, description })` and generalize breadcrumbs — refactor `breadcrumbSchema` into a reusable `breadcrumbSchema(trail: {name, url}[])` and update the existing service-page call site to pass its trail (behaviour-identical output).
-- [ ] Build `/learn` hub page: intro copy, grid of article cards (reuse existing card/`FadeInUp` patterns), `CollectionPage` + `BreadcrumbList` schema, full metadata (title/description/canonical/OG).
-- [ ] Build `/learn/[slug]` page: `generateStaticParams` from `articles`, `generateMetadata` (title/description/canonical/OG per article), renders answer-first block → sections → FAQ → CTA to `feedsService` → author + last-reviewed line; emits `Article` + `BreadcrumbList` + `FAQPage` (when `faqs` present).
-- [ ] Extend `src/app/sitemap.ts` to append `/learn` and every `articles` slug — derived from the array, **no hardcoded list**.
+- [x] Create `src/lib/learn-data.ts` mirroring the `services-data.ts` conventions: exported `Article` interface — `slug`, `title`, `seoTitle`, `metaDescription`, `answerFirst` (≤60-word direct answer), `intent`, `feedsService` (service slug), `sections: { heading, body }[]` (plus optional `bullets` / `table` so a comparison table stays data, not markup), `faqs?: FAQ[]`, `relatedSlugs`, `author` (team member name), `datePublished`, `dateModified`, `readingTime` — plus an empty-for-now `articles: Article[]` array (populated in Task 5). Helpers: `getArticle`, `articlesForService`, `relatedArticles`, `serviceForArticle`, `formatArticleDate`.
+- [x] Add `articleSchema(article)` to `schema.ts`: `@type: "Article"`, `headline`, `description`, `image` (default OG), `author` → Person (resolved from `team-data` via new `memberByName()`, referenced by `@id` so the byline points at the SAME entity `/about` declares), `publisher` → Organization, `datePublished`, `dateModified`, `mainEntityOfPage`, `isPartOf` → WebSite, `inLanguage`, `url`.
+- [x] Add `collectionPageSchema({ name, url, description, items? })` — emits an `ItemList` of children when `items` are passed, omits it when empty — and generalize breadcrumbs: `breadcrumbSchema(trail: {name, url}[])`, service-page call site updated to pass its trail.
+- [x] Build `/learn` hub page: intro copy, 2-col bordered card grid (reuses `Section`/`FadeInUp`/`StaggerGroup`), `CollectionPage` + `BreadcrumbList` schema, full metadata (title/description/canonical/OG), plus an honest empty state for the window before Task 5 lands.
+- [x] Build `/learn/[slug]` page: `generateStaticParams` from `articles`, `dynamicParams = false` (unknown slug = hard 404, not a soft 404), `generateMetadata` (title/description/canonical/OG `type: article` + published/modified times), renders answer-first block → sections (paragraphs / bullets / comparison table) → FAQ (reuses `ServiceFAQ`) → CTA to `feedsService` → related spokes → author + last-reviewed line; emits `Article` + `BreadcrumbList` + `FAQPage` (when `faqs` present).
+- [x] Extend `src/app/sitemap.ts` to append `/learn` and every `articles` slug — derived from the array, **no hardcoded list**.
 
 **Verify:**
-- [ ] `npm run build` green; `/learn` appears as a static route; `/learn/[slug]` shows as ● SSG (0 paths while the array is empty is acceptable at this stage).
-- [ ] `/sitemap.xml` includes `/learn`.
-- [ ] Existing service pages' breadcrumb JSON-LD output is **byte-identical** to before the refactor (diff the curl output).
-- [ ] No theme/color/animation changes; new pages use existing components.
+- [x] `npm run build` green — **28/28** static pages; `/learn` is `○ (Static)`; `/learn/[slug]` is `● SSG` (0 paths while the array is empty).
+- [x] `/sitemap.xml` → 17 URLs, includes `https://cortexagents.org/learn`.
+- [x] Existing service pages' breadcrumb JSON-LD is **byte-identical** to before the refactor — 379 bytes, verified char-by-char against a re-implementation of the old builder (same key order `@type,position,name,item`, same `&` escaping).
+- [x] `/learn` emits 4 JSON-LD blocks (Organization, WebSite, CollectionPage, BreadcrumbList); canonical + `og:url` = `.org`; `ItemList` correctly omitted while there are no articles.
+- [x] No theme/color/animation changes; new pages use existing components only.
+- [x] Zero `cortexagents.com` in rendered output.
 
 ---
 
@@ -108,19 +110,37 @@
 
 **Files:** `src/lib/learn-data.ts`
 
-- [ ] Write the 6 articles from spec §7 (A1–A6) into `articles`. Each: 1,200–2,000 words, **answer-first** opening (≤60 words that directly answer the title), then definition/comparison table, detail sections, an honest "when this is *not* the right choice" section, 3–5 FAQs, CTA to its `feedsService`, `author` = a real team member, `datePublished`/`dateModified` set.
-- [ ] Each article links to **exactly one** money page as its primary target plus 1–2 sibling articles via `relatedSlugs`. Anchors must be natural and varied — **no repeated exact-match anchor text**.
-- [ ] A3 (AEO/GEO) must be genuinely useful and non-promotional — it is the differentiator article and the most likely to be cited.
-- [ ] `metaDescription` per article: 150–160 chars.
-- [ ] Zero invented statistics. Where an industry figure would normally appear, either cite a named public source inline or omit the claim.
+- [x] Write the 6 articles from spec §7 (A1–A6) into `articles`. Each: 1,200–2,000 words, **answer-first** opening (≤60 words that directly answer the title), then definition/comparison table, detail sections, an honest "when this is *not* the right choice" section, 3–5 FAQs, CTA to its `feedsService`, `author` = a real team member, `datePublished`/`dateModified` set.
+- [x] Each article links to **exactly one** money page as its primary target plus 1–2 sibling articles via `relatedSlugs`. Anchors must be natural and varied — **no repeated exact-match anchor text**.
+- [x] A3 (AEO/GEO) must be genuinely useful and non-promotional — it is the differentiator article and the most likely to be cited.
+- [x] `metaDescription` per article: 150–160 chars.
+- [x] Zero invented statistics. Where an industry figure would normally appear, either cite a named public source inline or omit the claim.
+
+**Shipped set** — 6 different money pages get one spoke each, so no service competes with itself:
+
+| # | Slug | Intent | Feeds | Author | Words |
+|---|------|--------|-------|--------|-------|
+| A1 | `what-is-an-ai-agent` | Definition | `ai-agents` | Syed Hamza Ali | 1,336 |
+| A2 | `ai-agent-vs-ai-chatbot-vs-automation` | Comparison | `ai-chatbots` | Muhammad Ubaid Raza | 1,259 |
+| A3 | `what-are-aeo-and-geo` | Definition | `seo-optimization` | Okasha Nadeem | 1,577 |
+| A4 | `custom-web-application-cost` | Cost | `custom-saas-enterprise` | Syed Muhammad Huzaifa | 1,537 |
+| A5 | `dedicated-developers-vs-freelancers-vs-in-house` | Comparison | `dedicated-teams` | Okasha Nadeem | 1,294 |
+| A6 | `nextjs-vs-wordpress-for-business-websites` | Comparison | `web-development` | Taha Qureshi | 1,465 |
+
+**Supporting change:** `ArticleSection.body` is `string[]`, which could not hold contextual links. Rather than add a markdown dependency, `learn/[slug]/page.tsx` gained a ~20-line `InlineText` parser that accepts **only** `[anchor](/root-relative)` — so anchors are natural and varied inside sentences, and article data structurally cannot smuggle an external or `javascript:` link into the page.
 
 **Verify:**
-- [ ] `npm run build` green; `/learn/[slug]` shows **6** SSG paths.
-- [ ] `/sitemap.xml` contains all 6 article URLs.
-- [ ] curl one article → valid `Article` + `BreadcrumbList` + `FAQPage` JSON-LD; canonical + OG are `.org`.
-- [ ] Each article's HTML contains a link to its `feedsService` page.
-- [ ] Word count per article ≥ 1,200.
-- [ ] Manual read-through: no invented metric, no keyword stuffing, answer-first paragraph actually answers the question.
+- [x] `npm run build` green; `/learn/[slug]` shows **6** SSG paths; 34/34 static pages.
+- [x] `/sitemap.xml` → 23 URLs, contains all 6 article URLs, all `.org`.
+- [x] curl all 6 → each emits valid `Article` + `BreadcrumbList` + `FAQPage` JSON-LD (plus site-wide Organization + WebSite); canonical + OG `.org`; `Article.author.@id` = the SAME `/about#<slug>` Person `@id` that `/about` declares.
+- [x] Each article's HTML links to its `feedsService` page **twice** (once inline mid-sentence, once as the closing CTA), plus its 1–2 siblings and its author's `/about` anchor. Zero orphans.
+- [x] Rendered word count per article **1,259–1,577** (all inside 1,200–2,000).
+- [x] `metaDescription` 150–160 chars × 6; `answerFirst` ≤60 words × 6 (48–57).
+- [x] Zero unparsed `[text](/path)` left in any rendered body; unknown slug still hard-404s.
+- [x] Manual read-through: no invented metric. The only external figures used are Google's published Core Web Vitals thresholds (LCP ≤2.5s, INP ≤200ms, CLS ≤0.1, attributed to web.dev in A6) and Google's structured-data visibility requirement (A3) — both named public sources, no numbers of our own.
+
+> ⚠️ **Windows build gotcha (cost ~20 min here):** running `npm run build` while an old `next start` still holds `.next` open produces a **corrupt** build — the 6 article HTML files land on disk but their `.meta` says `"status": 404`, so every article 404s while the build log looks perfectly green. Always stop the server (kill whatever listens on :3000), `rm -rf .next`, then build.
+
 
 ---
 
@@ -128,17 +148,21 @@
 
 **Files:** `src/components/Header.tsx`, `src/components/Footer.tsx`, `src/app/services/[slug]/page.tsx`, `src/lib/services-data.ts` (optional `relatedArticles`)
 
-- [ ] Add `/learn` to the header nav and the footer `quickLinks` (footer array is at `Footer.tsx:10-17`). Keep existing styling/animation patterns exactly.
-- [ ] On each service page, render a "Learn more" block listing the articles whose `feedsService` matches that slug — derived from `learn-data`, so it stays in sync automatically. Reuse existing card/section components.
-- [ ] Ensure every spoke links **up** to its money page and every money page links **down** to its spokes (bidirectional cluster).
-- [ ] Confirm no orphan pages: every new URL is reachable from at least one internal link.
+- [x] Add `/learn` to the header nav and the footer `quickLinks` (footer array is at `Footer.tsx:10-17`). Keep existing styling/animation patterns exactly.
+- [x] On each service page, render a "Learn more" block listing the articles whose `feedsService` matches that slug — derived from `learn-data`, so it stays in sync automatically. Reuse existing card/section components.
+- [x] Ensure every spoke links **up** to its money page and every money page links **down** to its spokes (bidirectional cluster).
+- [x] Confirm no orphan pages: every new URL is reachable from at least one internal link.
+
+**As built:** `Learn` sits between `Portfolio` and `About Us` in `NAV_ITEMS` (desktop + mobile menu share the array) and between `Projects` and `About Us` in the footer's `quickLinks`. The service-page block is a `Related Reading` / "BEFORE YOU DECIDE." section placed **after the FAQ and before the free-audit form** — a reader who just finished the FAQs and still has questions is exactly the person a guide serves, and the conversion path (audit → CTA) stays last. It renders `articlesForService(service.slug)` in the same bordered `gap-px` `StaggerGroup` grid the `/learn` hub uses, and is conditional, so the 4 services with no spoke yet show nothing rather than an empty heading.
 
 **Verify:**
-- [ ] `npm run build` green.
-- [ ] `/learn` reachable from header **and** footer.
-- [ ] curl `/services/ai-agents` → contains links to A1 and A2; curl `/learn/<A1 slug>` → contains a link back to `/services/ai-agents`.
-- [ ] No new route is orphaned (grep the rendered HTML of hubs for each slug).
-- [ ] Nav/footer visuals and animations unchanged.
+- [x] `npm run build` green — 34/34; zero prerendered `"status": 404` across all `/learn` and `/services` meta files.
+- [x] `/learn` reachable from header **and** footer (2 occurrences of `href="/learn"` in the homepage HTML).
+- [x] Bidirectional cluster confirmed for all **6** pairs — service page links down to its spoke *and* the spoke links back up to that service page.
+- [x] Services with **no** spoke (`ui-ux-design`, `cloud-solutions`, `managed-it-services`, `graphic-designing`) render no Related Reading block at all.
+- [x] No orphans: all 6 article URLs appear on the `/learn` hub, and each is also linked from its money page and from 1–2 sibling articles.
+- [x] Nav/footer visuals and animations unchanged — only an array entry was added; the service-page block reuses `Section` / `FadeInUp` / `AccentBar` / `StaggerGroup` with existing brutalist tokens.
+
 
 ---
 

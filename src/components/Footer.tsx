@@ -11,6 +11,7 @@ export default function Footer() {
     { name: 'Home', href: '/' },
     { name: 'Services', href: '/services' },
     { name: 'Projects', href: '/portfolio' },
+    { name: 'Learn', href: '/learn' },
     { name: 'About Us', href: '/about' },
     { name: 'Careers', href: '/careers' },
     { name: 'Contact', href: '/contact' },

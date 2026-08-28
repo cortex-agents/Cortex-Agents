@@ -45,6 +45,15 @@ export function memberProfiles(member: TeamMember): TeamSocial[] {
   return [{ label: "LinkedIn", url: member.linkedin }, ...member.socials];
 }
 
+/**
+ * Resolve an author credit (a plain name string in `learn-data.ts`) back to the
+ * roster entry, so an article's `author` becomes a reference to the SAME Person
+ * entity that `/about` declares — not a second, look-alike author.
+ */
+export function memberByName(name: string): TeamMember | undefined {
+  return teamData.find((member) => member.name === name);
+}
+
 export const teamData: TeamMember[] = [
   {
     id: 1,
