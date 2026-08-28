@@ -2,6 +2,7 @@ import { MetadataRoute } from "next";
 import { SITE_URL } from "@/lib/site";
 import { servicesData } from "@/lib/services-data";
 import { articles } from "@/lib/learn-data";
+import products from "@/components/data/products";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
@@ -30,7 +31,20 @@ export default function sitemap(): MetadataRoute.Sitemap {
     changeFrequency: "monthly" as const,
   }));
 
-  return [...staticRoutes, ...serviceRoutes, ...articleRoutes].map((route) => ({
+  // Same rule as the articles above: derived from the products array, so a new
+  // case study is listed the moment it exists in the data.
+  const projectRoutes = products.map((project) => ({
+    url: `${SITE_URL}/portfolio/${project.slug}`,
+    priority: 0.7,
+    changeFrequency: "monthly" as const,
+  }));
+
+  return [
+    ...staticRoutes,
+    ...serviceRoutes,
+    ...articleRoutes,
+    ...projectRoutes,
+  ].map((route) => ({
     ...route,
     lastModified: now,
   }));

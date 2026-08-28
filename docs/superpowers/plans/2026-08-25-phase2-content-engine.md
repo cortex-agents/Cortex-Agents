@@ -91,18 +91,45 @@
 
 **Files:** `src/components/data/products.ts`, `src/lib/schema.ts`, `src/app/portfolio/[slug]/page.tsx` (new), `src/app/portfolio/page.tsx`, `src/app/sitemap.ts`
 
-- [ ] Extend each of the 9 entries in `products.ts` with: `slug`, `seoTitle`, `metaDescription`, `servicesUsed` (service slugs it demonstrates), `challenge`, `approach`, `outcome` (qualitative only — **no invented metrics**), `stack` (from existing `tags`). Keep existing fields and the current portfolio grid rendering intact.
-- [ ] Add `creativeWorkSchema(project)` to `schema.ts`: `@type: "CreativeWork"`, `name`, `description`, `url` (canonical project page), `sameAs` (the live demo link), `creator` → Organization, `keywords` (stack), `about` → the service(s) demonstrated.
-- [ ] Build `/portfolio/[slug]` with `generateStaticParams`, `generateMetadata`, `CreativeWork` + `BreadcrumbList` schema, honest write-up sections, a live-demo link (`rel="noopener noreferrer"`), and links to the service page(s) in `servicesUsed`.
-- [ ] Link each card on `/portfolio` to its detail page (keep the existing live-demo link too, and keep the existing per-card `aria-label` accessibility pattern).
-- [ ] Extend `sitemap.ts` with all 9 project URLs, derived from the array.
+- [x] Extend each of the 9 entries in `products.ts` with: `slug`, `seoTitle`, `metaDescription`, `servicesUsed` (service slugs it demonstrates), `challenge`, `approach`, `outcome` (qualitative only — **no invented metrics**), `stack` (from existing `tags`). Keep existing fields and the current portfolio grid rendering intact.
+- [x] Add `creativeWorkSchema(project)` to `schema.ts`: `@type: "CreativeWork"`, `name`, `description`, `url` (canonical project page), `sameAs` (the live demo link), `creator` → Organization, `keywords` (stack), `about` → the service(s) demonstrated.
+- [x] Build `/portfolio/[slug]` with `generateStaticParams`, `generateMetadata`, `CreativeWork` + `BreadcrumbList` schema, honest write-up sections, a live-demo link (`rel="noopener noreferrer"`), and links to the service page(s) in `servicesUsed`.
+- [x] Link each card on `/portfolio` to its detail page (keep the existing live-demo link too, and keep the existing per-card `aria-label` accessibility pattern).
+- [x] Extend `sitemap.ts` with all 9 project URLs, derived from the array.
+
+**As built:**
+
+| id | slug | seoTitle chars | meta chars | servicesUsed |
+|---|------|---|---|---|
+| 1 | `restaurant-fine-dining-platform` | 40 | 157 | web-development, ui-ux-design, seo-optimization |
+| 2 | `enterprise-job-portal` | 38 | 158 | web-development, custom-saas-enterprise, cloud-solutions |
+| 3 | `taskflow-ai` | 37 | 159 | ai-agents, custom-saas-enterprise, web-development |
+| 4 | `fitcore-membership-platform` | 36 | 157 | web-development, ui-ux-design, seo-optimization |
+| 5 | `brewhaus-digital-storefront` | 39 | 160 | web-development, ui-ux-design |
+| 6 | `luxeliving-ecommerce-engine` | 40 | 157 | web-development, ui-ux-design |
+| 7 | `abeer-essence-d2c` | 39 | 156 | ui-ux-design, web-development |
+| 8 | `mer-crafts-b2b-platform` | 31 | 151 | web-development, ui-ux-design |
+| 9 | `sofaspace-headless-commerce` | 40 | 159 | web-development, ui-ux-design |
+
+Each entry carries one `challenge` paragraph, 4 `approach` steps, 3 `outcome` bullets and a 4–6 item `stack`. Four services get **no** project (`ai-chatbots`, `dedicated-teams`, `managed-it-services`, `graphic-designing`) — the same honesty rule the `/learn` cluster follows, where 4 services have no spoke.
+
+**Supporting changes beyond the plan:**
+- `products_types.ts` — the array is now annotated `const products: Product[]`, so a field missing on one entry is a compile error instead of a blank section discovered on the live site. Also exports `getProject(slug)`.
+- `schema.ts` — new `serviceId(slug)` helper, and `serviceSchema` now emits `"@id": serviceId(...)`. That gives each Service a stable entity id so a project's `about` can reference the SAME node the service page declares, instead of inventing a second look-alike Service. Side effect (deliberate): all 10 service pages' `Service` JSON-LD gained an `@id`.
+- `/portfolio` hub now emits `CollectionPage` (ItemList of all 9) + `BreadcrumbList`, matching the `/learn` hub.
+- **A11y fix found while working:** both portfolio grids had arrow links whose only content was `→` (no discernible name) and `target="_blank"` with no `rel`. Both now carry `aria-label="Open the live <title> site in a new tab"`, `rel="noopener noreferrer"`, and `aria-hidden` on the glyph. Image and title link to the case study; the arrow stays the external demo link — siblings, never nested. (The parent `../CLAUDE.md` claims these aria-labels already existed; that claim was stale.)
 
 **Verify:**
-- [ ] `npm run build` green; 9 project paths listed as ● SSG.
-- [ ] `/sitemap.xml` contains all 9 project URLs.
-- [ ] `grep -rn "vercel.app" src/app/portfolio/` → demo links present only as external `sameAs`/CTA, never as canonical.
-- [ ] No fabricated client name, percentage, revenue figure, or timeline anywhere in the new copy.
-- [ ] Portfolio grid visuals + animations unchanged.
+- [x] `npm run build` green — **43/43** static pages; 9 project paths listed as ● SSG.
+- [x] `/sitemap.xml` contains all 9 project URLs — **32** `<loc>` total, 0 `.com`.
+- [x] `grep -rn "vercel.app" src/app/portfolio/` → **0 hits**; demo URLs live only in `products.ts`, rendered as an external CTA + schema `sameAs`. `alternates.canonical` is always our own `/portfolio/<slug>`.
+- [x] No fabricated client name, percentage, revenue figure, or timeline anywhere in the new copy — **72 copy strings** scanned across all `challenge`/`approach`/`outcome`, zero numeric claims.
+- [x] Portfolio grid visuals + animations unchanged (StaggerGroup/StaggerItem, grayscale→colour hover, `ease-fast` transitions all intact; only link wrappers and a11y attributes added).
+- [x] All 9 project pages 200; unknown slug (`/portfolio/no-such-project`) is a **hard 404** via `dynamicParams = false`; zero prerendered `"status": 404` in `.next`.
+- [x] Each project page emits valid `CreativeWork` + `BreadcrumbList`; `about[].@id` byte-matches the service page's `Service` `@id` (e.g. `https://cortexagents.org/services/ai-agents#service`).
+- [x] `/portfolio` emits `CollectionPage` with `"numberOfItems":9`.
+
+⚠️ **Flagged, not changed:** entries 2 and 6 carry pre-existing marketing claims in their original `description` copy ("thousands of concurrent users with sub-second latency", "sub-second checkouts"). These are the owner's own words and predate this task, so they were left intact per "keep existing fields" — but they are unverifiable performance numbers and the owner should decide whether to soften them.
 
 ---
 

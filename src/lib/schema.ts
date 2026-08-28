@@ -11,7 +11,9 @@ import {
   absoluteUrl,
 } from "./site";
 import type { ServiceData, FAQ } from "./services-data";
+import { servicesData } from "./services-data";
 import type { Article } from "./learn-data";
+import type { Product } from "../components/data/products_types";
 import {
   teamData,
   memberProfiles,
@@ -28,6 +30,13 @@ const ORG_ID = `${SITE_URL}#organization`;
 // A person's canonical entity id is their anchor on the About page.
 function personId(member: TeamMember) {
   return absoluteUrl(`/about#${member.slug}`);
+}
+
+// A service's canonical entity id is its own money page. Fixing it here lets a
+// project page say "this work is about THAT service" by `@id` reference instead
+// of re-declaring a second, look-alike Service node.
+function serviceId(slug: string) {
+  return `${absoluteUrl(`/services/${slug}`)}#service`;
 }
 
 export function organizationSchema() {
@@ -115,6 +124,7 @@ export function serviceSchema(service: ServiceData) {
   return {
     "@context": "https://schema.org",
     "@type": "Service",
+    "@id": serviceId(service.slug),
     name: service.title,
     description: service.shortDescription,
     serviceType: service.title,
@@ -225,6 +235,48 @@ export function articleSchema(article: Article) {
     publisher: { "@id": ORG_ID },
     isPartOf: { "@id": `${SITE_URL}#website` },
     mainEntityOfPage: { "@type": "WebPage", "@id": url },
+    inLanguage: "en",
+  };
+}
+
+// CreativeWork node for a /portfolio spoke. Two deliberate choices here:
+//
+//   `url`     → our own project page, never the demo. The demo lives on a
+//               vercel.app domain we do not own the ranking for; declaring it
+//               as the canonical would hand the signal to someone else's host.
+//   `sameAs`  → the live deployment. Same work, different address — which is
+//               exactly what sameAs means, and it corroborates that the project
+//               is real rather than a screenshot.
+//
+// `about` references each Service by the SAME `@id` the service page declares,
+// so the graph reads "this work is evidence for that service" instead of
+// inventing a second Service node that happens to share a name.
+export function creativeWorkSchema(project: Product) {
+  const url = absoluteUrl(`/portfolio/${project.slug}`);
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": `${url}#project`,
+    name: project.title,
+    description: project.metaDescription,
+    url,
+    sameAs: project.link,
+    image: absoluteUrl(project.image),
+    keywords: project.stack.join(", "),
+    creator: { "@id": ORG_ID },
+    publisher: { "@id": ORG_ID },
+    isPartOf: { "@id": `${SITE_URL}#website` },
+    mainEntityOfPage: { "@type": "WebPage", "@id": url },
+    about: project.servicesUsed
+      .map((slug) => servicesData.find((service) => service.slug === slug))
+      .filter((service): service is ServiceData => Boolean(service))
+      .map((service) => ({
+        "@type": "Service",
+        "@id": serviceId(service.slug),
+        name: service.title,
+        url: absoluteUrl(`/services/${service.slug}`),
+      })),
     inLanguage: "en",
   };
 }
