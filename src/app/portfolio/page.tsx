@@ -3,19 +3,24 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Section } from '@/components/ui/Section';
 import { Button } from '@/components/ui/Button';
+import { JsonLd } from '@/components/ui/JsonLd';
 import products from '@/components/data/products';
 import { Product } from '@/components/data/products_types';
 import { FadeInUp, AccentBar, StaggerGroup, StaggerItem } from '@/components/ui/Animations';
-import { OG_BASE } from '@/lib/site';
+import { breadcrumbSchema, collectionPageSchema } from '@/lib/schema';
+import { OG_BASE, SITE_NAME, SITE_URL, absoluteUrl } from '@/lib/site';
+
+const HUB_DESCRIPTION =
+  'Explore our complete portfolio featuring cutting-edge AI integrations, brutalist web designs, and high-performance applications.';
 
 export const metadata = {
   title: 'Portfolio',
-  description: 'Explore our complete portfolio featuring cutting-edge AI integrations, brutalist web designs, and high-performance applications.',
+  description: HUB_DESCRIPTION,
   alternates: { canonical: '/portfolio' },
   openGraph: {
     ...OG_BASE,
     title: 'Portfolio | Cortex Agents',
-    description: 'Explore our complete portfolio featuring cutting-edge AI integrations, brutalist web designs, and high-performance applications.',
+    description: HUB_DESCRIPTION,
     url: '/portfolio',
   }
 };
@@ -23,6 +28,26 @@ export const metadata = {
 export default function PortfolioPage() {
   return (
     <main className="bg-background text-foreground min-h-screen">
+      {/* Declares this page as a collection and lists all nine case studies, so a
+          crawler gets the full child-URL set from the hub's own markup instead of
+          having to discover each card link. */}
+      <JsonLd
+        data={collectionPageSchema({
+          name: `Portfolio | ${SITE_NAME}`,
+          url: absoluteUrl('/portfolio'),
+          description: HUB_DESCRIPTION,
+          items: products.map((project) => ({
+            name: project.title,
+            url: absoluteUrl(`/portfolio/${project.slug}`),
+          })),
+        })}
+      />
+      <JsonLd
+        data={breadcrumbSchema([
+          { name: 'Home', url: SITE_URL },
+          { name: 'Portfolio', url: absoluteUrl('/portfolio') },
+        ])}
+      />
       <Section spacing="loose" className="pt-32 pb-20">
         <div className="mb-20">
           <FadeInUp className="mb-8">
@@ -45,20 +70,31 @@ export default function PortfolioPage() {
           {products.map((project: Product) => (
             <StaggerItem key={project.id}>
               <div className="group flex flex-col">
-                <div className="relative aspect-[4/3] w-full overflow-hidden bg-muted border border-border mb-6">
-                  <Image 
-                    src={project.image} 
-                    alt={project.title} 
-                    fill 
-                    className="object-cover grayscale group-hover:grayscale-0 transition-all duration-500 ease-fast"
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                  />
-                </div>
-                
+                {/* The image and the title both open the case study. The live-demo
+                    arrow stays a separate external link, so the two destinations
+                    never sit inside one another. */}
+                <Link
+                  href={`/portfolio/${project.slug}`}
+                  aria-label={`Read the ${project.title} case study`}
+                  className="block mb-6 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
+                >
+                  <div className="relative aspect-[4/3] w-full overflow-hidden bg-muted border border-border">
+                    <Image
+                      src={project.image}
+                      alt={project.title}
+                      fill
+                      className="object-cover grayscale group-hover:grayscale-0 transition-all duration-500 ease-fast"
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                    />
+                  </div>
+                </Link>
+
                 <div className="flex justify-between items-start">
                   <div>
                     <h3 className="font-display text-2xl md:text-3xl font-bold tracking-tight mb-3 group-hover:text-accent transition-colors duration-150 ease-fast">
-                      {project.title}
+                      <Link href={`/portfolio/${project.slug}`} className="focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent">
+                        {project.title}
+                      </Link>
                     </h3>
                     <p className="text-muted-foreground mb-4 max-w-md">
                       {project.description}
@@ -71,13 +107,15 @@ export default function PortfolioPage() {
                       ))}
                     </div>
                   </div>
-                  
-                  <Link 
+
+                  <Link
                     href={project.link}
                     target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`Open the live ${project.title} site in a new tab`}
                     className="shrink-0 w-12 h-12 flex items-center justify-center border border-border hover:bg-foreground hover:text-background transition-colors duration-150 ease-fast"
                   >
-                    <span className="transform -rotate-45 text-xl">→</span>
+                    <span className="transform -rotate-45 text-xl" aria-hidden="true">→</span>
                   </Link>
                 </div>
               </div>

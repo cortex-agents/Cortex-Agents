@@ -1,85 +1,250 @@
-const products = [
+import { Product } from './products_types';
+
+// Typed on purpose: without the annotation a missing field on one entry would
+// pass the build and only surface as a blank section on the live detail page.
+//
+// Copy rule for every write-up below: no invented metrics, no client names, no
+// timelines, no revenue or traffic figures. Each `outcome` describes what the
+// build makes possible, not a number we cannot verify.
+const products: Product[] = [
     {
         id: 1,
+        slug: 'restaurant-fine-dining-platform',
         title: 'Restaurant & Fine Dining Platform',
         description: 'Engineered a high-conversion booking engine and menu interface, designed to capture local search traffic and drive digital reservations.',
         image: '/portfolio_imgs/restaurant_web.webp',
         link: 'https://restaurant-mu-rust.vercel.app/',
         tags: ['Next.js', 'Tailwind CSS', 'Conversion UI'],
-        gradient: 'from-red-600 to-orange-500'
+        gradient: 'from-red-600 to-orange-500',
+        seoTitle: 'Restaurant Booking Website — Case Study',
+        metaDescription: 'A restaurant website case study: how we structured the menu, booking flow and location content so a fine-dining venue turns local searches into reservations.',
+        servicesUsed: ['web-development', 'ui-ux-design', 'seo-optimization'],
+        challenge: 'A restaurant competes for a decision that happens in minutes. Someone searches for dinner, opens two or three sites, and books at whichever one answers fastest. Most restaurant sites work against that: the menu is a PDF, the booking form sits three scrolls down, and the address is in the footer — so the visitor who was ready to reserve leaves before finding any of it.',
+        approach: [
+            'Put the two things a diner actually came for — see the menu, book a table — inside the first screen on mobile, so neither requires a scroll.',
+            'Rebuilt the menu as real HTML instead of a PDF, so dishes are legible on a phone, selectable as text, and readable as content rather than an opaque file.',
+            'Structured the page around one conversion path — browse, choose a time, confirm — repeating the reservation action at each natural stopping point.',
+            'Built on Next.js with statically generated pages, so the menu is served pre-built from the edge instead of waiting on a server render.',
+        ],
+        outcome: [
+            'Menu and reservation content is indexable text, which is the precondition for showing up in local restaurant searches at all — a PDF menu is effectively invisible to a search engine.',
+            'The booking action is reachable from every section, so a visitor never has to scroll back to find it.',
+            'The layout holds on a small phone screen, so a mobile visitor gets the same clear path to a reservation as a desktop one.',
+        ],
+        stack: ['Next.js', 'React', 'Tailwind CSS', 'Static Generation', 'Vercel'],
     },
     {
         id: 2,
+        slug: 'enterprise-job-portal',
         title: 'Enterprise Job Portal',
         description: 'A multi-lingual, high-performance job board built on React and Firebase. Engineered to handle thousands of concurrent users with sub-second latency.',
         image: '/portfolio_imgs/jobportal.webp',
         link: 'https://job-portal-website-project.vercel.app/',
         tags: ['React.js', 'Firebase', 'i18n', 'Scalability'],
-        gradient: 'from-rose-500 to-fuchsia-500'
+        gradient: 'from-rose-500 to-fuchsia-500',
+        seoTitle: 'Multi-Language Job Portal — Case Study',
+        metaDescription: 'A job portal case study: how we built a multi-language board on React and Firebase with real-time listings, separate employer tools and filtering that scales.',
+        servicesUsed: ['web-development', 'custom-saas-enterprise', 'cloud-solutions'],
+        challenge: 'A job board serves two audiences with opposite needs. Candidates want to cut a long listing set down to a handful in seconds. Employers want to post, edit and track applications without filing a support request. Doing both from one interface — in more than one language — is where most job boards become unusable for someone.',
+        approach: [
+            'Split the product into two authenticated experiences over a single data model, so candidates and employers get different tools without maintaining two applications.',
+            'Used Firebase as the live backend, so a new posting or a new application appears without the user reloading the page.',
+            'Handled languages at the routing layer rather than with a translate widget, so each language has its own URLs and can be indexed on its own.',
+            'Pushed filtering into indexed queries instead of loading the full listing set into the browser, so the work stays proportional to the results shown.',
+        ],
+        outcome: [
+            'Each language version is a real, linkable URL — which is what makes it possible for a job board to be found in more than one market.',
+            'Employers manage their own postings, removing the manual middle step that usually makes a job board expensive to operate.',
+            'Filtering cost is bounded by the result set rather than the size of the catalogue, so adding listings does not degrade the search experience.',
+        ],
+        stack: ['React', 'Firebase', 'Firestore', 'Authentication', 'i18n Routing', 'Vercel'],
     },
     {
         id: 3,
+        slug: 'taskflow-ai',
         title: 'TaskFlow AI',
         description: 'An autonomous productivity engine utilizing OpenAI. We replaced manual task management with an agentic workflow that executes actions automatically.',
         image: '/portfolio_imgs/TaskFlowAI.webp',
         link: 'https://giaic-q4-h2-p2.vercel.app/',
         tags: ['Next.js', 'Python', 'OpenAI', 'Agentic AI'],
-        gradient: 'from-slate-500 to-gray-400'
+        gradient: 'from-slate-500 to-gray-400',
+        seoTitle: 'AI Agent Task Automation — Case Study',
+        metaDescription: 'An AI agent case study: how we turned a task list into an agentic workflow that reads a goal, decomposes it into ordered steps, and executes them under review.',
+        servicesUsed: ['ai-agents', 'custom-saas-enterprise', 'web-development'],
+        challenge: 'A task manager does not save time — it only records the work. The user still decides what happens next, in what order, and then does it by hand. The question worth building for is whether a system can take a stated goal and carry out the steps itself, and just as importantly, where that should stop and hand back to a human.',
+        approach: [
+            'Modelled each task as a goal with a plan attached, so the system reasons about what needs to happen rather than storing a title and a due date.',
+            'Added an OpenAI-backed planning step that decomposes a stated goal into ordered, individually executable actions.',
+            'Kept planning and execution in separate layers, so a failed step can be retried or corrected without regenerating the entire plan.',
+            'Left the human at the approval boundary: the agent proposes and executes, and the user stays able to inspect a plan and stop it.',
+        ],
+        outcome: [
+            'Demonstrates the loop that actually matters in production agents — plan, execute, observe, correct — rather than a single prompt-and-response call.',
+            'Separating planning from execution is what makes an agent debuggable; without that split, a wrong result leaves you nothing to inspect.',
+            'Serves as our internal reference for how much autonomy an agent should get before a human checkpoint is required.',
+        ],
+        stack: ['Next.js', 'Python', 'OpenAI API', 'Agentic Workflows', 'TypeScript'],
     },
     {
         id: 4,
+        slug: 'fitcore-membership-platform',
         title: 'FitCore — Membership Platform',
         description: 'A membership acquisition platform engineered to convert local search traffic into high-ticket gym sign-ups via an optimized sales funnel.',
         image: '/portfolio_imgs/gym_web.webp',
         link: 'https://gym-website-three-azure.vercel.app/',
         tags: ['Next.js', 'CMS', 'Lead Capture'],
-        gradient: 'from-orange-500 to-red-500'
+        gradient: 'from-orange-500 to-red-500',
+        seoTitle: 'Gym Membership Website — Case Study',
+        metaDescription: 'A gym website case study: how we surfaced classes, trainers and pricing up front and cut the sign-up funnel down so local interest converts into memberships.',
+        servicesUsed: ['web-development', 'ui-ux-design', 'seo-optimization'],
+        challenge: 'Someone looking for a gym has three questions: is it near me, what does it cost, and can I try it first. Most gym sites answer none of them in the first screen and put pricing behind a contact form — which loses precisely the visitor who had already decided to join.',
+        approach: [
+            'Answered the three deciding questions — location, schedule, price — in the top section instead of behind a form.',
+            'Gave classes and trainers their own CMS-fed content blocks, so the team updates the timetable without a developer.',
+            'Cut the sign-up form to the minimum fields needed to start a trial, because every extra field is another place to abandon.',
+            'Used a strict visual hierarchy so the primary action is the single brightest element on every screen.',
+        ],
+        outcome: [
+            'Pricing and schedule exist as page content, so they can also be read by a search engine answering a "gym near me" style query.',
+            'The team edits classes and trainers themselves, so the timetable does not go stale between development cycles.',
+            'One unmistakable action per screen removes the ambiguity that makes a ready visitor leave without contacting anyone.',
+        ],
+        stack: ['Next.js', 'Headless CMS', 'Tailwind CSS', 'Form Handling', 'Vercel'],
     },
     {
         id: 5,
+        slug: 'brewhaus-digital-storefront',
         title: 'BrewHaus — Digital Storefront',
         description: 'A seamless online ordering and brand experience platform, built to capture mobile traffic and drive footfall to physical locations.',
         image: '/portfolio_imgs/cafe_web.webp',
         link: 'https://caf-cosmo.vercel.app/',
         tags: ['React', 'Framer Motion', 'Mobile-First'],
-        gradient: 'from-amber-700 to-brown-500'
+        gradient: 'from-amber-700 to-brown-500',
+        seoTitle: 'Cafe Ordering & Brand Site — Case Study',
+        metaDescription: 'A cafe website case study: how we paired a mobile-first ordering flow with motion-led brand storytelling without letting the animation get in front of the page.',
+        servicesUsed: ['web-development', 'ui-ux-design'],
+        challenge: 'A cafe site has to do two jobs that pull against each other: sell an atmosphere, and let a hungry person order in under a minute. Heavy animation delivers the first and destroys the second, because motion that blocks the first paint does not read as premium — it reads as broken.',
+        approach: [
+            'Designed mobile-first, treating the phone layout as the real product and the desktop layout as the wider variant of it.',
+            'Used Framer Motion for entrance and scroll transitions only, so content lives in the markup and motion is a layer on top of it rather than a gate in front of it.',
+            'Kept the ordering action fixed and always reachable instead of a button that scrolls out of view.',
+            'Carried the brand voice in typography and spacing rather than large decorative imagery, which keeps the page light.',
+        ],
+        outcome: [
+            'The page reads as a designed brand experience while the order action stays one tap away at any scroll position.',
+            'Because content is in the HTML and motion is applied after it, the text is available to a crawler and to a reader whose animations never run.',
+            'A single mobile-first layout serves both screen sizes, so there is no separate mobile site to maintain or let drift out of sync.',
+        ],
+        stack: ['React', 'Framer Motion', 'Mobile-First CSS', 'Responsive Layout'],
     },
     {
         id: 6,
+        slug: 'luxeliving-ecommerce-engine',
         title: 'LuxeLiving — E-Commerce Engine',
         description: 'A high-ticket e-commerce architecture powered by Next.js and Sanity CMS. Engineered for sub-second checkouts and flawless product discovery.',
         image: '/portfolio_imgs/furniture_web.webp',
         link: 'https://giaic-hackathon-3-five.vercel.app/',
         tags: ['Next.js', 'Sanity CMS', 'E-commerce'],
-        gradient: 'from-amber-600 to-yellow-400'
+        gradient: 'from-amber-600 to-yellow-400',
+        seoTitle: 'Next.js & Sanity Storefront — Case Study',
+        metaDescription: 'A headless commerce case study: how we modelled a furniture catalogue in Sanity and rendered it with Next.js so every product becomes a fast, indexable page.',
+        servicesUsed: ['web-development', 'ui-ux-design'],
+        challenge: 'High-ticket furniture is not an impulse purchase. The visitor compares, leaves, and comes back days later — so the catalogue has to be browsable, linkable and re-findable. A monolithic store template fights that: product data is trapped inside the theme, and every content change turns into a deployment.',
+        approach: [
+            'Modelled products, categories and media as structured content in Sanity, so the catalogue is data the business owns rather than markup inside a template.',
+            'Rendered with Next.js so each product is a real, statically generated URL that can be shared, bookmarked and indexed.',
+            'Built discovery around category and product pages instead of one filtered listing, giving every item its own address.',
+            'Kept the checkout path short and separate from browsing, so a returning visitor can go straight from product to purchase.',
+        ],
+        outcome: [
+            'Every product has its own indexable URL — the difference between a catalogue a search engine can list and one it cannot see.',
+            'The content team adds and edits products without touching code or waiting on a release.',
+            'Static generation means the catalogue is served as pre-built pages rather than assembled on every request.',
+        ],
+        stack: ['Next.js', 'Sanity CMS', 'TypeScript', 'Structured Content', 'Vercel'],
     },
     {
         id: 7,
+        slug: 'abeer-essence-d2c',
         title: 'Abeer Essence — Direct-to-Consumer',
         description: 'A luxury brand interface built with Framer Motion and React, elevating perceived brand value and optimizing the D2C sales funnel.',
         image: '/portfolio_imgs/perfume_web.webp',
         link: 'https://abeeressence.store/',
         tags: ['React', 'D2C', 'UI/UX'],
-        gradient: 'from-rose-500 to-fuchsia-500'
+        gradient: 'from-rose-500 to-fuchsia-500',
+        seoTitle: 'Luxury D2C Fragrance Store — Case Study',
+        metaDescription: 'A direct-to-consumer case study: how typography, restraint and measured motion raise perceived value for a fragrance brand selling with no retail middleman.',
+        servicesUsed: ['ui-ux-design', 'web-development'],
+        challenge: 'A fragrance cannot be sampled online, so the interface has to carry the entire sensory argument on its own. Selling direct means there is no retail environment doing that work — and if the site looks ordinary, the product is assumed to be ordinary, whatever the price tag says.',
+        approach: [
+            'Led with typography and generous negative space rather than dense product grids, because crowding is what makes a premium product read as cheap.',
+            'Used restrained motion on entry and hover so the interface feels considered without turning the storefront into a showreel.',
+            'Kept the product story — notes, character, occasion — as readable content beside the buy action instead of hidden in a separate tab.',
+            'Held one accent treatment across the whole storefront, so the brand is recognisable from any single screen.',
+        ],
+        outcome: [
+            'The storefront reads as a brand rather than a template, which is the substitute for the retail environment a direct-to-consumer seller does not have.',
+            'Product descriptions sit as text alongside the purchase action, so the argument for buying is on the page where the decision gets made.',
+            'A consistent visual system means new products drop into the existing design without a redesign.',
+        ],
+        stack: ['React', 'Framer Motion', 'D2C Storefront', 'Responsive Layout'],
     },
     {
         id: 8,
+        slug: 'mer-crafts-b2b-platform',
         title: 'MER Crafts — B2B Agency Platform',
         description: 'A brutalist B2B agency platform designed to capture enterprise leads. Built with modular React components for infinite scalability.',
         image: '/portfolio_imgs/mer_tech_web.webp',
         link: 'https://mer-tech-solutions.vercel.app/',
         tags: ['React', 'B2B Lead Gen', 'UI/UX'],
-        gradient: 'from-indigo-500 to-blue-600'
+        gradient: 'from-indigo-500 to-blue-600',
+        seoTitle: 'B2B Agency Website — Case Study',
+        metaDescription: 'A B2B website case study: how a brutalist layout and modular React components make an agency legible to a buyer who is already comparing three vendors.',
+        servicesUsed: ['web-development', 'ui-ux-design'],
+        challenge: 'A B2B buyer arrives already comparing. They are not reading the homepage for pleasure — they are checking whether this vendor does the specific thing they need, at their scale, and whether it is safe to send an enquiry. A page that says "we do digital" fails all three checks at once.',
+        approach: [
+            'Named the services explicitly instead of describing capabilities in the abstract, so a buyer can match their requirement to a line on the page.',
+            'Built the page from modular React components, so a new service is a data entry rather than a new bespoke section.',
+            'Used a brutalist grid — hard borders, mono labels, no decorative gradients — so structure does the work decoration usually attempts.',
+            'Placed the enquiry action at the end of each service block, where the buyer has just had that exact question answered.',
+        ],
+        outcome: [
+            'Service scope is stated in plain language, which is what a comparing buyer needs and what a search engine can match to a query.',
+            'New services are added as components without redesigning the page, so the site grows with the agency.',
+            'The enquiry path follows the reading order instead of living only in the header.',
+        ],
+        stack: ['React', 'Component Architecture', 'Tailwind CSS', 'Lead Capture'],
     },
     {
         id: 9,
+        slug: 'sofaspace-headless-commerce',
         title: 'SofaSpace — Headless Commerce',
         description: 'An interactive, headless e-commerce display that uses dynamic visuals and minimal UI to increase conversion rates and average order values.',
         image: '/portfolio_imgs/furniture_2_web.webp',
         link: 'https://marketplace-builder-hackathon-2025-proje-okashanadeems-projects.vercel.app/',
         tags: ['React', 'Headless', 'Conversion Rate'],
-        gradient: 'from-slate-500 to-gray-400'
+        gradient: 'from-slate-500 to-gray-400',
+        seoTitle: 'Headless Commerce Frontend — Case Study',
+        metaDescription: 'A headless commerce case study: how decoupling the storefront from the backend lets a furniture marketplace redesign its interface without moving product data.',
+        servicesUsed: ['web-development', 'ui-ux-design'],
+        challenge: 'In a traditional store the interface and the product data are the same system. Any visual change puts the catalogue at risk, and any catalogue change means editing a template. For a marketplace that needs to keep iterating on presentation, that coupling is the actual constraint.',
+        approach: [
+            'Decoupled the storefront from the commerce backend, consuming products over an API so the interface can be rebuilt without migrating data.',
+            'Built discovery as a visual grid with minimal chrome, letting product photography carry the browsing experience.',
+            'Held interface state — filters, selection, cart — in the front end, so browsing does not round-trip to the server on every interaction.',
+            'Used a responsive grid that reflows, rather than a fixed desktop layout scaled down.',
+        ],
+        outcome: [
+            'The presentation layer can be redesigned independently of the catalogue, which is the main practical reason to go headless in the first place.',
+            'Product data stays in one system while the storefront is free to change, so a redesign is not a data migration.',
+            'One codebase serves phone and desktop browsing without a separate mobile build.',
+        ],
+        stack: ['React', 'Headless Commerce API', 'Client-Side State', 'Responsive Grid'],
     }
 ];
 
 export default products;
+
+export function getProject(slug: string): Product | undefined {
+    return products.find((project) => project.slug === slug);
+}
