@@ -12,6 +12,7 @@ const NAV_ITEMS = [
   { name: "Home", href: "/" },
   { name: "Services", href: "/services" },
   { name: "Portfolio", href: "/portfolio" },
+  { name: "Learn", href: "/learn" },
   { name: "About Us", href: "/about" },
   { name: "Careers", href: "/careers" },
 ];

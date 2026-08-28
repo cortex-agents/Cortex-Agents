@@ -1,6 +1,8 @@
 import { notFound } from "next/navigation";
+import Link from "next/link";
 import type { Metadata } from "next";
 import { servicesData } from "@/lib/services-data";
+import { articlesForService } from "@/lib/learn-data";
 import { SITE_NAME, SITE_URL, DEFAULT_OG_IMAGE, absoluteUrl } from "@/lib/site";
 import { serviceSchema, faqPageSchema, breadcrumbSchema } from "@/lib/schema";
 import { JsonLd } from "@/components/ui/JsonLd";
@@ -13,7 +15,7 @@ import ServiceFAQ from "@/components/services/ServiceFAQ";
 import ServiceCTA from "@/components/services/ServiceCTA";
 import AuditForm from "@/components/AuditForm";
 import { Section } from "@/components/ui/Section";
-import { FadeInUp, AccentBar } from "@/components/ui/Animations";
+import { FadeInUp, AccentBar, StaggerGroup, StaggerItem } from "@/components/ui/Animations";
 
 interface ServicePageProps {
   params: Promise<{
@@ -59,6 +61,10 @@ export default async function ServicePage({ params }: ServicePageProps) {
     notFound();
   }
 
+  // Derived from learn-data, so publishing an article that feeds this service
+  // links itself in here — the cluster cannot drift out of sync by hand.
+  const guides = articlesForService(service.slug);
+
   return (
     <main className="bg-background text-foreground pb-20">
       <JsonLd data={serviceSchema(service)} />
@@ -73,6 +79,50 @@ export default async function ServicePage({ params }: ServicePageProps) {
       <ServiceFeatures featuresData={service.features} />
       <ServiceProcess processData={service.process} />
       <ServiceFAQ faqs={service.faqs} />
+
+      {/* Related guides — completes the cluster: the spoke links up to this
+          money page, and this money page links back down to the spoke. */}
+      {guides.length > 0 && (
+        <Section spacing="standard" className="border-t border-border">
+          <FadeInUp className="mb-12">
+            <span className="font-mono text-sm tracking-widest uppercase text-accent border border-accent px-3 py-1">
+              Related Reading
+            </span>
+            <h2 className="font-display text-4xl md:text-6xl font-bold tracking-tighter uppercase leading-[0.9] mt-8 mb-8">
+              BEFORE YOU<br />DECIDE.
+            </h2>
+            <p className="text-xl text-muted-foreground leading-relaxed max-w-2xl mb-10">
+              Plain-English guides that go deeper on {service.title} — what it involves, what drives the cost, and when it is the wrong choice.
+            </p>
+            <AccentBar className="w-16 h-1 bg-accent" />
+          </FadeInUp>
+
+          <StaggerGroup className="grid grid-cols-1 md:grid-cols-2 gap-px bg-border border border-border">
+            {guides.map((guide) => (
+              <StaggerItem key={guide.slug} className="bg-background">
+                <Link
+                  href={`/learn/${guide.slug}`}
+                  className="group flex h-full flex-col p-8 md:p-10 transition-colors duration-150 ease-fast hover:bg-muted/50 focus-visible:outline-2 focus-visible:outline-offset-[-4px] focus-visible:outline-accent"
+                >
+                  <div className="flex items-center justify-between font-mono text-[11px] uppercase tracking-widest mb-6">
+                    <span className="text-accent">{guide.intent}</span>
+                    <span className="text-muted-foreground">{guide.readingTime} Min Read</span>
+                  </div>
+                  <h3 className="font-display text-xl md:text-2xl font-bold tracking-tight leading-snug mb-4 group-hover:text-accent transition-colors duration-150 ease-fast">
+                    {guide.title}
+                  </h3>
+                  <p className="text-muted-foreground leading-relaxed line-clamp-3">
+                    {guide.answerFirst}
+                  </p>
+                  <span className="mt-auto pt-8 font-mono text-[11px] uppercase tracking-widest text-accent">
+                    Read →
+                  </span>
+                </Link>
+              </StaggerItem>
+            ))}
+          </StaggerGroup>
+        </Section>
+      )}
       
       {/* Free Tech Audit Section (Auto-selects current service) */}
       <Section spacing="standard" className="border-t border-border">

@@ -148,17 +148,21 @@
 
 **Files:** `src/components/Header.tsx`, `src/components/Footer.tsx`, `src/app/services/[slug]/page.tsx`, `src/lib/services-data.ts` (optional `relatedArticles`)
 
-- [ ] Add `/learn` to the header nav and the footer `quickLinks` (footer array is at `Footer.tsx:10-17`). Keep existing styling/animation patterns exactly.
-- [ ] On each service page, render a "Learn more" block listing the articles whose `feedsService` matches that slug — derived from `learn-data`, so it stays in sync automatically. Reuse existing card/section components.
-- [ ] Ensure every spoke links **up** to its money page and every money page links **down** to its spokes (bidirectional cluster).
-- [ ] Confirm no orphan pages: every new URL is reachable from at least one internal link.
+- [x] Add `/learn` to the header nav and the footer `quickLinks` (footer array is at `Footer.tsx:10-17`). Keep existing styling/animation patterns exactly.
+- [x] On each service page, render a "Learn more" block listing the articles whose `feedsService` matches that slug — derived from `learn-data`, so it stays in sync automatically. Reuse existing card/section components.
+- [x] Ensure every spoke links **up** to its money page and every money page links **down** to its spokes (bidirectional cluster).
+- [x] Confirm no orphan pages: every new URL is reachable from at least one internal link.
+
+**As built:** `Learn` sits between `Portfolio` and `About Us` in `NAV_ITEMS` (desktop + mobile menu share the array) and between `Projects` and `About Us` in the footer's `quickLinks`. The service-page block is a `Related Reading` / "BEFORE YOU DECIDE." section placed **after the FAQ and before the free-audit form** — a reader who just finished the FAQs and still has questions is exactly the person a guide serves, and the conversion path (audit → CTA) stays last. It renders `articlesForService(service.slug)` in the same bordered `gap-px` `StaggerGroup` grid the `/learn` hub uses, and is conditional, so the 4 services with no spoke yet show nothing rather than an empty heading.
 
 **Verify:**
-- [ ] `npm run build` green.
-- [ ] `/learn` reachable from header **and** footer.
-- [ ] curl `/services/ai-agents` → contains links to A1 and A2; curl `/learn/<A1 slug>` → contains a link back to `/services/ai-agents`.
-- [ ] No new route is orphaned (grep the rendered HTML of hubs for each slug).
-- [ ] Nav/footer visuals and animations unchanged.
+- [x] `npm run build` green — 34/34; zero prerendered `"status": 404` across all `/learn` and `/services` meta files.
+- [x] `/learn` reachable from header **and** footer (2 occurrences of `href="/learn"` in the homepage HTML).
+- [x] Bidirectional cluster confirmed for all **6** pairs — service page links down to its spoke *and* the spoke links back up to that service page.
+- [x] Services with **no** spoke (`ui-ux-design`, `cloud-solutions`, `managed-it-services`, `graphic-designing`) render no Related Reading block at all.
+- [x] No orphans: all 6 article URLs appear on the `/learn` hub, and each is also linked from its money page and from 1–2 sibling articles.
+- [x] Nav/footer visuals and animations unchanged — only an array entry was added; the service-page block reuses `Section` / `FadeInUp` / `AccentBar` / `StaggerGroup` with existing brutalist tokens.
+
 
 ---
 
