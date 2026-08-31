@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { Button } from './ui/Button';
+import { trackLead } from '@/lib/analytics';
 
 export default function AuditForm({ defaultService = "" }: { defaultService?: string }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -31,6 +32,9 @@ export default function AuditForm({ defaultService = "" }: { defaultService?: st
 
       const result = await res.json();
       if (result.success) {
+        // Fired only on a confirmed server success, so the conversion count
+        // never includes submissions that failed to reach us.
+        trackLead("audit_form", (data.service as string) || undefined);
         setIsSuccess(true);
       } else {
         setErrorMsg("Failed to submit request. Please try again or email us directly.");

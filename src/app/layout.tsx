@@ -8,6 +8,7 @@ import { ScrollController } from '@/components/ui/ScrollController';
 import { SITE_URL, SITE_NAME, SITE_DESCRIPTION, SITE_KEYWORDS } from '@/lib/site';
 import { organizationSchema, websiteSchema } from '@/lib/schema';
 import { JsonLd } from '@/components/ui/JsonLd';
+import Analytics from '@/components/Analytics';
 
 const interTight = Inter_Tight({
   subsets: ['latin'],
@@ -115,6 +116,7 @@ export default function RootLayout({
       <body className={`${inter.className} bg-background text-foreground antialiased min-h-screen relative overflow-x-hidden`} suppressHydrationWarning>
         <JsonLd data={organizationSchema()} />
         <JsonLd data={websiteSchema()} />
+        <Analytics />
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
           <div className="relative z-10">
             <Header />

@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import Notification from './Notification';
+import { trackLead } from '@/lib/analytics';
 
 export default function CollaborateForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -27,6 +28,7 @@ export default function CollaborateForm() {
       });
       
       if (res.ok) {
+        trackLead("collaborate_form");
         setNotif({ show: true, type: "success", message: "PARTNERSHIP INQUIRY SENT." });
         (e.target as HTMLFormElement).reset();
         setTimeout(() => setNotif(n => ({ ...n, show: false })), 5000);

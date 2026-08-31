@@ -5,6 +5,7 @@ import { Input } from "./ui/Input";
 import { Textarea } from "./ui/Textarea";
 import { Button } from "./ui/Button";
 import Notification from "./Notification";
+import { trackLead } from "@/lib/analytics";
 
 export default function ContactForm() {
   const [name, setName] = useState("");
@@ -28,6 +29,7 @@ export default function ContactForm() {
         body: JSON.stringify({ name, email, subject, message }),
       });
       if (res.ok) {
+        trackLead("contact_form");
         setNotif({ show: true, type: "success", message: "Message received." });
         setName(""); setEmail(""); setSubject(""); setMessage("");
         setTimeout(() => setNotif(n => ({ ...n, show: false })), 3000);
