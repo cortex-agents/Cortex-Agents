@@ -135,6 +135,17 @@ export function serviceSchema(service: ServiceData) {
       name: SITE_NAME,
       url: SITE_URL,
     },
+    // The entry-point price, in USD, as a minPrice specification — the honest
+    // "from $X" the page shows. minPrice (not a bare `price`) says the real
+    // quote depends on scope, which is how these services are actually sold.
+    offers: {
+      "@type": "Offer",
+      priceSpecification: {
+        "@type": "PriceSpecification",
+        priceCurrency: "USD",
+        minPrice: service.priceFrom.amount,
+      },
+    },
   };
 }
 

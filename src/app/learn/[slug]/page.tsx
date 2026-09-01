@@ -231,6 +231,12 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                   </table>
                 </div>
               )}
+
+              {section.afterTable && (
+                <p className="mt-4 font-mono text-xs tracking-widest uppercase text-muted-foreground leading-relaxed">
+                  {section.afterTable}
+                </p>
+              )}
             </FadeInUp>
           ))}
         </div>

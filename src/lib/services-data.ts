@@ -32,6 +32,14 @@ export interface ServiceData {
   shortDescription: string;
   seoTitle?: string;
   metaDescription?: string;
+  /** The honest entry point for worldwide clients, in USD. `unit` is
+   *  "one-time" for project services and "monthly" for retainer services.
+   *  Rendered on the service page AND emitted into the Service JSON-LD as an
+   *  `offers` priceSpecification — the two must agree, so there is one field. */
+  priceFrom: {
+    amount: number;
+    unit: "one-time" | "monthly";
+  };
   hero: {
     badge: string;
     tagline: string;
@@ -75,6 +83,7 @@ export const servicesData: ServiceData[] = [
   {
     slug: "web-development",
     icon: "Globe",
+    priceFrom: { amount: 800, unit: "one-time" },
     label: "Most Popular",
     title: "Web Development",
     shortDescription: "Next.js architecture engineered for sub-second load times, infinite scale, and ruthless conversion.",
@@ -253,6 +262,7 @@ export const servicesData: ServiceData[] = [
   {
     slug: "ui-ux-design",
     icon: "Palette",
+    priceFrom: { amount: 500, unit: "one-time" },
     title: "UI/UX Design",
     shortDescription: "Strategic interface design that dictates user behavior and drives conversion.",
     seoTitle: "UI/UX Design Services",
@@ -429,6 +439,7 @@ export const servicesData: ServiceData[] = [
   {
     slug: "ai-chatbots",
     icon: "MessageSquare",
+    priceFrom: { amount: 1200, unit: "one-time" },
     label: "High ROI",
     title: "AI Chatbots",
     shortDescription: "Automated support layers that capture leads, qualify intent, and close deals at 3 AM.",
@@ -603,6 +614,7 @@ export const servicesData: ServiceData[] = [
   {
     slug: "ai-agents",
     icon: "Cpu",
+    priceFrom: { amount: 2000, unit: "one-time" },
     title: "AI Agents & Automation",
     shortDescription: "Autonomous systems that handle data, routing, and logic without human intervention.",
     seoTitle: "AI Agents & Automation Services",
@@ -776,6 +788,7 @@ export const servicesData: ServiceData[] = [
   {
     slug: "seo-optimization",
     icon: "TrendingUp",
+    priceFrom: { amount: 500, unit: "monthly" },
     title: "SEO & AI Visibility",
     shortDescription: "Dominate Google and become the default answer across ChatGPT, Claude, and Perplexity.",
     seoTitle: "SEO & AI Visibility Services",
@@ -949,6 +962,7 @@ export const servicesData: ServiceData[] = [
   {
     slug: "cloud-solutions",
     icon: "Cloud",
+    priceFrom: { amount: 800, unit: "one-time" },
     title: "Cloud Solutions",
     shortDescription: "Scalable, secure cloud infrastructure that grows with your business — deployed and managed by experts.",
     seoTitle: "Cloud Solutions & DevOps Services",
@@ -1127,6 +1141,7 @@ export const servicesData: ServiceData[] = [
   {
     slug: "custom-saas-enterprise",
     icon: "Blocks",
+    priceFrom: { amount: 5000, unit: "one-time" },
     label: "High Scale",
     title: "Custom SaaS & Enterprise",
     shortDescription: "Scalable, secure, and complex web applications—from multi-tenant SaaS products to custom ERPs and internal portals.",
@@ -1304,6 +1319,7 @@ export const servicesData: ServiceData[] = [
   {
     slug: "dedicated-teams",
     icon: "Users",
+    priceFrom: { amount: 1000, unit: "monthly" },
     title: "Dedicated Teams",
     shortDescription: "Scale your engineering capacity instantly. Hire our pre-vetted Next.js and AI developers on a monthly retainer.",
     seoTitle: "Hire Dedicated Development Teams",
@@ -1477,6 +1493,7 @@ export const servicesData: ServiceData[] = [
   {
     slug: "managed-it-services",
     icon: "ShieldCheck",
+    priceFrom: { amount: 200, unit: "monthly" },
     title: "Managed IT & Software",
     shortDescription: "Your virtual Tech Department. We maintain, secure, and scale your existing software so you can focus on business.",
     seoTitle: "Managed IT & Software Services",
@@ -1651,6 +1668,7 @@ export const servicesData: ServiceData[] = [
   {
     slug: "graphic-designing",
     icon: "Image",
+    priceFrom: { amount: 150, unit: "one-time" },
     title: "Graphic Designing",
     shortDescription: "Visual communication that builds brand identity and creates memorable experiences.",
     seoTitle: "Graphic Design Services",
