@@ -4,7 +4,16 @@ import { Button } from '../ui/Button';
 import { FadeInUp } from '../ui/Animations';
 
 interface ServiceHeroProps {
-  service: { hero: { badge: string; title: string; subtitle: string; heroDescription: string; }; cta: { primaryLink: string; primaryCTA: string; } };
+  service: {
+    hero: { badge: string; title: string; subtitle: string; heroDescription: string; };
+    cta: { primaryLink: string; primaryCTA: string; };
+    priceFrom: { amount: number; unit: "one-time" | "monthly" };
+  };
+}
+
+function formatPrice(priceFrom: { amount: number; unit: "one-time" | "monthly" }) {
+  const amount = `$${priceFrom.amount.toLocaleString("en-US")}`;
+  return priceFrom.unit === "monthly" ? `From ${amount} / mo` : `From ${amount}`;
 }
 
 export default function ServiceHero({ service }: ServiceHeroProps) {
@@ -27,9 +36,14 @@ export default function ServiceHero({ service }: ServiceHeroProps) {
             <p className="text-lg text-muted-foreground leading-relaxed mb-10 max-w-2xl">
               {service.hero.heroDescription}
             </p>
-            <Button variant="primary" size="lg" href={service.cta.primaryLink}>
-              {service.cta.primaryCTA}
-            </Button>
+            <div className="flex flex-wrap items-center gap-6">
+              <Button variant="primary" size="lg" href={service.cta.primaryLink}>
+                {service.cta.primaryCTA}
+              </Button>
+              <span className="font-mono text-sm tracking-widest uppercase text-muted-foreground border border-border px-4 py-3">
+                {formatPrice(service.priceFrom)}
+              </span>
+            </div>
           </FadeInUp>
         </div>
       </div>

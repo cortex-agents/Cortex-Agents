@@ -40,6 +40,9 @@ export interface ArticleSection {
   body: string[];
   bullets?: string[];
   table?: ArticleTable;
+  /** A short note rendered directly under a table — for the caveat that must
+   *  be read with the numbers, e.g. "these are market ranges, not our quote". */
+  afterTable?: string;
 }
 
 export interface Article {
@@ -504,7 +507,7 @@ export const articles: Article[] = [
     metaDescription:
       "What really drives the cost of a custom web application: user roles, integrations, data complexity, and compliance. Plus the line items most quotes forget.",
     answerFirst:
-      "There is no honest single number. The cost of a custom web application is set by four things: how many distinct user roles it serves, how many external systems it must talk to, how much of the data model is genuinely custom, and the compliance bar it has to clear. Anyone quoting before scoping those is guessing.",
+      "There is no honest single number. A custom web application typically starts around $5,000 for a single-purpose internal tool, $15,000 to $50,000 for a serious platform, and far more for a multi-tenant product with billing and compliance. The exact figure is set by four things: how many distinct user roles it serves, how many external systems it must talk to, how much of the data model is genuinely custom, and the compliance bar it has to clear. Anyone quoting before scoping those is guessing.",
     intent: "Cost",
     feedsService: "custom-saas-enterprise",
     author: "Syed Muhammad Huzaifa",
@@ -542,25 +545,27 @@ export const articles: Article[] = [
           "Most projects land in one of three tiers. The label matters less than the middle column — that is what you should be able to recognise your own project in.",
         ],
         table: {
-          headers: ["Scope", "What it looks like", "What actually drives the cost"],
+          headers: ["Scope", "Typical range (USD)", "What actually drives the cost"],
           rows: [
             [
               "Single-purpose tool",
-              "One user role, one job done properly, few or no integrations",
+              "$5,000 – $15,000",
               "The interface, and the one workflow it replaces",
             ],
             [
               "Internal platform",
-              "Several roles with different permissions, real reporting, two or three integrations",
+              "$15,000 – $50,000",
               "Permission logic, and keeping two systems in agreement",
             ],
             [
               "Multi-tenant product",
-              "Isolated customer data, billing, onboarding, an audit trail",
+              "$50,000 – $150,000+",
               "Tenant isolation, billing edge cases, and everything that must be right on day one",
             ],
           ],
         },
+        afterTable:
+          "These are global market ranges, not our quote — a Karachi-based agency like ours typically lands at the lower end of each band while a US or European agency sits higher. The shape is the point: each tier is roughly three times the last, and scope, not vendor, is what decides which band you fall into.",
       },
       {
         heading: "The Line Items People Forget",
