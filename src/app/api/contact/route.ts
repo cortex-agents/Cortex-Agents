@@ -4,7 +4,10 @@ import nodemailer from 'nodemailer';
 export async function POST(req: Request) {
   try {
     const { name, email, subject, message } = await req.json();
-    console.log('API /api/contact called with:', { name, email, subject });
+    // Deliberately logs no submitted field. The enquiry itself is delivered by
+    // email; repeating the sender's name or address in the host's server logs
+    // would store personal data we never need and cannot easily delete.
+    console.log('API /api/contact called');
 
     // transporter using Gmail app password
     const transporter = nodemailer.createTransport({
@@ -21,7 +24,9 @@ export async function POST(req: Request) {
       console.log('Nodemailer transporter verified ✅');
     } catch (verifyErr) {
       console.error('Transporter verify failed:', verifyErr);
-      return NextResponse.json({ success: false, error: 'transporter_verify_failed', details: String(verifyErr) }, { status: 500 });
+      // The cause is logged server-side only — a stringified mail-server error
+      // can carry account details and internals that no browser needs.
+      return NextResponse.json({ success: false, error: 'transporter_verify_failed' }, { status: 500 });
     }
 
     // safer mail options: use your mailbox as sender and replyTo user
@@ -33,11 +38,11 @@ export async function POST(req: Request) {
       text: `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`,
     };
 
-    const info = await transporter.sendMail(mailOptions);
-    console.log('Email sent:', info);
-    return NextResponse.json({ success: true, info }, { status: 200 });
+    await transporter.sendMail(mailOptions);
+    console.log('Contact enquiry delivered');
+    return NextResponse.json({ success: true }, { status: 200 });
   } catch (error) {
     console.error('Email send error:', error);
-    return NextResponse.json({ success: false, error: String(error) }, { status: 500 });
+    return NextResponse.json({ success: false, error: 'send_failed' }, { status: 500 });
   }
 }

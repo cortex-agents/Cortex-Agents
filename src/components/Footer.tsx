@@ -113,6 +113,13 @@ export default function Footer() {
           <p>
             &copy; {currentYear} CORTEX AGENTS. ALL RIGHTS RESERVED.
           </p>
+          <Link
+            href="/privacy"
+            className="group relative inline-flex items-center hover:text-accent transition-colors duration-150"
+          >
+            Privacy Policy
+            <span className="absolute -bottom-1 left-0 w-full h-[2px] bg-accent scale-x-0 origin-left transition-transform duration-150 ease-fast group-hover:scale-x-100" />
+          </Link>
         </div>
       </div>
     </footer>

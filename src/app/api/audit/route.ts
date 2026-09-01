@@ -4,7 +4,9 @@ import nodemailer from 'nodemailer';
 export async function POST(req: Request) {
   try {
     const { name, email, company, service, challenge } = await req.json();
-    console.log('API /api/audit called with:', { name, email, company });
+    // No submitted field is logged — see the note in /api/contact. The audit
+    // request reaches us as email; the host's logs need none of its contents.
+    console.log('API /api/audit called');
 
     const transporter = nodemailer.createTransport({
       service: 'gmail',
@@ -29,10 +31,10 @@ export async function POST(req: Request) {
       text: `Name: ${name}\nEmail: ${email}\nCompany: ${company || 'N/A'}\nInterested Service: ${service}\n\nBiggest Challenge/Bottleneck:\n${challenge}`,
     };
 
-    const info = await transporter.sendMail(mailOptions);
-    return NextResponse.json({ success: true, info }, { status: 200 });
+    await transporter.sendMail(mailOptions);
+    return NextResponse.json({ success: true }, { status: 200 });
   } catch (error) {
     console.error('Email send error:', error);
-    return NextResponse.json({ success: false, error: String(error) }, { status: 500 });
+    return NextResponse.json({ success: false, error: 'send_failed' }, { status: 500 });
   }
 }

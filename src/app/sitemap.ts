@@ -15,6 +15,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${SITE_URL}/learn`, priority: 0.8, changeFrequency: "weekly" as const },
     { url: `${SITE_URL}/careers`, priority: 0.7, changeFrequency: "weekly" as const },
     { url: `${SITE_URL}/contact`, priority: 0.8, changeFrequency: "monthly" as const },
+    // Legal boilerplate: indexable so it can be found and cited, but ranked
+    // last of our own pages — it should never outrank a service page.
+    { url: `${SITE_URL}/privacy`, priority: 0.3, changeFrequency: "yearly" as const },
   ];
 
   const serviceRoutes = servicesData.map((service) => ({
