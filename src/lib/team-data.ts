@@ -164,3 +164,38 @@ export const teamData: TeamMember[] = [
     socials: [],
   },
 ];
+
+export interface ExtendedTeamMember {
+  id: number;
+  name: string;
+  role: string;
+  bio: string;
+}
+
+export const extendedTeamData: ExtendedTeamMember[] = [
+  {
+    id: 1,
+    name: "Alex Mercer",
+    role: "Senior Data Scientist",
+    bio: "Alex builds the predictive models and NLP pipelines that empower our autonomous agents."
+  },
+  {
+    id: 2,
+    name: "Jordan Lee",
+    role: "DevOps Engineer",
+    bio: "Jordan ensures our cloud infrastructure scales seamlessly during high traffic periods."
+  },
+  {
+    id: 3,
+    name: "Maria Gonzalez",
+    role: "QA Automation Specialist",
+    bio: "Maria writes the rigorous test suites that guarantee our enterprise software remains bug-free."
+  },
+  {
+    id: 4,
+    name: "Bilal Ahmed",
+    role: "Full-Stack Developer",
+    bio: "Bilal integrates complex third-party APIs into our custom SaaS solutions."
+  }
+];
+
