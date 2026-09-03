@@ -2,7 +2,7 @@ import React from 'react'
 import Hero from '@/components/Hero'
 import About from '@/components/About'
 import Services from '@/components/Services'
-import Portfolio from '@/components/portfolio'
+import HomeEvidence from '@/components/HomeEvidence'
 import Testimonials from '@/components/Testimonials'
 import ServiceCTA from '@/components/services/ServiceCTA'
 
@@ -19,7 +19,7 @@ export default function Home() {
       <Hero />
       <About />
       <Services />
-      <Portfolio />
+      <HomeEvidence />
       <Testimonials />
       <ServiceCTA ctaData={ctaData} />
     </main>
