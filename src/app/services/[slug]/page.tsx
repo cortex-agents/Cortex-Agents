@@ -53,6 +53,10 @@ export function generateStaticParams() {
   return servicesData.map((service) => ({ slug: service.slug }));
 }
 
+import { caseStudies } from "@/lib/case-studies-data";
+import { ArrowRight } from "lucide-react";
+import Image from "next/image";
+
 export default async function ServicePage({ params }: ServicePageProps) {
   const resolvedParams = await params;
   const service = servicesData.find((s) => s.slug === resolvedParams.slug);
@@ -64,6 +68,7 @@ export default async function ServicePage({ params }: ServicePageProps) {
   // Derived from learn-data, so publishing an article that feeds this service
   // links itself in here — the cluster cannot drift out of sync by hand.
   const guides = articlesForService(service.slug);
+  const relatedCaseStudies = caseStudies.filter(cs => cs.services.some(s => s.slug === service.slug));
 
   return (
     <main className="bg-background text-foreground pb-20">
@@ -79,6 +84,59 @@ export default async function ServicePage({ params }: ServicePageProps) {
       <ServiceFeatures featuresData={service.features} />
       <ServiceProcess processData={service.process} />
       <ServiceFAQ faqs={service.faqs} />
+
+      {/* Related Case Studies */}
+      {relatedCaseStudies.length > 0 && (
+        <Section spacing="standard" className="border-t border-border">
+          <FadeInUp className="mb-16">
+            <span className="font-mono text-sm tracking-wider uppercase text-accent mb-4 block">
+              Evidence
+            </span>
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tighter uppercase leading-[0.9] mb-8">
+              RELATED CASE STUDIES
+            </h2>
+            <AccentBar className="w-16 h-1 bg-accent" />
+          </FadeInUp>
+          
+          <StaggerGroup className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {relatedCaseStudies.map(cs => (
+              <StaggerItem key={cs.slug}>
+                <div className="group flex flex-col h-full border border-border bg-muted/20 hover:bg-muted/50 transition-colors duration-300">
+                  <Link href={`/case-studies/${cs.slug}`} className="block relative aspect-video w-full overflow-hidden border-b border-border">
+                    <Image
+                      src={cs.image}
+                      alt={cs.title}
+                      fill
+                      className="object-cover grayscale group-hover:grayscale-0 transition-all duration-500 ease-fast"
+                    />
+                  </Link>
+                  <div className="p-8 flex flex-col flex-grow">
+                    <span className="font-mono text-xs uppercase tracking-wider text-muted-foreground mb-4 block">
+                      {cs.industry}
+                    </span>
+                    <h3 className="text-2xl font-bold tracking-tight mb-4 group-hover:text-accent transition-colors duration-150">
+                      <Link href={`/case-studies/${cs.slug}`} className="focus-visible:outline-2 focus-visible:outline-accent">
+                        {cs.title}
+                      </Link>
+                    </h3>
+                    <p className="text-muted-foreground mb-8 flex-grow">
+                      {cs.summary}
+                    </p>
+                    <Link
+                      href={`/case-studies/${cs.slug}`}
+                      className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-wider text-accent font-semibold group/link mt-auto w-fit"
+                    >
+                      Read Case Study
+                      <ArrowRight className="w-4 h-4 transform group-hover/link:translate-x-1 transition-transform duration-150" />
+                      <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-accent origin-left scale-x-100 group-hover/link:scale-x-110 transition-transform duration-150" />
+                    </Link>
+                  </div>
+                </div>
+              </StaggerItem>
+            ))}
+          </StaggerGroup>
+        </Section>
+      )}
 
       {/* Related guides — completes the cluster: the spoke links up to this
           money page, and this money page links back down to the spoke. */}

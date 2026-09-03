@@ -11,9 +11,9 @@ import { ThemeToggle } from "./ThemeToggle";
 const NAV_ITEMS = [
   { name: "Home", href: "/" },
   { name: "Services", href: "/services" },
-  { name: "Portfolio", href: "/portfolio" },
-  { name: "Learn", href: "/learn" },
-  { name: "About Us", href: "/about" },
+  { name: "Case Studies", href: "/case-studies" },
+  { name: "Insights", href: "/learn" },
+  { name: "About", href: "/about" },
   { name: "Careers", href: "/careers" },
 ];
 
