@@ -5,11 +5,11 @@ import { ArrowRight } from 'lucide-react';
 import { Section } from './ui/Section';
 import { FadeInUp, AccentBar, StaggerGroup, StaggerItem } from './ui/Animations';
 import { caseStudies } from '@/lib/case-studies-data';
-import { learnArticles } from '@/lib/learn-data';
+import { articles } from '@/lib/learn-data';
 
 export default function HomeEvidence() {
   const featuredCases = caseStudies.slice(0, 2);
-  const featuredInsights = learnArticles.slice(0, 3);
+  const featuredInsights = articles.slice(0, 3);
 
   return (
     <Section spacing="standard" className="border-t border-border bg-muted/10">
@@ -26,7 +26,7 @@ export default function HomeEvidence() {
             </h2>
             <AccentBar className="w-12 h-1 bg-accent mb-8" />
             <p className="text-lg text-muted-foreground leading-relaxed">
-              We engineer solutions that dictate markets. See how we've transformed enterprise operations through AI and high-performance software.
+              We engineer solutions that dictate markets. See how we&apos;ve transformed enterprise operations through AI and high-performance software.
             </p>
           </FadeInUp>
 
@@ -86,7 +86,7 @@ export default function HomeEvidence() {
               <StaggerItem key={article.slug}>
                 <Link href={`/learn/${article.slug}`} className="group block py-6 border-b border-border hover:pl-4 transition-all duration-300">
                   <div className="flex flex-wrap items-center gap-4 font-mono text-[11px] uppercase tracking-widest text-muted-foreground mb-3">
-                    <span className="text-accent">{article.category}</span>
+                    <span className="text-accent">{article.intent}</span>
                     <span>•</span>
                     <span>{article.readingTime} Min Read</span>
                   </div>
