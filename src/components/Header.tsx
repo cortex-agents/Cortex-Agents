@@ -100,7 +100,7 @@ export default function Header() {
                   key={item.name}
                   href={item.href} 
                   prefetch={true}
-                  className={`relative font-mono text-sm uppercase tracking-wider transition-colors duration-150 ease-fast py-2 ${isActive ? "text-accent" : "text-foreground hover:text-accent"}`}
+                  className={`group relative font-mono text-sm uppercase tracking-wider transition-colors duration-150 ease-fast py-2 ${isActive ? "text-accent" : "text-foreground hover:text-accent"}`}
                 >
                   {item.name}
                   <span className={`absolute bottom-0 left-0 w-full h-0.5 bg-accent origin-left transition-transform duration-150 ease-fast ${isActive ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'}`} />
@@ -110,7 +110,7 @@ export default function Header() {
             
             <div className="pl-4 border-l border-border flex items-center gap-4">
               <ThemeToggle />
-              <Button variant="primary" size="default" href="/contact">
+              <Button variant="secondary" size="default" href="/contact">
                 Start Project
               </Button>
             </div>
