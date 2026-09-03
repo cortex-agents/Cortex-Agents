@@ -7,6 +7,13 @@
     "location": "Global"
   },
   {
+    "id": "lead-generation-specialist",
+    "title": "Lead Generation & Data Specialist",
+    "description": "We need a data-obsessed researcher to fuel our sales pipeline. You will be responsible for scraping, verifying, and curating highly-targeted lists of enterprise decision-makers. You will not be taking sales calls—your sole metric of success is delivering hundreds of verified, high-quality leads to our closers every week.",
+    "type": "Remote / Full-Time",
+    "location": "Global"
+  },
+  {
     "id": "agentic-ai-developer-intern",
     "title": "Agentic AI Developer (Intern)",
     "description": "We are looking for a highly driven intern to help build autonomous AI systems. You will not be fetching coffee or doing manual data entry. You will be writing Python, configuring LLMs, and deploying multi-agent architectures that automate complex business workflows. Only apply if you live and breathe AI.",
