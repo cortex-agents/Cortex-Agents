@@ -68,7 +68,7 @@ export const caseStudies: CaseStudy[] = [
     timeline: "6 months",
     engagementType: "Product Engineering",
     featured: true,
-    image: "/placeholder-case-study.jpg"
+    image: "/case-studies/ai-powered-customer-operations.jpg"
   },
   {
     title: "Intelligent Customer Support System",
@@ -105,7 +105,7 @@ export const caseStudies: CaseStudy[] = [
     timeline: "3 months",
     engagementType: "AI Implementation",
     featured: true,
-    image: "/placeholder-case-study.jpg"
+    image: "/case-studies/intelligent-customer-support.jpg"
   },
   {
     title: "Multi-Tenant Enterprise SaaS Platform",
@@ -143,7 +143,7 @@ export const caseStudies: CaseStudy[] = [
     timeline: "9 months",
     engagementType: "Dedicated Product Team",
     featured: true,
-    image: "/placeholder-case-study.jpg"
+    image: "/case-studies/enterprise-saas-platform.jpg"
   },
   {
     title: "Search + AI Visibility Transformation",
@@ -180,6 +180,6 @@ export const caseStudies: CaseStudy[] = [
     timeline: "4 months",
     engagementType: "Growth Engineering",
     featured: false,
-    image: "/placeholder-case-study.jpg"
+    image: "/case-studies/search-ai-visibility.jpg"
   }
 ];
